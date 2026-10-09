@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudo Play</title>
+<meta name="description" content="A macOS menu bar app that suggests today's Spotify playlist for the mood you are coding in.">
+<link rel="canonical" href="https://sudoplay.dev/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sudoplay.dev/">
+<meta property="og:title" content="Sudo Play">
+<meta property="og:description" content="A macOS menu bar app that suggests today's Spotify playlist for the mood you are coding in.">
+<meta name="twitter:card" content="summary">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #18181b;
+    --muted: #71717a;
+    --accent: #059669;
+    --line: #e4e4e7;
+    --panel: #f4f4f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #09090b;
+      --fg: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #34d399;
+      --line: #27272a;
+      --panel: #18181b;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+  main { width: 100%; max-width: 34rem; }
+  .prompt {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 0 0 28px;
+    overflow-wrap: anywhere;
+  }
+  .prompt .sigil { color: var(--muted); }
+  .prompt .flag { color: var(--accent); }
+  h1 { font-size: 1.5rem; margin: 0 0 12px; letter-spacing: -0.01em; }
+  p { margin: 0 0 16px; color: var(--muted); }
+  p.lead { color: var(--fg); }
+  footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="prompt"><span class="sigil">$</span> sudo play <span class="flag">--mood</span> friday-deploy</p>
+
+  <h1>Sudo Play</h1>
+
+  <p class="lead">A macOS menu bar app that suggests today's Spotify playlist for the mood you are coding in.</p>
+
+  <p>Pick a genre and a mood. It picks the playlist, the same one all day, and a different one tomorrow.</p>
+
+  <p>No accounts, no analytics, no tracking. It opens public playlist links and nothing else.</p>
+
+  <footer>
+    The documentation site is being built. Nothing here yet.
+  </footer>
+</main>
+</body>
+</html>

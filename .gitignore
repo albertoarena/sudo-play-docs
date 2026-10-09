@@ -1,0 +1,15 @@
+# Local scratch docs (not the tracked docs/ folder)
+.docs/
+
+# Node
+node_modules/
+.astro/
+dist/
+
+# macOS
+.DS_Store
+
+# Env
+.env
+.env.*
+!.env.example
