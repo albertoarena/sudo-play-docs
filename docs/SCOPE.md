@@ -56,6 +56,23 @@ before consent is not. That rules out a font from a CDN, an iframe demo, and a
 search widget that phones home on load. Decide it on day one. Retrofitting the
 promise means pulling out furniture that already works.
 
+### The app's privacy promise is not a promise about this site
+
+The placeholder, and the app's own `README.md` and `PRIVACY.md`, say Sudo Play
+has no accounts, no analytics and no tracking. That is a promise about **the
+app**. It does not argue against GA4 behind the consent gate here, and nobody
+should let one be used against the other.
+
+The sentence on the placeholder names Sudo Play explicitly for that reason. An
+earlier wording started "No accounts, no analytics, no tracking", which read as
+a claim about whatever page you were looking at. True of the app, and this is
+the page that will later carry a consent banner, so a visitor would have met a
+contradiction on one domain. Keep any future copy attributed the same way.
+
+The app's promise does harden, though, and that is tracked in `dev-reputation`
+as Markstone a94395f0: if Sudo Play ever wants Spotify sign in, library reading,
+accounts or analytics, the sentence changes **before** the feature ships.
+
 **And before anyone quotes a number from it:** GA4 behind this gate counts
 acceptors, not visitors. Every figure is a floor, and developers decline consent
 and run blockers more than most audiences.
