@@ -83,9 +83,31 @@ goes in the first Astro commit**, not after the first silently broken page.
 At minimum: the site builds, the home page renders its heading, and no page
 makes a third party request before consent.
 
+## Deployment, settled 2026-10-09
+
+Netsons shared hosting, through cPanel, on `89.40.172.137`. The same server
+already serves `trussphp.com`, `cogway.dev` and `albertoarena.it`.
+
+- **DNS is on Cloudflare, both records DNS only.** Never proxied, matching
+  `trussphp.com`. The apex A record and the `www` CNAME both resolve straight
+  to the origin
+- **One canonical host, `https://sudoplay.dev`.** `www` 301s to it in a single
+  hop, over either scheme
+- **The certificate is AutoSSL's**, covering `sudoplay.dev`,
+  `www.sudoplay.dev` and both `.progettofacile.it` forms
+- **The redirect lives in `.htaccess`**, not in cPanel's Redirects tool. The
+  rule cPanel generates is an HTTP to HTTPS redirect whose first condition is
+  `%{HTTPS} off`, so it can never fire for a browser on a preloaded HSTS
+  domain. The www rule was added above it, testing only the host. Do not
+  re-add a row in the Redirects tool: cPanel would own the file again and
+  regenerate its block
+
+Remaining: `netsons-token.sudoplay.dev` TXT is a verification artefact and can
+be deleted.
+
 ## Open, and Alberto's to answer
 
-1. **Where it deploys.** Not decided
+1. ~~Where it deploys.~~ **Answered above on 2026-10-09**
 2. **Starlight, or not.** `laravel-truss-docs` has two independent head paths
    because custom pages use a layout and Starlight docs use the `head:` array in
    `astro.config.mjs`. Anything site wide has to go in both, and a fix applied
