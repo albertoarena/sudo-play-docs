@@ -25,8 +25,11 @@ export default defineConfig({
   // `npm run check` builds first: the test list is read from dist/, which
   // must exist before Playwright collects tests, and a failed build stops
   // the run.
+  // --ignore-lock keeps the server in the foreground. Without it, Astro 7
+  // moves preview to the background when an AI agent runs it, the process
+  // Playwright started exits at once, and the real server is left orphaned.
   webServer: {
-    command: `npm run preview -- --port ${port}`,
+    command: `npm run preview -- --port ${port} --ignore-lock`,
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
