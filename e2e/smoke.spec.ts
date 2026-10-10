@@ -3,7 +3,7 @@ import { join, relative, sep } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 // Every built page, read from dist/ so a new page is covered without editing
-// this file. `npm test` builds the site before Playwright collects tests.
+// this file. `npm run check` builds the site before Playwright collects tests.
 function builtPages(dir = 'dist'): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const path = join(dir, entry.name);

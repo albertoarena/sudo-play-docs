@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 const port = 4321;
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './e2e',
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
@@ -22,8 +22,9 @@ export default defineConfig({
       },
     },
   ],
-  // `npm test` builds first: the test list is read from dist/, which must
-  // exist before Playwright collects tests, and a failed build stops the run.
+  // `npm run check` builds first: the test list is read from dist/, which
+  // must exist before Playwright collects tests, and a failed build stops
+  // the run.
   webServer: {
     command: `npm run preview -- --port ${port}`,
     url: `http://localhost:${port}`,
