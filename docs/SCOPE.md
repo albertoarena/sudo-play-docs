@@ -35,6 +35,11 @@ a marketing site and does not need to persuade anyone.
   copy worth hiding. A GA4 measurement ID is public by nature
 - **A placeholder page goes up first**, in `placeholder/`, so the domain serves
   something before Astro exists
+- **Test first**, decided 2026-10-10. The failing test is committed, then the
+  code. One commit per green cycle
+- **No implementation before the design**, decided 2026-10-10. Alberto
+  designs with Impeccable in phase 2 of `docs/PLAN.md`, and nothing before
+  that phase adds styles, copy or layout
 
 ## The analytics rule, which is a design constraint before it is a feature
 
@@ -125,28 +130,23 @@ be deleted.
 ## Open, and Alberto's to answer
 
 1. ~~Where it deploys.~~ **Answered above on 2026-10-09**
-2. **Starlight, or not.** `laravel-truss-docs` has two independent head paths
-   because custom pages use a layout and Starlight docs use the `head:` array in
-   `astro.config.mjs`. Anything site wide has to go in both, and a fix applied
-   to one looks complete if verification only checks a page the other path does
-   not serve. That trap exists only because the two share a site. An original
-   design may remove the reason for Starlight entirely
-3. **What the site actually contains at launch.** The app's own repository
-   already holds `README.md`, `CONTRIBUTING.md` and `PRIVACY.md`. Duplicating
-   them here creates two copies that drift. Deciding what the site adds, rather
-   than repeats, is the real scoping question
-4. **Licence for the site content**, which need not match the app's MIT
+2. ~~Starlight, or not.~~ **Answered on 2026-10-10: plain Astro, no
+   Starlight.** `laravel-truss-docs` has two independent head paths because
+   custom pages use a layout and Starlight docs use the `head:` array in
+   `astro.config.mjs`, so a fix applied to one looks complete when it is not.
+   One layout means one head path. The choice is reversible later
+3. ~~What the site actually contains at launch.~~ **Answered on 2026-10-10:**
+   how it works, install, moods and tips, plus a short privacy page about this
+   site. It links to the app's `README.md`, `CONTRIBUTING.md` and `PRIVACY.md`
+   and never copies them, so there are never two copies to drift
+4. **Licence for the site content**, which need not match the app's MIT. It
+   blocks making the repository public. `docs/PLAN.md` lists it with the other
+   open questions
 
 ## Order of work
 
-1. The placeholder, served at `https://sudoplay.dev` ✅ written, not yet deployed
-2. Deployment decided and the placeholder live
-3. Astro scaffold, with the smoke test in the same commit ✅ plain Astro, no
-   Starlight yet, so question 2 stays open
-4. The design, by Alberto, with the Impeccable skill
-5. Content, once question 3 is answered
-6. GA4 and the consent gate, ported from `laravel-truss-docs` with its tests
-7. The repository goes public
+The phases, what each one tests and what still blocks them are in
+[`docs/PLAN.md`](PLAN.md).
 
 **Sudo Play itself does not go public until this site serves something real.**
 Alberto decided that on 2026-10-09, accepting that it may delay the app's

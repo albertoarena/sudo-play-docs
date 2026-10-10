@@ -8,37 +8,45 @@ Lives at **https://sudoplay.dev**.
 
 ## Status
 
-Early. The Astro site is scaffolded but not designed. Its home page carries the
-same copy as the placeholder. `placeholder/index.html` is a single static page,
-with no build step and no third party request, and it is what the domain serves
-until the Astro build replaces it.
+Phase 1 of `docs/PLAN.md`: the Astro site is scaffolded, with tooling and smoke
+tests only. The home page is a bare document with a title, a canonical and one
+heading. There is no design and no copy yet. `placeholder/index.html` is a
+single static page, with no build step and no third party request, and it is
+what the domain serves until phase 6 deploys the Astro build over it.
 
-`docs/SCOPE.md` is the plan: what is decided, what is deliberately excluded,
-and what is still open.
+`docs/SCOPE.md` says what is decided, what is deliberately excluded and why.
+`docs/PLAN.md` says the phases and what is still open.
 
 ## Develop
 
-Needs Node 22.12 or later.
+Needs Node 22.12 or later (`.nvmrc` says 22).
 
 ```sh
-npm install
+npm ci
 npx playwright install chromium   # once
 npm run dev                       # http://localhost:4321
-npm test                          # build, then the smoke tests
+npm run check                     # build once, then every test
 ```
 
-`npm test` builds the site and runs Playwright against the preview server. It
-checks that the home page renders its heading and that **no built page makes a
-third party request before consent**. New pages are picked up from `dist/`
-without editing the test.
+| Script | What it does |
+| --- | --- |
+| `npm run build` | `astro check`, then `astro build` into `dist/` |
+| `npm test` | Vitest checks on `dist/`: every page has a title and one canonical on `https://sudoplay.dev` |
+| `npm run test:e2e` | Playwright against the preview server: the home page heading, and **no built page makes a third party request before consent** |
+| `npm run check` | All three, in that order. CI runs this |
+
+`npm test` and `npm run test:e2e` read `dist/` and do not build it, so run
+`npm run build` first or use `npm run check`. Both pick up new pages from
+`dist/` without editing a test.
 
 ## Layout
 
 ```
 src/           the Astro site
-tests/         Playwright smoke tests
+tests/         Vitest checks on the built site
+e2e/           Playwright smoke tests
 placeholder/   a single static page, no build, no external requests
-docs/          the plan for this repository
+docs/          the scope and the plan for this repository
 ```
 
 ## The one rule worth knowing before contributing

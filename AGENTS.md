@@ -14,11 +14,17 @@ new session has are answered there.
 
 ## Current state, so nothing is assumed
 
-Early. The **Astro site is scaffolded but not designed**: plain Astro, strict
-TypeScript, no Starlight and no CSS framework, with one home page that carries
-the placeholder's copy. `placeholder/index.html` is still what the domain
-serves. The design is not started, and three questions in `docs/SCOPE.md` are
-still open.
+Phase 1 of `docs/PLAN.md`: **scaffold and smoke tests, tooling only.** Plain
+Astro with strict TypeScript, no Starlight and no CSS framework. The home page
+is a bare document: a title, a canonical and one `<h1>`. No styles, no copy and
+no Open Graph tags. `placeholder/index.html` is still what the domain serves.
+
+Nothing adds styles, copy or layout before phase 2, where Alberto designs the
+site with Impeccable. Work is test first: the failing test is committed, then
+the code, one commit per green cycle.
+
+`docs/PLAN.md` holds the phases and the three open questions: the GA4
+measurement ID, who writes the tips, and the licence for the site content.
 
 This repository is **private now and public later**. Everything committed while
 it is private is readable the moment it flips, so no credentials and no draft
@@ -86,7 +92,19 @@ minimum: the site builds, the home page renders its heading, and no page issues
 a third party request before consent. The last of those is the only automated
 guard the consent promise will ever have.
 
-It lives in `tests/smoke.spec.ts` and runs with `npm test`, locally and in CI.
+There are two suites, and `npm run check` builds once and runs both, locally and
+in CI:
+
+- `tests/`, Vitest in a node environment, checks the files in `dist/`: the
+  home page exists, and every page has a non empty `<title>` and exactly one
+  canonical on `https://sudoplay.dev`. Run it with `npm test`
+- `e2e/smoke.spec.ts`, Playwright, checks the served site: the home page
+  renders its heading, and no page makes a third party request before
+  consent. Run it with `npm run test:e2e`
+
+Neither script builds on its own: run `npm run build` first, or use
+`npm run check`.
+
 The consent check visits every HTML file in `dist/`, so a new page is covered
 without touching the test. Do not weaken it to make a page pass: remove the
 request instead. When GA4 arrives, the test grows a second half that accepts
