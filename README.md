@@ -8,16 +8,35 @@ Lives at **https://sudoplay.dev**.
 
 ## Status
 
-Early. The site is not built yet. `placeholder/index.html` is a single static
-page, with no build step and no third party request, so the domain serves
-something while the real site is written.
+Early. The Astro site is scaffolded but not designed. Its home page carries the
+same copy as the placeholder. `placeholder/index.html` is a single static page,
+with no build step and no third party request, and it is what the domain serves
+until the Astro build replaces it.
 
 `docs/SCOPE.md` is the plan: what is decided, what is deliberately excluded,
 and what is still open.
 
+## Develop
+
+Needs Node 22.12 or later.
+
+```sh
+npm install
+npx playwright install chromium   # once
+npm run dev                       # http://localhost:4321
+npm test                          # build, then the smoke tests
+```
+
+`npm test` builds the site and runs Playwright against the preview server. It
+checks that the home page renders its heading and that **no built page makes a
+third party request before consent**. New pages are picked up from `dist/`
+without editing the test.
+
 ## Layout
 
 ```
+src/           the Astro site
+tests/         Playwright smoke tests
 placeholder/   a single static page, no build, no external requests
 docs/          the plan for this repository
 ```

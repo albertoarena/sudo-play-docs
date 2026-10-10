@@ -14,10 +14,11 @@ new session has are answered there.
 
 ## Current state, so nothing is assumed
 
-Early. There is **no Astro site yet** and no build step. `placeholder/index.html`
-is a single static page so the domain serves something. The framework choice is
-made but unscaffolded, the design is not started, and three questions in
-`docs/SCOPE.md` are still open.
+Early. The **Astro site is scaffolded but not designed**: plain Astro, strict
+TypeScript, no Starlight and no CSS framework, with one home page that carries
+the placeholder's copy. `placeholder/index.html` is still what the domain
+serves. The design is not started, and three questions in `docs/SCOPE.md` are
+still open.
 
 This repository is **private now and public later**. Everything committed while
 it is private is readable the moment it flips, so no credentials and no draft
@@ -84,6 +85,15 @@ rendered output, which is exactly what unit tests do not see.
 minimum: the site builds, the home page renders its heading, and no page issues
 a third party request before consent. The last of those is the only automated
 guard the consent promise will ever have.
+
+It lives in `tests/smoke.spec.ts` and runs with `npm test`, locally and in CI.
+The consent check visits every HTML file in `dist/`, so a new page is covered
+without touching the test. Do not weaken it to make a page pass: remove the
+request instead. When GA4 arrives, the test grows a second half that accepts
+consent and expects Google, but the first half stays as it is.
+
+If a machine has a Chromium that does not match the Playwright version, set
+`PLAYWRIGHT_CHROMIUM_PATH` to it instead of downloading another.
 
 ## Infrastructure that is already decided
 

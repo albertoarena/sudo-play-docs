@@ -141,7 +141,8 @@ be deleted.
 
 1. The placeholder, served at `https://sudoplay.dev` ✅ written, not yet deployed
 2. Deployment decided and the placeholder live
-3. Astro scaffold, with the smoke test in the same commit
+3. Astro scaffold, with the smoke test in the same commit ✅ plain Astro, no
+   Starlight yet, so question 2 stays open
 4. The design, by Alberto, with the Impeccable skill
 5. Content, once question 3 is answered
 6. GA4 and the consent gate, ported from `laravel-truss-docs` with its tests
