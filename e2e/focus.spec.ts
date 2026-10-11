@@ -44,3 +44,20 @@ test('the skip link appears on focus and moves focus to main', async ({ page }) 
   await skip.press('Enter');
   await expect(page).toHaveURL(/#content$/);
 });
+
+test('the skip link keeps its text readable on hover', async ({ page }) => {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme });
+    await page.goto('/install/');
+    await page.keyboard.press('Tab');
+    const skip = page.getByRole('link', { name: 'Skip to content' });
+    await skip.hover();
+
+    const [color, fill] = await skip.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return [style.color, style.backgroundColor];
+    });
+    const onAccent = colorScheme === 'light' ? 'rgb(255, 255, 255)' : 'rgb(9, 9, 11)';
+    expect(color, `${colorScheme} on ${fill}`).toBe(onAccent);
+  }
+});
