@@ -1,0 +1,68 @@
+---
+// The brand line, as the app shows it: a dim $ and a green command. It is the
+// tagline, not a command, so it is never set as code and has no copy button.
+// It wraps like the app's commandParts: the command, then each flag with its
+// value, and none of those parts ever splits. A continued line is indented
+// two columns, as in the app. The app also ends a broken line with a dim
+// backslash; that needs to know where the line broke, which takes a script,
+// so the site leaves it out.
+interface Props {
+  genre?: string;
+  mood?: string;
+}
+
+const { genre = 'rock', mood = 'debugging' } = Astro.props;
+const parts = ['sudo play', `--genre ${genre}`, `--mood ${mood}`];
+---
+<div class="terminal-panel" data-testid="terminal-panel">
+  <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="line">
+    <span class="prompt">$</span>{parts.map((part) => [' ', <span class="part">{part}</span>])}
+  </p>
+</div>
+
+<style>
+  .terminal-panel {
+    padding: clamp(1rem, 3vw, 1.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.75rem, 5vw, 3rem);
+    border: 1px solid var(--term-edge);
+    border-radius: 16px;
+    background: var(--term-bg);
+  }
+
+  .dots {
+    display: flex;
+    gap: 7px;
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .dots i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--term-dots);
+  }
+
+  .line {
+    margin: 0;
+    color: var(--term-green);
+    font-family: var(--font-mono);
+    font-size: clamp(1.375rem, 0.9rem + 2.2vw, 2.375rem);
+    font-variant-ligatures: none;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .line {
+    padding-left: 2ch;
+    text-indent: -2ch;
+  }
+
+  .part {
+    white-space: nowrap;
+  }
+
+  .prompt {
+    color: var(--term-dim);
+  }
+</style>

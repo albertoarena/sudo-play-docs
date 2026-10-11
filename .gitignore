@@ -17,3 +17,6 @@ playwright-report/
 .env
 .env.*
 !.env.example
+
+# Impeccable review captures, regenerated on demand
+.impeccable/review/

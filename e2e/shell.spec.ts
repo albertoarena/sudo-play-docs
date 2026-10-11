@@ -1,0 +1,62 @@
+import { expect, test } from '@playwright/test';
+import { builtPages } from './pages';
+
+// The shell: every page carries the same masthead, main column and footer.
+for (const path of builtPages()) {
+  test.describe(path, () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(path);
+    });
+
+    test('has the masthead with the site navigation', async ({ page }) => {
+      const banner = page.getByRole('banner');
+
+      await expect(banner).toHaveCount(1);
+      await expect(banner.getByRole('link', { name: 'Sudo Play' })).toHaveAttribute('href', '/');
+      await expect(banner.getByRole('navigation', { name: 'Site' })).toHaveCount(1);
+    });
+
+    // DIRECTION.md: the band stays about 56px on inner pages, so it reads
+    // as chrome. Only Home grows it into the terminal panel.
+    if (path !== '/') {
+      test('keeps the masthead band short', async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 800 });
+        const box = await page.getByRole('banner').boundingBox();
+
+        expect(box!.height).toBeLessThanOrEqual(64);
+      });
+    }
+
+    test('has one main and one footer', async ({ page }) => {
+      await expect(page.getByRole('main')).toHaveCount(1);
+      await expect(page.getByRole('contentinfo')).toHaveCount(1);
+    });
+
+    test('has exactly one h1, inside main', async ({ page }) => {
+      await expect(page.locator('h1')).toHaveCount(1);
+      await expect(page.getByRole('main').locator('h1')).toHaveCount(1);
+    });
+
+    test('has a favicon on its own origin', async ({ page, baseURL }) => {
+      const href = await page.locator('link[rel="icon"]').first().getAttribute('href');
+
+      expect(href).not.toBeNull();
+      expect(new URL(href!, baseURL).origin).toBe(new URL(baseURL!).origin);
+    });
+  });
+}
+
+// Decided in review of PR #2: on a wide screen the reading column sits in
+// the middle of the page, and previous and next sit under it.
+test('centres the reading column on a wide screen', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/how-it-works/');
+  const middle = 1440 / 2;
+
+  for (const box of [
+    await page.locator('main .column').boundingBox(),
+    await page.getByRole('navigation', { name: 'Previous and next' }).boundingBox(),
+  ]) {
+    expect(Math.abs(box!.x + box!.width / 2 - middle)).toBeLessThanOrEqual(2);
+  }
+});

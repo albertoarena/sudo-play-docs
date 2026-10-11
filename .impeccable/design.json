@@ -1,0 +1,598 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T14:39:26+00:00",
+  "title": "Design System: Sudo Play docs",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "bg-dark": {
+        "role": "neutral",
+        "displayName": "Ink Black",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "bg-subtle": {
+        "role": "neutral",
+        "displayName": "Faint Zinc",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "bg-subtle-dark": {
+        "role": "neutral",
+        "displayName": "Faint Zinc (dark)",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "fg": {
+        "role": "neutral",
+        "displayName": "Zinc Ink",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "fg-dark": {
+        "role": "neutral",
+        "displayName": "Zinc Ink (dark)",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "fg-muted": {
+        "role": "neutral",
+        "displayName": "Muted Zinc",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "fg-muted-dark": {
+        "role": "neutral",
+        "displayName": "Muted Zinc (dark)",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "border-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (dark)",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Strong Zinc",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Deep Emerald",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Deep Emerald, hover",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "accent-dark": {
+        "role": "primary",
+        "displayName": "Signal Emerald",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "accent-hover-dark": {
+        "role": "primary",
+        "displayName": "Signal Emerald, hover",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "on-accent": {
+        "role": "neutral",
+        "displayName": "On Accent",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "on-accent-dark": {
+        "role": "neutral",
+        "displayName": "On Accent (dark)",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus Ring",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "focus-dark": {
+        "role": "primary",
+        "displayName": "Focus Ring (dark)",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Warning Amber",
+        "tonalRamp": [
+          "#461901",
+          "#7b3306",
+          "#bb4d00",
+          "#e17100",
+          "#fe9a00",
+          "#ffb900",
+          "#fee685",
+          "#fffbeb"
+        ]
+      },
+      "warn-dark": {
+        "role": "tertiary",
+        "displayName": "Warning Amber (dark)",
+        "tonalRamp": [
+          "#461901",
+          "#7b3306",
+          "#bb4d00",
+          "#e17100",
+          "#fe9a00",
+          "#ffb900",
+          "#fee685",
+          "#fffbeb"
+        ]
+      },
+      "term-bg": {
+        "role": "neutral",
+        "displayName": "Terminal Black",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "term-fg": {
+        "role": "neutral",
+        "displayName": "Terminal Text",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "term-green": {
+        "role": "primary",
+        "displayName": "Terminal Green",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      },
+      "term-dim": {
+        "role": "neutral",
+        "displayName": "Terminal Dim",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "term-edge": {
+        "role": "neutral",
+        "displayName": "Terminal Edge",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "term-dots": {
+        "role": "neutral",
+        "displayName": "Window Dots",
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525c",
+          "#71717b",
+          "#9f9fa9",
+          "#e4e4e7",
+          "#f4f4f5"
+        ]
+      },
+      "term-focus": {
+        "role": "primary",
+        "displayName": "Terminal Focus",
+        "tonalRamp": [
+          "#002c22",
+          "#004f3b",
+          "#006045",
+          "#007a55",
+          "#009966",
+          "#00d492",
+          "#5ee9b5",
+          "#d0fae5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The brand line in the Home panel only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The one h1 per page."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "h2 section headings."
+      },
+      "title-small": {
+        "displayName": "Title small",
+        "purpose": "h3 headings."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "The paragraph under the h1."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text in the 66ch column."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Masthead links and the brand name."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Footer and other secondary text."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Code blocks."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "The file or language label on a code block."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "40rem",
+        "purpose": "Below this the masthead stacks and the nav wraps under the name."
+      },
+      {
+        "name": "narrowest",
+        "value": "22rem",
+        "purpose": "Below this the nav is a three column grid."
+      }
+    ],
+    "notes": [
+      "Tonal ramps are display strips only. The frontmatter tokens are the only colours the site uses.",
+      "No shadows and no motion, by decision: see docs/DIRECTION.md.",
+      "Tokens switch light and dark through prefers-color-scheme on the same CSS custom properties; the -dark keys record the dark values."
+    ]
+  },
+  "components": [
+    {
+      "name": "Masthead and navigation",
+      "kind": "nav",
+      "refersTo": "masthead",
+      "description": "The dark band on every page: the mark, the name, and one row of links with the current page in green over three bars.",
+      "html": "<header class=\"ds-masthead\"><a class=\"ds-brand\" href=\"#\"><svg class=\"ds-mark\" viewBox=\"2 4 40 26\" aria-hidden=\"true\"><path d=\"M4.6 8.4 13.2 16 4.6 23.6\" fill=\"none\" stroke=\"var(--term-dim)\" stroke-width=\"3.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g fill=\"var(--term-green)\"><rect x=\"20\" y=\"18\" width=\"4\" height=\"10\" rx=\"1\"/><rect x=\"28\" y=\"6\" width=\"4\" height=\"22\" rx=\"1\"/><rect x=\"36\" y=\"12\" width=\"4\" height=\"16\" rx=\"1\"/></g></svg><span>Sudo Play</span></a><nav class=\"ds-nav\"><a href=\"#\">How it works</a><a href=\"#\" aria-current=\"page\">Install<span class=\"ds-here\" aria-hidden=\"true\"><i></i><i></i><i></i></span></a><a href=\"#\">Moods</a><a href=\"#\">Tips</a><a href=\"#\">Privacy</a></nav></header>",
+      "css": ".ds-masthead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 2rem; min-height: 3.5rem; padding-inline: 1.5rem; background: var(--term-bg); color: var(--term-dim); font-family: var(--font-sans); } .ds-brand { display: inline-flex; align-items: center; gap: 0.625rem; padding-block: 0.875rem; color: var(--term-fg); font-size: 0.9375rem; font-weight: 650; letter-spacing: -0.01em; text-decoration: none; } .ds-mark { width: 1.75rem; height: auto; } .ds-nav { display: flex; flex-wrap: wrap; gap: 0 1.5rem; } .ds-nav a { position: relative; display: block; padding-block: 1.125rem; color: var(--term-dim); font-size: 0.9375rem; text-decoration: none; } .ds-nav a:hover { color: var(--term-fg); } .ds-nav a[aria-current=\"page\"] { color: var(--term-green); } .ds-masthead a:focus-visible { outline: 2px solid var(--term-focus); outline-offset: 2px; border-radius: 2px; } .ds-here { position: absolute; bottom: 0.4375rem; left: 50%; display: flex; align-items: flex-end; gap: 2px; height: 6px; transform: translateX(-50%); } .ds-here i { width: 3px; border-radius: 1px; background: var(--term-green); } .ds-here i:nth-child(1) { height: 45%; } .ds-here i:nth-child(2) { height: 100%; } .ds-here i:nth-child(3) { height: 73%; }"
+    },
+    {
+      "name": "Terminal panel",
+      "kind": "custom",
+      "refersTo": "terminal-panel",
+      "description": "The brand line on Home: window dots, a dim $ and a green command. Not code, no Copy button.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-dots\" aria-hidden=\"true\"><i></i><i></i><i></i></div><p class=\"ds-line\"><span class=\"ds-word ds-prompt\">$</span> <span class=\"ds-word\">sudo</span> <span class=\"ds-word\">play</span> <span class=\"ds-word\">--genre</span> <span class=\"ds-word\">rock</span> <span class=\"ds-word\">--mood</span> <span class=\"ds-word\">debugging</span></p></div>",
+      "css": ".ds-panel { padding: clamp(1rem, 3vw, 1.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.75rem, 5vw, 3rem); border: 1px solid var(--term-edge); border-radius: 16px; background: var(--term-bg); } .ds-dots { display: flex; gap: 7px; margin-bottom: clamp(1.5rem, 4vw, 2.5rem); } .ds-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--term-dots); } .ds-line { margin: 0; color: var(--term-green); font-family: var(--font-mono); font-size: clamp(1.375rem, 0.9rem + 2.2vw, 2.375rem); font-variant-ligatures: none; font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; } .ds-word { white-space: nowrap; } .ds-prompt { color: var(--term-dim); }"
+    },
+    {
+      "name": "Code block",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Real code to type or paste: a labelled light block in light mode, with a Copy button added by script.",
+      "html": "<figure class=\"ds-code\"><figcaption>catalog/playlists.yaml</figcaption><pre><code>debugging:\n  genre: rock</code></pre><div class=\"ds-code-actions\"><span class=\"ds-copy-status\" role=\"status\"></span><button class=\"ds-copy\" type=\"button\">Copy</button></div></figure>",
+      "css": ".ds-code { position: relative; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-subtle); } .ds-code figcaption { padding: 0.625rem 6.5rem 0.625rem 1.25rem; border-bottom: 1px solid var(--border); color: var(--fg-muted); font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.4; } .ds-code pre { margin: 0; padding: 1rem 1.25rem; overflow-x: auto; color: var(--fg); font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.65; font-variant-ligatures: none; scrollbar-color: var(--border-strong) transparent; scrollbar-width: thin; } .ds-code-actions { position: absolute; top: 0.3125rem; right: 0.5rem; display: flex; align-items: center; gap: 0.5rem; } .ds-copy-status { color: var(--fg-muted); font-size: 0.75rem; }"
+    },
+    {
+      "name": "Copy button",
+      "kind": "button",
+      "refersTo": "button-copy",
+      "description": "The only button: small, outlined in Strong Zinc, inside a code block label row.",
+      "html": "<button class=\"ds-copy\" type=\"button\">Copy</button>",
+      "css": ".ds-copy { min-height: 1.75rem; padding: 0.25rem 0.625rem; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--bg); color: var(--fg); font: 500 0.75rem/1 var(--font-sans); cursor: pointer; } .ds-copy:hover { border-color: var(--fg); } .ds-copy:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }"
+    },
+    {
+      "name": "Inline code and key",
+      "kind": "chip",
+      "refersTo": "inline-code",
+      "description": "Code and keys inside running text.",
+      "html": "<p class=\"ds-prose\">Edit <code class=\"ds-inline-code\">catalog/playlists.yaml</code>, then press <kbd class=\"ds-kbd\">Enter</kbd>.</p>",
+      "css": ".ds-prose { color: var(--fg); font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.6; } .ds-inline-code { padding: 0.1em 0.35em; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-subtle); font-family: var(--font-mono); font-size: 0.875em; font-variant-ligatures: none; } .ds-kbd { display: inline-block; min-width: 1.75em; padding: 0.05em 0.4em; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px; background: var(--bg); font-family: var(--font-mono); font-size: 0.8125em; text-align: center; }"
+    },
+    {
+      "name": "Note",
+      "kind": "card",
+      "refersTo": "note",
+      "description": "Something worth knowing that is not a warning.",
+      "html": "<div class=\"ds-note\" role=\"note\"><p><strong>Note.</strong> The pick is the same all day and changes tomorrow.</p></div>",
+      "css": ".ds-note { margin: 1.75rem 0; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-subtle); color: var(--fg); font-family: var(--font-sans); } .ds-note p { margin: 0; } .ds-note strong { font-weight: 650; }"
+    },
+    {
+      "name": "Link",
+      "kind": "custom",
+      "refersTo": "link",
+      "description": "Links in running text: emerald, a thin underline that thickens on hover.",
+      "html": "<p class=\"ds-prose\">Read about <a class=\"ds-link\" href=\"#\">the moods</a>.</p>",
+      "css": ".ds-prose { color: var(--fg); font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.6; } .ds-link { color: var(--accent); text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; } .ds-link:hover { color: var(--accent-hover); text-decoration-thickness: 2px; } .ds-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }"
+    },
+    {
+      "name": "Previous and next",
+      "kind": "nav",
+      "description": "The neighbours in reading order at the end of every page.",
+      "html": "<nav class=\"ds-prevnext\" aria-label=\"Previous and next\"><a class=\"ds-prev\" href=\"#\"><span class=\"ds-dir\">Previous</span><span class=\"ds-name\">How it works</span></a><a class=\"ds-next\" href=\"#\"><span class=\"ds-dir\">Next</span><span class=\"ds-name\">Moods</span></a></nav>",
+      "css": ".ds-prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-family: var(--font-sans); } .ds-prevnext a { display: flex; flex-direction: column; gap: 0.125rem; padding-top: 1rem; border-top: 1px solid var(--border); text-decoration: none; } .ds-next { grid-column: 2; align-items: flex-end; text-align: right; } .ds-dir { color: var(--fg-muted); font-size: 0.8125rem; } .ds-name { color: var(--fg); font-weight: 650; } .ds-prevnext a:hover { border-top-color: var(--accent); } .ds-prevnext a:hover .ds-name { color: var(--accent); } .ds-prevnext a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The popover, at page size",
+    "overview": "The site is the app's menu bar popover, widened into a document. The app's composition carries over as the frame: a dark terminal band on top, a quiet light body below. The band holds the mark and the navigation on every page. On Home it grows into the full terminal panel with the brand line at display size. Everything under the band is a plain reading column.\n\nThe brand lives in the frame, never in the text. Running text is the system sans in a 66ch column on a plain page. Mono appears in three places only: the panel, code, and small labels. The page is flat and still. There are no shadows, no motion and no syntax colours, and one green that only ever means \"act here\" or \"you are here\".\n\nLight and dark follow `prefers-color-scheme`, with no toggle. The band and the panel are dark in both modes. Code blocks follow the page, so in light mode they are light, and the dark panel stays the one dark object that means identity.",
+    "keyCharacteristics": [
+      "A dark band (56px) in both modes, with the mark, the name and one row of nav",
+      "One emerald accent; zinc neutrals with a faint cool violet cast",
+      "System sans for reading, Geist Mono for the panel, code and labels",
+      "Flat, borders instead of shadows, nothing moves",
+      "Six pages read in order, with previous and next at the end of each"
+    ],
+    "rules": [
+      {
+        "name": "The One Green Rule",
+        "body": "Green means \"act here\" or \"you are here\". It never decorates: no green headings, rules, icons or syntax colours.",
+        "section": "colors"
+      },
+      {
+        "name": "The Amber Means Trouble Rule",
+        "body": "Information uses `fg-muted`, never `warn`.",
+        "section": "colors"
+      },
+      {
+        "name": "The Own Hues Rule",
+        "body": "These tokens are the only colours. Zinc sits at hue 286 and emerald at 163; never mix in another grey or green.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dim Text Rule",
+        "body": "On a dark ground, muted text is `#9f9fa9`, never `#71717b`. Strong Zinc is a border colour there, not a text colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono in Three Places Rule",
+        "body": "Geist Mono sets the panel, code and small labels. Nothing else.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Ligatures Rule",
+        "body": "Mono text sets `font-variant-ligatures: none`, so `=>` and `--` stay as typed.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Page Rule",
+        "body": "Separate with tone and a hairline, never a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Still Page Rule",
+        "body": "Nothing moves, Home included. No transitions, no load animation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the band about 56px on inner pages. Only Home grows it.",
+      "Do mark the current page with `term-green` and the three bars, and nothing else.",
+      "Do set real code in a Code Block with a label, light in light mode.",
+      "Do keep the brand line in the Terminal Panel, wrapping between parts.",
+      "Do keep running text in the system sans, in the 66ch column.",
+      "Do author focus: 2px `focus` outline at 2px offset, `term-focus` inside the band and the panel.",
+      "Do check every new layout at 320px for horizontal scroll."
+    ],
+    "donts": [
+      "Don't set running text in mono or make the page dark. The dark ground belongs to the band and the panel only.",
+      "Don't give the tagline a Copy button or a code block, or present it as something to type.",
+      "Don't use green, or any colour, as decoration or as syntax highlighting.",
+      "Don't use `warn` for information.",
+      "Don't add a shadow, a transition or an animation.",
+      "Don't add a sidebar, a hamburger menu or JavaScript for navigation.",
+      "Don't load a font, icon or script from another host. Fonts are self hosted."
+    ]
+  }
+}

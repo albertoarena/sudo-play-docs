@@ -1,11 +1,12 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Sudo Play</title>
-    <link rel="canonical" href="https://sudoplay.dev/" />
-  </head>
-  <body>
-    <h1>Sudo Play</h1>
-  </body>
-</html>
+---
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import TerminalPanel from '../components/TerminalPanel.astro';
+---
+<Base>
+  <TerminalPanel slot="masthead" />
+  <Placeholder />
+  <h1>Sudo Play</h1>
+  <p class="lead">Placeholder lead. A macOS menu bar app that picks today's Spotify playlist from a genre and a developer mood.</p>
+  <p>Placeholder paragraph. Home will say what the app does in a few lines and point to the pages that follow.</p>
+</Base>

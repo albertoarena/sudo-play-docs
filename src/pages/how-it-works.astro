@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const catalogEntry = `- id: rock-friday-deploy-01
+  title: Placeholder title
+  url: https://open.spotify.com/playlist/XXXXXXXXXXXXXXXXXXXXXX
+  genre: rock
+  moods: [friday-deploy, flow-state]
+  curator: your-github-handle`;
+---
+<Base title="How it works">
+  <Placeholder />
+  <h1>How it works</h1>
+  <p class="lead">Placeholder lead. You pick a genre and a mood, and the app picks one playlist for today. This page is the long mock: it shows every kind of content a page can hold.</p>
+
+  <h2>Placeholder: a section of prose</h2>
+  <p>Placeholder paragraph. Body text sits in a column about sixty six characters wide, so a line is easy to follow back to its start. A link looks like <a href="/moods/">this link to Moods</a>, and inline code looks like <code>catalog/playlists.yaml</code>.</p>
+  <p>Placeholder paragraph. A second paragraph shows the space between paragraphs, which is smaller than the space above a heading.</p>
+
+  <h2>Placeholder: a list</h2>
+  <ul>
+    <li>Placeholder item. Pick a genre.</li>
+    <li>Placeholder item. Pick a mood.</li>
+    <li>Placeholder item. Press Play.</li>
+  </ul>
+
+  <h3>Placeholder: a smaller heading</h3>
+  <ol>
+    <li>Placeholder step one.</li>
+    <li>Placeholder step two, which is long enough to wrap onto a second line at a narrow width.</li>
+  </ol>
+
+  <h2>Placeholder: a table</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Key</th><th scope="col">Placeholder action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Enter</kbd></td><td>Placeholder. Play.</td></tr>
+        <tr><td><kbd>N</kbd></td><td>Placeholder. Next.</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Placeholder. Surprise me.</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Placeholder. Close the window.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note" role="note">
+    <p><strong>Note.</strong> Placeholder note. A note holds something worth knowing that is not a warning.</p>
+  </div>
+
+  <h2>Placeholder: a code block</h2>
+  <p>Placeholder paragraph. Real code, such as a catalog entry, sits in a code block.</p>
+  <CodeBlock label="catalog/playlists.yaml" code={catalogEntry} />
+</Base>
