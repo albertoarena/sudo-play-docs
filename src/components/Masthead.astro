@@ -1,0 +1,30 @@
+---
+import Mark from './Mark.astro';
+import { home, navPages, normalise } from '../data/nav';
+
+const current = normalise(Astro.url.pathname);
+const isHome = current === home.href;
+---
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href={home.href} aria-current={isHome ? 'page' : undefined}>
+      <Mark class="brand-mark" />
+      <span>Sudo Play</span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        {navPages.map((page) => (
+          <li>
+            <a href={page.href} aria-current={page.href === current ? 'page' : undefined}>
+              {page.label}
+              {page.href === current && (
+                <span class="here" aria-hidden="true"><i></i><i></i><i></i></span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+  <slot />
+</header>

@@ -1,0 +1,33 @@
+---
+import Masthead from '../components/Masthead.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  // The page's own name. Home passes nothing and is titled "Sudo Play".
+  title?: string;
+}
+
+const { title } = Astro.props;
+const fullTitle = title ? `${title} · Sudo Play` : 'Sudo Play';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <Masthead><slot name="masthead" /></Masthead>
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
