@@ -36,3 +36,30 @@ test('the nav wraps into compact rows at 320px', async ({ page }) => {
   // the full band padding of a wide screen.
   expect(nav!.height).toBeLessThanOrEqual(80);
 });
+
+test('no nav row holds a single link at 320px', async ({ page }) => {
+  await page.goto('/install/');
+  const tops = await page
+    .getByRole('navigation', { name: 'Site' })
+    .getByRole('link')
+    .evaluateAll((links) => links.map((link) => Math.round(link.getBoundingClientRect().top)));
+  const rows = new Map<number, number>();
+  for (const top of tops) rows.set(top, (rows.get(top) ?? 0) + 1);
+
+  expect([...rows.values()].every((count) => count > 1), JSON.stringify([...rows])).toBe(true);
+});
+
+test('a code block that scrolls shows an edge fade', async ({ page }) => {
+  await page.goto('/how-it-works/');
+  const pre = page.locator('figure.code-block pre').first();
+  const scrolls = await pre.evaluate((el) => el.scrollWidth > el.clientWidth);
+  const style = await pre.evaluate((el) => {
+    const s = getComputedStyle(el);
+    return { image: s.backgroundImage, attachment: s.backgroundAttachment };
+  });
+
+  // macOS hides scrollbars until you scroll, so the fade is the only sign.
+  expect(scrolls).toBe(true);
+  expect(style.image).toContain('linear-gradient');
+  expect(style.attachment).toContain('local');
+});
