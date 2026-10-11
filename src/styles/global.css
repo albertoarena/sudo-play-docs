@@ -108,7 +108,7 @@ p {
 }
 
 .lead {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   font-size: 1.1875rem;
   line-height: 1.55;
   text-wrap: pretty;
@@ -175,7 +175,7 @@ kbd {
 
 pre {
   margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
+  padding: 1rem 0 1rem 1.25rem;
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -184,6 +184,16 @@ pre {
   font-size: 0.875rem;
   line-height: 1.65;
   tab-size: 2;
+  scrollbar-color: var(--border-strong) transparent;
+  scrollbar-width: thin;
+}
+
+/* Keep the end padding inside the scroll area, so a long line that scrolls
+   still ends with breathing room instead of at the block's edge. */
+pre > code {
+  display: inline-block;
+  min-width: 100%;
+  padding-right: 1.25rem;
 }
 
 .table-wrap {
