@@ -16,6 +16,17 @@ for (const path of builtPages()) {
       await expect(banner.getByRole('navigation', { name: 'Site' })).toHaveCount(1);
     });
 
+    // DIRECTION.md: the band stays about 56px on inner pages, so it reads
+    // as chrome. Only Home grows it into the terminal panel.
+    if (path !== '/') {
+      test('keeps the masthead band short', async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 800 });
+        const box = await page.getByRole('banner').boundingBox();
+
+        expect(box!.height).toBeLessThanOrEqual(64);
+      });
+    }
+
     test('has one main and one footer', async ({ page }) => {
       await expect(page.getByRole('main')).toHaveCount(1);
       await expect(page.getByRole('contentinfo')).toHaveCount(1);
