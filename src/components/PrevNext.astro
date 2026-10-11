@@ -1,0 +1,21 @@
+---
+import { neighbours } from '../data/nav';
+
+const { previous, next } = neighbours(Astro.url.pathname);
+---
+{(previous || next) && (
+  <nav class="prev-next" aria-label="Previous and next">
+    {previous && (
+      <a class="prev" href={previous.href} rel="prev">
+        <span class="dir">Previous</span>
+        <span class="name">{previous.label}</span>
+      </a>
+    )}
+    {next && (
+      <a class="next" href={next.href} rel="next">
+        <span class="dir">Next</span>
+        <span class="name">{next.label}</span>
+      </a>
+    )}
+  </nav>
+)}
