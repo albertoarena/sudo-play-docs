@@ -61,6 +61,10 @@ main {
   transform: translateY(-200%);
 }
 
+.skip-link:hover {
+  color: var(--on-accent);
+}
+
 .skip-link:focus-visible {
   transform: none;
   outline-color: var(--term-focus);
