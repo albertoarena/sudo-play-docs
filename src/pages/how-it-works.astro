@@ -1,6 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import Placeholder from '../components/Placeholder.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const catalogEntry = `- id: rock-friday-deploy-01
+  title: Placeholder title
+  url: https://open.spotify.com/playlist/XXXXXXXXXXXXXXXXXXXXXX
+  genre: rock
+  moods: [friday-deploy, flow-state]
+  curator: your-github-handle`;
 ---
 <Base title="How it works">
   <Placeholder />
@@ -43,10 +51,5 @@ import Placeholder from '../components/Placeholder.astro';
 
   <h2>Placeholder: a code block</h2>
   <p>Placeholder paragraph. Real code, such as a catalog entry, sits in a code block.</p>
-  <pre><code>- id: rock-friday-deploy-01
-  title: Placeholder title
-  url: https://open.spotify.com/playlist/XXXXXXXXXXXXXXXXXXXXXX
-  genre: rock
-  moods: [friday-deploy, flow-state]
-  curator: your-github-handle</code></pre>
+  <CodeBlock label="catalog/playlists.yaml" code={catalogEntry} />
 </Base>
