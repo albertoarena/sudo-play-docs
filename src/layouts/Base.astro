@@ -29,7 +29,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
-    <Masthead><slot name="masthead" /></Masthead>
+    {Astro.slots.has('masthead') ? (
+      <Masthead><slot name="masthead" /></Masthead>
+    ) : (
+      <Masthead />
+    )}
     <main id="content">
       <div class="column">
         <slot />
