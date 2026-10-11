@@ -17,3 +17,48 @@ const links = [
     <p>Sudo Play is not affiliated with Spotify.</p>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    color: var(--fg-muted);
+    font-size: 0.875rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    max-width: var(--frame);
+    margin-inline: auto;
+    padding: 2rem var(--gutter) calc(2rem + var(--banner-space));
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: var(--fg);
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

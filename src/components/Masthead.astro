@@ -28,3 +28,131 @@ const isHome = current === home.href;
   </div>
   <slot />
 </header>
+
+<style>
+  .masthead {
+    background: var(--term-bg);
+    color: var(--term-dim);
+    border-bottom: 1px solid transparent;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .masthead {
+      border-bottom-color: var(--term-edge);
+    }
+  }
+
+  .masthead :focus-visible {
+    outline-color: var(--term-focus);
+  }
+
+  .masthead-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 2rem;
+    max-width: var(--frame);
+    min-height: 3.5rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding-block: 0.875rem;
+    color: var(--term-fg);
+    font-size: 0.9375rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .brand:hover {
+    color: var(--term-fg);
+  }
+
+  .brand :global(.brand-mark) {
+    width: 1.75rem;
+    height: auto;
+    flex: none;
+  }
+
+  .site-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-nav li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav a {
+    position: relative;
+    display: block;
+    padding-block: 1.125rem;
+    color: var(--term-dim);
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .site-nav a:hover {
+    color: var(--term-fg);
+  }
+
+  .site-nav a[aria-current='page'] {
+    color: var(--term-green);
+  }
+
+  /* You are here: the mark's three equaliser bars, small, under the link. */
+  .here {
+    position: absolute;
+    bottom: 0.4375rem;
+    left: 50%;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 6px;
+    transform: translateX(-50%);
+  }
+
+  .here i {
+    width: 3px;
+    border-radius: 1px;
+    background: var(--term-green);
+  }
+
+  .here i:nth-child(1) { height: 45%; }
+  .here i:nth-child(2) { height: 100%; }
+  .here i:nth-child(3) { height: 73%; }
+
+  @media (max-width: 40rem) {
+    .masthead-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .brand {
+      padding-bottom: 0.25rem;
+    }
+
+    .site-nav ul {
+      column-gap: 1.25rem;
+    }
+
+    .site-nav a {
+      padding-block: 0.5rem 0.875rem;
+    }
+
+    .here {
+      bottom: 0.25rem;
+    }
+  }
+</style>
