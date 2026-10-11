@@ -27,3 +27,12 @@ test('the panel command wraps only between words at 320px', async ({ page }) => 
     expect(lines, await word.textContent() ?? '').toBe(1);
   }
 });
+
+test('the nav wraps into compact rows at 320px', async ({ page }) => {
+  await page.goto('/install/');
+  const nav = await page.getByRole('navigation', { name: 'Site' }).boundingBox();
+
+  // Five links fit in two rows; each row stays a comfortable target without
+  // the full band padding of a wide screen.
+  expect(nav!.height).toBeLessThanOrEqual(80);
+});
