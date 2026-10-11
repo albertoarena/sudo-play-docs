@@ -10,7 +10,7 @@ and the code is the bug, unless a later entry here changes the decision.
 
 Approved 2026-10-11.
 
-The colours are fixed by `.docs/COLOURS.md`: zinc, one emerald, and a dark
+The colours are fixed (see Colours below): zinc, one emerald, and a dark
 terminal panel. So the question was never which world, but how the site carries
 it. The answer is the app's own composition: a dark terminal header over a quiet
 body. The site is the menu bar popover, widened into a document.
@@ -73,7 +73,8 @@ modes.
 `--term-focus: #00d492`, for the focus ring inside the dark band and the panel.
 The light mode `--focus`, `#007a55`, measures about 3.6 against `#09090b`. That
 passes the 3 to 1 rule for a focus indicator, but only just. Every other token
-stays as `.docs/COLOURS.md` writes it.
+is as Alberto's scheme wrote it. `--term-edge` and `--term-dots` only name
+values the app's CSS and icon already use.
 
 ### The footer
 
@@ -92,6 +93,69 @@ swapped in.
 
 Mock pages in phase 2 use placeholder text only, clearly marked as placeholder,
 and none of it ships as real copy. Real copy arrives in phase 3.
+
+## Colours
+
+Approved 2026-10-11. Taken from the scheme Alberto derived from the app and
+contrast checked on 2026-10-10, with one addition, `--term-focus`, explained
+below. These are the only colours the site uses. Zinc carries a faint cool
+violet (hue 286) and emerald sits at 163: never mix in Tailwind's plain grey or
+green, which have different hues. Ratios are WCAG 2, measured: AA needs 4.5 for
+text and 3 for UI edges and focus.
+
+### Light
+
+| Token | Hex | Use | Contrast |
+|---|---|---|---|
+| `--bg` | `#ffffff` | Page | |
+| `--bg-subtle` | `#fafafa` | Code blocks, table stripes | |
+| `--fg` | `#18181b` | Body text | 17.7 on bg |
+| `--fg-muted` | `#52525c` | Secondary text, captions | 7.7 on bg |
+| `--border` | `#e4e4e7` | Dividers, code block edges (decorative only) | 1.3, not a UI edge |
+| `--border-strong` | `#71717b` | Edges of inputs and outline buttons | 4.8 on bg |
+| `--accent` | `#007a55` | Links, selected state | 5.4 on bg |
+| `--accent-hover` | `#006045` | Hover and pressed | 7.6 with white |
+| `--on-accent` | `#ffffff` | Text on accent fill | 5.4 on accent |
+| `--warn` | `#bb4d00` | Real warnings and errors only | 5.0 on bg |
+| `--focus` | `#007a55` | 2px outline, 2px offset | 5.4 on bg |
+
+### Dark
+
+| Token | Hex | Use | Contrast |
+|---|---|---|---|
+| `--bg` | `#09090b` | Page | |
+| `--bg-subtle` | `#18181b` | Code blocks, table stripes | |
+| `--fg` | `#f4f4f5` | Body text | 18.1 on bg |
+| `--fg-muted` | `#9f9fa9` | Secondary text | 7.6 on bg, 6.8 on subtle |
+| `--border` | `#27272a` | Dividers (decorative only) | |
+| `--border-strong` | `#71717b` | Edges of inputs and outline buttons | 4.1 on bg |
+| `--accent` | `#00d492` | Links, selected state | 10.3 on bg |
+| `--accent-hover` | `#5ee9b5` | Hover | 13.1 with dark text |
+| `--on-accent` | `#09090b` | Text on accent fill | 10.3 on accent |
+| `--warn` | `#ffb900` | Warnings and errors | 11.6 on bg |
+| `--focus` | `#00d492` | 2px outline, 2px offset | 10.3 on bg |
+
+### The terminal, the same in both modes
+
+The masthead band and the Home panel.
+
+| Token | Hex | Use | Contrast |
+|---|---|---|---|
+| `--term-bg` | `#09090b` | Band and panel | 19.9 against a white page |
+| `--term-fg` | `#f4f4f5` | Plain text, the site name | 18.1 |
+| `--term-green` | `#00d492` | The command, the current page, the bars | 10.3 |
+| `--term-dim` | `#9f9fa9` | The `$`, nav links, the `>` of the mark | 7.6 |
+| `--term-edge` | `#27272a` | Band and panel edge on the dark page | decorative |
+| `--term-dots` | `#3f3f46` | The three window dots, as in the app icon | decorative |
+| `--term-focus` | `#00d492` | Focus ring inside the band and the panel | 10.3 |
+
+### Rules
+
+- **One accent.** Green means "act here" or "you are here". Never decoration
+- **Amber is for problems only.** Information uses `--fg-muted`, never `--warn`
+- **Never `#71717b` as text on the dark page.** It measures 4.1. Use `#9f9fa9`.
+  It is fine as a border
+- **Focus is authored**, never the browser default
 
 ## Fonts: the system sans and Geist Mono
 

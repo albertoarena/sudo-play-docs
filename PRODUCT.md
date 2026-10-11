@@ -56,7 +56,7 @@ belong here.
 ## Brand Commitments
 
 - The app's look carries over: "a terminal on a quiet page". The colour scheme
-  is shared with the app and recorded in `.docs/COLOURS.md`
+  is shared with the app and recorded in `docs/DIRECTION.md`
 - **The tagline is not a command.** `$ sudo play --mood friday-deploy` and its
   variants are the brand line, shown in the dark terminal panel. No page may
   present it as something to type. Real code (the YAML catalog entry, any shell
