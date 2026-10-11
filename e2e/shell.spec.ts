@@ -45,3 +45,18 @@ for (const path of builtPages()) {
     });
   });
 }
+
+// Decided in review of PR #2: on a wide screen the reading column sits in
+// the middle of the page, and previous and next sit under it.
+test('centres the reading column on a wide screen', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/how-it-works/');
+  const middle = 1440 / 2;
+
+  for (const box of [
+    await page.locator('main .column').boundingBox(),
+    await page.getByRole('navigation', { name: 'Previous and next' }).boundingBox(),
+  ]) {
+    expect(Math.abs(box!.x + box!.width / 2 - middle)).toBeLessThanOrEqual(2);
+  }
+});
