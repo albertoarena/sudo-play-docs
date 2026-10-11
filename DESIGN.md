@@ -242,8 +242,8 @@ Mono was chosen from a specimen of four pairs and is decided.
 
 ### Hierarchy
 - **Display** (Geist Mono 500, fluid 22 to 38px, 1.3): the brand line in the
-  Home panel only. Each word is unbreakable, so the line wraps between words,
-  never inside a flag.
+  Home panel only. It wraps in the app's parts, `sudo play` then each flag
+  with its value, and a continued line is indented two columns.
 - **Headline** (700, fluid 32 to 44px, 1.1, tight tracking): the one `h1` per
   page.
 - **Title** (650, 24px, 1.25): `h2`, with 3rem above it.
@@ -381,7 +381,7 @@ Sudo Play is not affiliated with Spotify.
 - **Do** mark the current page with `term-green` and the three bars, and
   nothing else.
 - **Do** set real code in a Code Block with a label, light in light mode.
-- **Do** keep the brand line in the Terminal Panel, wrapping between words.
+- **Do** keep the brand line in the Terminal Panel, wrapping between parts.
 - **Do** keep running text in the system sans, in the 66ch column.
 - **Do** author focus: 2px `focus` outline at 2px offset, `term-focus` inside
   the band and the panel.

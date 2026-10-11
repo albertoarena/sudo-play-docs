@@ -580,7 +580,7 @@
       "Do keep the band about 56px on inner pages. Only Home grows it.",
       "Do mark the current page with `term-green` and the three bars, and nothing else.",
       "Do set real code in a Code Block with a label, light in light mode.",
-      "Do keep the brand line in the Terminal Panel, wrapping between words.",
+      "Do keep the brand line in the Terminal Panel, wrapping between parts.",
       "Do keep running text in the system sans, in the 66ch column.",
       "Do author focus: 2px `focus` outline at 2px offset, `term-focus` inside the band and the panel.",
       "Do check every new layout at 320px for horizontal scroll."

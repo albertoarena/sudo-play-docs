@@ -17,14 +17,14 @@ for (const colorScheme of ['light', 'dark'] as const) {
   }
 }
 
-test('the panel command wraps only between words at 320px', async ({ page }) => {
+test('each part of the panel command stays on one line at 320px', async ({ page }) => {
   await page.goto('/');
-  const words = page.getByTestId('terminal-panel').locator('.word');
+  const parts = page.getByTestId('terminal-panel').locator('.part');
 
-  expect(await words.count()).toBeGreaterThan(0);
-  for (const word of await words.all()) {
-    const lines = await word.evaluate((el) => el.getClientRects().length);
-    expect(lines, await word.textContent() ?? '').toBe(1);
+  expect(await parts.count()).toBeGreaterThan(0);
+  for (const part of await parts.all()) {
+    const lines = await part.evaluate((el) => el.getClientRects().length);
+    expect(lines, await part.textContent() ?? '').toBe(1);
   }
 });
 

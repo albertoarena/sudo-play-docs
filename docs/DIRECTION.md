@@ -179,8 +179,12 @@ arrow, and it looks least like the app), Commit Mono (close to SF Mono, but
 fixed weights at 48 KB each), Atkinson Hyperlegible Next and Mono (built for
 legibility, and the least like the app).
 
-One rule for the build: the command in the panel never breaks inside a flag. It
-wraps between words, never in the middle of `--mood`.
+One rule for the build: the command in the panel wraps like the app's. Its
+parts never split: `sudo play`, then each flag with its value, such as
+`--mood debugging`. A continued line is indented two columns, as in the app.
+Changed 2026-10-11 in review: the first build wrapped word by word, which let a
+flag end a line. The app also ends a broken line with a dim backslash; the
+site leaves it out, because knowing where a line broke takes a script.
 
 ## Motion: none
 

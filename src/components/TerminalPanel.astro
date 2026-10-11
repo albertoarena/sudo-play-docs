@@ -1,20 +1,23 @@
 ---
 // The brand line, as the app shows it: a dim $ and a green command. It is the
 // tagline, not a command, so it is never set as code and has no copy button.
-// Each word is unbreakable, so the line wraps between words, never inside
-// a flag.
+// It wraps like the app's commandParts: the command, then each flag with its
+// value, and none of those parts ever splits. A continued line is indented
+// two columns, as in the app. The app also ends a broken line with a dim
+// backslash; that needs to know where the line broke, which takes a script,
+// so the site leaves it out.
 interface Props {
   genre?: string;
   mood?: string;
 }
 
 const { genre = 'rock', mood = 'debugging' } = Astro.props;
-const words = ['sudo', 'play', '--genre', genre, '--mood', mood];
+const parts = ['sudo play', `--genre ${genre}`, `--mood ${mood}`];
 ---
 <div class="terminal-panel" data-testid="terminal-panel">
   <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
   <p class="line">
-    <span class="word prompt">$</span>{words.map((word) => [' ', <span class="word">{word}</span>])}
+    <span class="prompt">$</span>{parts.map((part) => [' ', <span class="part">{part}</span>])}
   </p>
 </div>
 
@@ -50,7 +53,12 @@ const words = ['sudo', 'play', '--genre', genre, '--mood', mood];
     letter-spacing: -0.01em;
   }
 
-  .word {
+  .line {
+    padding-left: 2ch;
+    text-indent: -2ch;
+  }
+
+  .part {
     white-space: nowrap;
   }
 
