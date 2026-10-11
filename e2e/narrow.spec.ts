@@ -63,3 +63,33 @@ test('a code block that scrolls shows an edge fade', async ({ page }) => {
   expect(style.image).toContain('linear-gradient');
   expect(style.attachment).toContain('local');
 });
+
+// The panel wraps the way the app does: a flag never ends a line, because
+// "--genre rock" and "--mood debugging" are parts that never split.
+for (const width of [320, 375, 768]) {
+  test(`the panel never ends a line on a flag at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+
+    const lines = await page.getByTestId('terminal-panel').locator('.line').evaluate((el) => {
+      const rows = new Map<number, string>();
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const range = document.createRange();
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        for (let i = 0; i < node.textContent!.length; i++) {
+          range.setStart(node, i);
+          range.setEnd(node, i + 1);
+          const rect = range.getClientRects()[0];
+          if (!rect) continue;
+          const top = Math.round(rect.top);
+          rows.set(top, (rows.get(top) ?? '') + node.textContent![i]);
+        }
+      }
+      return [...rows.values()].map((row) => row.trim());
+    });
+
+    for (const line of lines) {
+      expect(line, JSON.stringify(lines)).not.toMatch(/--(genre|mood)$/);
+    }
+  });
+}
