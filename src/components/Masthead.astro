@@ -165,4 +165,13 @@ const isHome = current === home.href;
     }
 
   }
+
+  /* The narrowest phones: three links over two, never one stranded. */
+  @media (max-width: 22rem) {
+    .site-nav ul {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      justify-content: start;
+    }
+  }
 </style>

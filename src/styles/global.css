@@ -7,6 +7,7 @@
 }
 
 html {
+  --code-shade: color-mix(in srgb, var(--fg) 22%, transparent);
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
@@ -179,7 +180,19 @@ pre {
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--bg-subtle);
+  /* Scroll shadows: a soft edge shade shows only where more code is
+     hidden. The two covers scroll with the content and hide the shade at
+     each end. macOS hides scrollbars, so this is the visible hint. */
+  background-color: var(--bg-subtle);
+  background-image:
+    linear-gradient(to right, var(--bg-subtle) 40%, transparent),
+    linear-gradient(to left, var(--bg-subtle) 40%, transparent),
+    linear-gradient(to right, var(--code-shade), transparent),
+    linear-gradient(to left, var(--code-shade), transparent);
+  background-position: left, right, left, right;
+  background-size: 2.5rem 100%, 2.5rem 100%, 1.5rem 100%, 1.5rem 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
   color: var(--fg);
   font-size: 0.875rem;
   line-height: 1.65;
