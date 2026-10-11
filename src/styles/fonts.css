@@ -1,0 +1,11 @@
+/*
+  Geist Mono, self hosted: the panel, code and small labels. Body text uses
+  the system sans. The file and its OFL licence are in public/fonts/geist-mono.
+*/
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/geist-mono/geist-mono-latin-wght-normal.woff2') format('woff2');
+}
