@@ -1,0 +1,60 @@
+---
+// The brand line, as the app shows it: a dim $ and a green command. It is the
+// tagline, not a command, so it is never set as code and has no copy button.
+// Each word is unbreakable, so the line wraps between words, never inside
+// a flag.
+interface Props {
+  genre?: string;
+  mood?: string;
+}
+
+const { genre = 'rock', mood = 'debugging' } = Astro.props;
+const words = ['sudo', 'play', '--genre', genre, '--mood', mood];
+---
+<div class="terminal-panel" data-testid="terminal-panel">
+  <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="line">
+    <span class="word prompt">$</span>{words.map((word) => [' ', <span class="word">{word}</span>])}
+  </p>
+</div>
+
+<style>
+  .terminal-panel {
+    padding: clamp(1rem, 3vw, 1.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.75rem, 5vw, 3rem);
+    border: 1px solid var(--term-edge);
+    border-radius: 16px;
+    background: var(--term-bg);
+  }
+
+  .dots {
+    display: flex;
+    gap: 7px;
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .dots i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--term-dots);
+  }
+
+  .line {
+    margin: 0;
+    color: var(--term-green);
+    font-family: var(--font-mono);
+    font-size: clamp(1.375rem, 0.9rem + 2.6vw, 3rem);
+    font-variant-ligatures: none;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .word {
+    white-space: nowrap;
+  }
+
+  .prompt {
+    color: var(--term-dim);
+  }
+</style>
