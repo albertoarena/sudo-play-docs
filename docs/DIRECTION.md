@@ -63,6 +63,11 @@ Home, How it works, Install, Moods, Tips, Privacy.
 
 A page gets its own table of contents only if phase 3 makes it long.
 
+The reading column, and previous and next under it, sit in the middle of the
+page. Decided 2026-10-11 in review: the first build aligned the column with the
+mark, which left the right side of a wide screen empty. The band keeps the full
+frame, so on a wide screen the mark sits left of the column's edge.
+
 ### Light and dark
 
 Both follow `prefers-color-scheme`. There is no toggle. The band is dark in both

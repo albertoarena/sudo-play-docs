@@ -35,6 +35,7 @@ main {
 
 .column {
   max-width: var(--measure);
+  margin-inline: auto;
 }
 
 ::selection {

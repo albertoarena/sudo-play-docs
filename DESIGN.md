@@ -271,13 +271,13 @@ labels. Nothing else.
 
 One centred frame (72rem) with a fluid gutter (16 to 32px). Inside it, the
 masthead, the main area and the footer share the same edges. Page content sits
-in a single column capped at 66ch, left aligned in the frame. There is no
+in a single column capped at 66ch, centred in the frame. There is no
 sidebar and no table of contents.
 
 Main has fluid top and bottom padding (about 40 to 72px above, 48 to 80px
 below). Vertical rhythm: 1.125rem between paragraphs, 1.5rem around code
 blocks and tables, 3rem above an `h2`, 2.25rem above an `h3`. Previous and next
-sit 4rem below the column, in two equal cells.
+sit 4rem below the column, centred with it, in two equal cells.
 
 The masthead is one row, at least 56px: brand on the left, nav on the right.
 Below 40rem it stacks, with the nav wrapping under the name in compact rows.
