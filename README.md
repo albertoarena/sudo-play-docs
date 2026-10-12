@@ -8,9 +8,10 @@ Lives at **https://sudoplay.dev**.
 
 ## Status
 
-Phases 1 to 4 of `docs/PLAN.md` are done: tooling and tests, the design, the
-copy for all six pages, and SEO basics. Phase 5, GA4 and the consent gate, is
-next.
+Phases 1 to 5 of `docs/PLAN.md` are done: tooling and tests, the design, the
+copy for all six pages, SEO basics, and GA4 behind the consent gate. Phase 6,
+the deploy, is next. Analytics are on only in a build with
+`PUBLIC_GA_MEASUREMENT_ID` set, and the real ID is still to come.
 `placeholder/index.html` is a single static page, with no build step and no
 third party request, and it is what the domain serves until phase 6 deploys
 the Astro build over it.
@@ -31,15 +32,16 @@ npm run check                     # build once, then every test
 
 | Script | What it does |
 | --- | --- |
-| `npm run build` | `astro check`, then `astro build` into `dist/` |
+| `npm run build` | `astro check`, then `astro build` into `dist/`. Set `PUBLIC_GA_MEASUREMENT_ID` for a build with analytics |
+| `npm run build:consent` | A second build into `dist-consent/`, with the test measurement ID `G-TESTING000`, for the consent tests |
 | `npm test` | Vitest checks on `dist/`: titles and canonicals, the design tokens and fonts, the copy on each page, no placeholder text, and the SEO files and tags |
-| `npm run test:e2e` | Playwright against the preview server: the shell, navigation, focus, the 320px width, axe in light and dark, and **no built page makes a third party request before consent** |
-| `npm run check` | All three, in that order. CI runs this |
+| `npm run test:e2e` | Playwright against the preview server: the shell, navigation, focus, the 320px width, axe in light and dark, and **no built page makes a third party request before consent**. A second project serves `dist-consent/` and tests the banner: accept, decline and withdraw |
+| `npm run check` | Both builds, then both suites. CI runs this |
 | `npm run og:image` | Draws `public/og.png`, the link preview image, with Playwright. On macOS only, by hand, when the design or the tagline changes. Commit the PNG |
 | `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog in `../sudo-play` (or a path given as an argument). By hand, at each release |
 
-`npm test` and `npm run test:e2e` read `dist/` and do not build it, so run
-`npm run build` first or use `npm run check`. Both pick up new pages from
+`npm test` and `npm run test:e2e` read `dist/` and `dist-consent/` and do not
+build them, so run both builds first or use `npm run check`. Both pick up new pages from
 `dist/` without editing a test.
 
 ## Layout

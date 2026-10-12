@@ -275,7 +275,14 @@ Below 22rem the five links sit in a three column grid, so a row never strands
 one link. There is never a menu button. Home's band adds a hero area under the
 row for the panel.
 
-The footer leaves bottom room for a consent banner through `--banner-space`.
+The consent banner is fixed to the bottom edge, on `--bg` with a
+`--border-strong` hairline on top: the title and one sentence on the left,
+Decline and Accept analytics on the right. The two buttons share one class and
+two equal grid columns, so refusing is never smaller than agreeing. Accept is
+filled with `--accent`, Decline is outlined. While the banner shows, it sets
+`--banner-space` to its height, and the footer keeps that much room at the
+bottom, so nothing at the end of a page is hidden under it. It only exists
+when a measurement ID is set.
 Everything works at 320px with no horizontal page scroll; wide code and tables
 scroll inside their own box.
 

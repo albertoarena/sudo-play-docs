@@ -23,7 +23,9 @@ commit per green cycle.
      `PRIVACY.md` and never copies them
 4. **SEO basics:** `robots.txt`, sitemap, 404, Open Graph, `og:image`
 5. **GA4 and the consent gate**, ported with its tests from
-   `laravel-truss-docs`
+   `laravel-truss-docs`. Built on 2026-10-12. The measurement ID is read from
+   `PUBLIC_GA_MEASUREMENT_ID` at build time, and unset means no banner and no
+   script. The tests build a second copy with a test ID, `dist-consent/`
 6. **Deploy** over the placeholder on Netsons, verified live with `curl`, the
    way `trussphp.com` deploys (`albertoarena/laravel-truss-docs`, see its
    `DEPLOYMENT.md`). Decided 2026-10-12:
@@ -37,12 +39,16 @@ commit per green cycle.
      404 status for an unknown address (`ErrorDocument 404 /404.html`). The
      preview server does this already, and an e2e test checks it there, but
      only `curl` on the live site can check Apache
+   - The deploy build sets `PUBLIC_GA_MEASUREMENT_ID` from a repository
+     variable, not a secret: the ID is public. Without it the live site has no
+     analytics, which is safe but measures nothing
    - The server pulls without credentials, which needs the repository public.
      The site goes live when Sudo Play goes public, so the two arrive together
 
 ## Open
 
-- **The GA4 measurement ID.** Blocks phase 5
+- **The GA4 measurement ID.** Phase 5 is built and waits only on it. It goes
+  in a repository variable for the phase 6 deploy build
 - ~~Who writes the tips.~~ **Answered on 2026-10-12:** Claude drafts them
   from the app's README, `PRIVACY.md` and code, and Alberto approves them.
   If a release has nothing to add, Tips can wait

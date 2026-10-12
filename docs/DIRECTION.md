@@ -90,8 +90,8 @@ values the app's CSS and icon already use.
 
 The links to the app on GitHub and to its `README.md`, `CONTRIBUTING.md` and
 `PRIVACY.md`, and a line saying Sudo Play is not affiliated with Spotify. The
-footer leaves room for the small consent banner that phase 5 adds. Phase 2 does
-not build the banner.
+footer leaves room for the small consent banner, through `--banner-space`. The
+banner came in phase 5, and `DESIGN.md` describes it as built.
 
 ### The alternative not taken
 
@@ -214,9 +214,12 @@ declined.
 
 Decided 2026-10-11.
 
-- **No script.** The Copy button was the site's one script, and it went with
-  the code block on 2026-10-12. The consent banner in phase 5 is the next
-  script, and the same rules hold: our own, inline, no request
+- **One script, the consent banner.** The Copy button was the site's first
+  script, and it went with the code block on 2026-10-12. The banner script
+  from phase 5 follows the same rules: our own, inline, no request. It also
+  wires Analytics settings in the footer, because one script with no shared
+  chunk is what Astro inlines. A build without a measurement ID has no script
+  at all
 - **No syntax colours.** Astro's Shiki highlighting is off. All code is set
   in `--fg`. Green never decorates. Changed 2026-10-12: keys and comments were
   to be in `--fg-muted`, but with highlighting off nothing marks a key or a
