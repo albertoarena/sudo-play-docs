@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import TerminalPanel from '../components/TerminalPanel.astro';
+import { releaseNote } from '../data/release';
 ---
 <Base>
   <TerminalPanel slot="masthead" />
@@ -16,7 +17,7 @@ import TerminalPanel from '../components/TerminalPanel.astro';
   <h2>Where to start</h2>
   <ul>
     <li><a href="/how-it-works/">How it works</a>: genres, moods and the daily pick.</li>
-    <li><a href="/install/">Install</a>: how to get the app onto your Mac. There is no release yet.</li>
+    <li><a href="/install/">Install</a>: how to get the app onto your Mac. {releaseNote()}</li>
     <li><a href="/moods/">Moods</a>: what each mood is for.</li>
     <li><a href="/tips/">Tips</a>: small ways to get more from the app.</li>
     <li><a href="/privacy/">Privacy</a>: what this website loads.</li>
