@@ -5,6 +5,8 @@ import '../styles/global.css';
 import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
 import PrevNext from '../components/PrevNext.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import { gaMeasurementId } from '../data/analytics';
 
 // A page search engines index has a description, which also goes to link
 // previews. Only the 404 is noindex: no canonical, no description, no preview.
@@ -69,5 +71,6 @@ const image = new URL('/og.png', Astro.site);
       <PrevNext />
     </main>
     <Footer />
+    {gaMeasurementId && <ConsentBanner />}
   </body>
 </html>

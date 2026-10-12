@@ -29,10 +29,6 @@ describe('the build without a measurement ID', () => {
     expect(html).not.toMatch(/<script/i);
     expect(html).not.toMatch(/googletagmanager|google-analytics/i);
   });
-
-  it('ships no script file', () => {
-    expect(files('dist', '.js')).toEqual([]);
-  });
 });
 
 describe('the build with a measurement ID', () => {

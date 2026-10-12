@@ -1,0 +1,45 @@
+---
+// The footer control that withdraws or changes the analytics choice. Consent
+// that cannot be taken back is not consent, and Privacy says this exists.
+// Footer renders it only when a measurement ID is set, like the banner.
+---
+<button type="button" class="consent-settings" data-consent-reset>Analytics settings</button>
+
+<script>
+  import { clearConsent } from '../scripts/consent';
+
+  for (const button of document.querySelectorAll('[data-consent-reset]')) {
+    button.addEventListener('click', () => {
+      const storage = (() => {
+        try {
+          return window.localStorage;
+        } catch {
+          return undefined;
+        }
+      })();
+
+      clearConsent(storage);
+      // Reload rather than show the banner again. For a visitor who accepted,
+      // gtag is already running on this page, and clearing the choice does
+      // not stop it. A fresh page starts from no choice and loads nothing.
+      window.location.reload();
+    });
+  }
+</script>
+
+<style>
+  /* It sits with the footer links, so it reads as one of them. */
+  .consent-settings {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fg);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .consent-settings:hover {
+    color: var(--accent);
+  }
+</style>
