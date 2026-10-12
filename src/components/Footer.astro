@@ -1,4 +1,7 @@
 ---
+import ConsentSettings from './ConsentSettings.astro';
+import { gaMeasurementId } from '../data/analytics';
+
 const app = 'https://github.com/albertoarena/sudo-play';
 const links = [
   { href: app, label: 'Sudo Play on GitHub' },
@@ -14,7 +17,10 @@ const links = [
         {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
       </ul>
     </nav>
-    <p>Sudo Play is not affiliated with Spotify.</p>
+    <div class="footer-end">
+      {gaMeasurementId && <ConsentSettings />}
+      <p>Sudo Play is not affiliated with Spotify.</p>
+    </div>
   </div>
 </footer>
 
@@ -56,6 +62,13 @@ const links = [
 
   a:hover {
     color: var(--accent);
+  }
+
+  .footer-end {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.5rem;
   }
 
   p {

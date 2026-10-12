@@ -1,0 +1,160 @@
+---
+// The analytics banner. Base renders it only when a measurement ID is set.
+// It names no Google address: the tag can only arrive through loadAnalytics,
+// after an explicit accept. Ported from laravel-truss-docs.
+//
+// Its script also wires Analytics settings in the footer. One script with no
+// shared chunk is one Astro inlines, so the page loads no script file.
+import { gaMeasurementId } from '../data/analytics';
+---
+<section id="consent" class="consent" aria-labelledby="consent-title" data-measurement-id={gaMeasurementId} hidden>
+  <div class="consent-inner">
+    <div class="consent-copy">
+      <p id="consent-title" class="consent-title">Analytics, only if you agree</p>
+      <p>Nothing loads from Google until you choose. If you accept, Google Analytics counts which pages people read. There is no advertising. <a href="/privacy/">Privacy</a></p>
+    </div>
+    <div class="consent-actions">
+      <button type="button" class="consent-button" data-consent="declined">Decline</button>
+      <button type="button" class="consent-button" data-consent="accepted">Accept analytics</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { ACCEPTED, DECLINED, analyticsAllowed, clearConsent, readConsent, shouldShowBanner, storeConsent } from '../scripts/consent';
+  import { loadAnalytics } from '../scripts/analytics';
+
+  const storage = (() => {
+    try {
+      return window.localStorage;
+    } catch {
+      return undefined;
+    }
+  })();
+
+  const banner = document.getElementById('consent');
+  if (banner) {
+    const id = banner.dataset.measurementId ?? '';
+    const root = document.documentElement;
+    const stored = readConsent(storage);
+
+    // A visitor who accepted before loads on this page view too. Every other
+    // visitor never reaches the loader, so Google is never contacted.
+    if (analyticsAllowed(stored)) loadAnalytics({ id });
+
+    // The banner overlays the page. While it shows, the footer keeps room for
+    // it through --banner-space, so it hides nothing at the end of a page.
+    const makeRoom = () => root.style.setProperty('--banner-space', `${banner.offsetHeight}px`);
+    const observer = new ResizeObserver(makeRoom);
+
+    const close = () => {
+      observer.disconnect();
+      banner.remove();
+      root.style.removeProperty('--banner-space');
+    };
+
+    if (shouldShowBanner(stored)) {
+      // Rendered hidden and shown here, so a visitor who already chose never
+      // sees it flash, and without a script it never shows at all.
+      banner.hidden = false;
+      makeRoom();
+      observer.observe(banner);
+    } else {
+      close();
+    }
+
+    for (const button of banner.querySelectorAll<HTMLButtonElement>('[data-consent]')) {
+      button.addEventListener('click', () => {
+        const choice = button.dataset.consent === ACCEPTED ? ACCEPTED : DECLINED;
+        storeConsent(storage, choice);
+        if (analyticsAllowed(choice)) loadAnalytics({ id });
+        close();
+      });
+    }
+  }
+
+  // Analytics settings, in the footer. Reload rather than show the banner
+  // again: for a visitor who accepted, gtag is already running on this page,
+  // and clearing the choice does not stop it. A fresh page starts from no
+  // choice and loads nothing.
+  for (const button of document.querySelectorAll('[data-consent-reset]')) {
+    button.addEventListener('click', () => {
+      clearConsent(storage);
+      window.location.reload();
+    });
+  }
+</script>
+
+<style>
+  /* Fixed, so it overlays the page instead of pushing it down. */
+  .consent {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 5;
+    background: var(--bg);
+    border-top: 1px solid var(--border-strong);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .consent[hidden] {
+    display: none;
+  }
+
+  .consent-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    max-width: var(--frame);
+    margin-inline: auto;
+    padding: 1rem var(--gutter);
+  }
+
+  .consent-copy {
+    flex: 1 1 24rem;
+    max-width: var(--measure);
+  }
+
+  .consent-copy p {
+    margin: 0;
+  }
+
+  .consent-title {
+    font-weight: 600;
+  }
+
+  /* Two equal columns: the buttons are the same width, whatever the words. */
+  .consent-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Both buttons share this one class and nothing else. Refusing must be as
+     easy as agreeing: same size, same look, and no fill or green that marks
+     Accept as the expected answer. e2e/consent.spec.ts checks both. */
+  .consent-button {
+    min-height: 2.75rem;
+    padding: 0.625rem 1.125rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--fg);
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+
+  .consent-button:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 30rem) {
+    .consent-actions {
+      width: 100%;
+    }
+  }
+</style>

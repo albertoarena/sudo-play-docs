@@ -23,7 +23,9 @@ commit per green cycle.
      `PRIVACY.md` and never copies them
 4. **SEO basics:** `robots.txt`, sitemap, 404, Open Graph, `og:image`
 5. **GA4 and the consent gate**, ported with its tests from
-   `laravel-truss-docs`
+   `laravel-truss-docs`. Built on 2026-10-12. The measurement ID is read from
+   `PUBLIC_GA_MEASUREMENT_ID` at build time, and unset means no banner and no
+   script. The tests build a second copy with a test ID, `dist-consent/`
 6. **Deploy** over the placeholder on Netsons, verified live with `curl`, the
    way `trussphp.com` deploys (`albertoarena/laravel-truss-docs`, see its
    `DEPLOYMENT.md`). Decided 2026-10-12:
@@ -37,12 +39,25 @@ commit per green cycle.
      404 status for an unknown address (`ErrorDocument 404 /404.html`). The
      preview server does this already, and an e2e test checks it there, but
      only `curl` on the live site can check Apache
+   - The deploy build sets `PUBLIC_GA_MEASUREMENT_ID` from a repository
+     variable, not a secret: the ID is public. Without it the live site has no
+     analytics, which is safe but measures nothing
+   - Cloudflare Web Analytics stays off, and the DNS records stay DNS only.
+     If the records were ever proxied, Cloudflare could add its beacon script
+     to every page at the edge. That is a third party request before consent,
+     and no local test would see it, because the preview server is not behind
+     Cloudflare. So `curl` checks the live pages as a guard: none may carry
+     `cloudflareinsights`, for example
+     `curl -s https://sudoplay.dev/ | grep -c cloudflareinsights` prints 0 for
+     every page in the sitemap
    - The server pulls without credentials, which needs the repository public.
      The site goes live when Sudo Play goes public, so the two arrive together
 
 ## Open
 
-- **The GA4 measurement ID.** Blocks phase 5
+- ~~The GA4 measurement ID.~~ **Answered on 2026-10-12:** `G-KV357NVHX4`.
+  It never goes in the code: the phase 6 deploy build sets
+  `PUBLIC_GA_MEASUREMENT_ID` from a repository variable
 - ~~Who writes the tips.~~ **Answered on 2026-10-12:** Claude drafts them
   from the app's README, `PRIVACY.md` and code, and Alberto approves them.
   If a release has nothing to add, Tips can wait

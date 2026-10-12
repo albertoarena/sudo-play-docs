@@ -1,31 +1,69 @@
 ---
 import Base from '../layouts/Base.astro';
+import { STORAGE_KEY } from '../scripts/consent';
 
 const app = 'https://github.com/albertoarena/sudo-play';
+const contact = 'hello@albertoarena.it';
 ---
 <Base title="Privacy" description="What sudoplay.dev loads, and what it does not. Google Analytics runs only if you accept, and no third party is contacted before that.">
   <h1>Privacy</h1>
   <p class="lead">This page is about this website, sudoplay.dev. The app has its own <a href={`${app}/blob/main/PRIVACY.md`}>privacy policy</a>, which says what Sudo Play sends and stores.</p>
+  <p><strong>Last updated: 12 October 2026.</strong></p>
+
+  <h2>Who is responsible</h2>
+  <p>Alberto Arena maintains this site and is the data controller for it. For any question about this page, or to use one of your rights below, write to <a href={`mailto:${contact}`}>{contact}</a>.</p>
 
   <h2>What this site loads</h2>
   <p>Every file on this site comes from sudoplay.dev: the pages, the styles, the icons and the font. The font, Geist Mono, is stored here. It does not come from a font service.</p>
   <p>Until you accept analytics, the pages make no request to a third party. There are no embedded videos, no maps, no social buttons and no search service.</p>
-  <p>There is one small script. It adds the Copy button to code examples, and it sends nothing.</p>
+  <p>The one small script on this site shows the analytics banner and remembers your choice. It comes from sudoplay.dev too, and it loads Google Analytics only after you accept.</p>
 
   <h2>Analytics</h2>
-  <p>This site uses Google Analytics to learn which pages are read, but only if you accept. Until you do, nothing from Google loads: not the script, and not a cookieless ping. If you decline, or ignore the question, Google is never contacted.</p>
-  <p>Every advertising feature is switched off. This site has no advertising.</p>
+  <p>This site uses Google Analytics to learn which pages people read, but only if you accept. Until you press Accept analytics, nothing from Google loads: not the script, and not a cookieless ping. If you decline, or ignore the banner, Google is never contacted.</p>
+  <p>Many sites load the Google script at once, in a "denied" mode. That mode sets no cookie, but it still sends your IP address to Google before you agree to anything. This site does not do that.</p>
+  <p>If you accept, Google Analytics records the pages you visit, the referring page, your approximate location, your device and browser, how far you scroll, and clicks on links leading away from this site, for example to GitHub.</p>
+  <p>Every advertising feature is switched off: no ad personalisation, no ad storage and no Google Signals, so there is no profile of you across sites. The data is kept for 14 months. Google acts as a processor, and its own privacy policy applies.</p>
+
+  <h2>Server logs</h2>
+  <p>Like any web server, the server that hosts this site records each request in its access logs, with the IP address it came from. The hosting provider keeps these logs to keep the site secure and to fix problems. They are not used for analytics.</p>
 
   <h2>Cookies and storage</h2>
-  <p>Unless you accept analytics, this site sets no cookies. If you accept, Google Analytics sets its own cookies to tell repeat visits apart.</p>
-  <p>Your choice is remembered in your browser's local storage, so you are not asked again. Local storage is not a cookie and is never sent to the server.</p>
+  <p>Unless you accept analytics, this site sets no cookies.</p>
+  <p>Your choice is remembered in your browser's local storage, under the name <code>{STORAGE_KEY}</code>, so you are not asked again. Local storage is not a cookie and is never sent to the server. A decline is remembered there too, so refusing leaves nothing that a server can read.</p>
+  <p>Only if you accept, Google Analytics sets its own cookies, <code>_ga</code> and <code>_ga_&lt;id&gt;</code>, to tell repeat visits apart. If you decline, they are never created.</p>
+  <p>You can clear all of this at any time in your browser's settings for this site. If you clear <code>{STORAGE_KEY}</code>, the site asks you again.</p>
 
-  <h2>The server</h2>
-  <p>Like any web server, the server that hosts this site sees the IP address that each request comes from. That is how a page reaches your browser.</p>
+  <h2>Changing your mind</h2>
+  <p>To change your choice, use <strong>Analytics settings</strong> in the footer of any page. It forgets your choice, reloads the page and asks again. The reload stops anything that was already loaded. Until you accept again, Google Analytics does not load.</p>
+
+  <h2>Legal basis</h2>
+  <p>For Google Analytics, the legal basis is consent, under Article 6(1)(a) GDPR. You give it when you press Accept analytics, and you can withdraw it at any time from the footer.</p>
+  <p>For the server logs, the legal basis is legitimate interest, under Article 6(1)(f) GDPR: keeping the site available and secure.</p>
+
+  <h2>Where your data goes</h2>
+  <p>The site is served from Italy.</p>
+  <p>If you accept Google Analytics, the data it collects goes to Google LLC in the United States, which is outside the European Economic Area. This transfer relies on the EU-US Data Privacy Framework, a decision of the European Commission from July 2023. Google LLC is certified under it.</p>
+  <p>If you decline, nothing about you goes to Google, because nothing from Google ever loads.</p>
+
+  <h2>Third parties</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Who</th><th scope="col">What for</th><th scope="col">Where</th></tr></thead>
+      <tbody>
+        <tr><td>Cloudflare</td><td>DNS only: it answers the lookup for sudoplay.dev, and never sees the pages you request</td><td><a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a></td></tr>
+        <tr><td>Google</td><td>Google Analytics, only after you accept. Never contacted otherwise</td><td><a href="https://policies.google.com/privacy">Google privacy policy</a></td></tr>
+        <tr><td>The hosting provider</td><td>The origin server and its access logs</td><td>Italy</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <h2>Links to other sites</h2>
-  <p>Some links, like the ones to GitHub, take you to another website. That website's own privacy terms apply there.</p>
+  <p>Some links, like the ones to GitHub, take you to another website. They are ordinary links: nothing is requested from that website until you click. After that, its own privacy terms apply.</p>
 
-  <h2>Questions</h2>
-  <p>Open an <a href={`${app}/issues`}>issue on GitHub</a>.</p>
+  <h2>Your rights</h2>
+  <p>Under the GDPR, you have the right to see the personal data held about you, to have it corrected or erased, to limit or object to its use, to receive it in a portable form, and to complain to a data protection authority.</p>
+  <p>To use any of these rights, write to <a href={`mailto:${contact}`}>{contact}</a>. Every request gets an answer.</p>
+
+  <h2>Changes</h2>
+  <p>If this site starts to collect anything new, this page changes before that happens, not after, and the date at the top changes too.</p>
 </Base>

@@ -46,8 +46,10 @@ belong here.
 - **No third party request of any kind before consent**, on every page. No CDN
   or hosted font, no remote icon set, no embed, no iframe, no search widget that
   calls home. Fonts are self hosted in this repository
-- GA4 behind an explicit consent gate arrives in phase 5. Until then nothing
-  Google related is on the page. Advertising consent stays denied for ever
+- GA4 sits behind an explicit consent gate, built in phase 5. It is switched
+  on by setting `PUBLIC_GA_MEASUREMENT_ID` at build time; unset, no banner and
+  nothing Google related is on the page. Advertising consent stays denied for
+  ever
 - One canonical host, `https://sudoplay.dev`, HSTS preloaded
 - The repository is private now and public later, so nothing committed may be a
   secret or draft copy worth hiding

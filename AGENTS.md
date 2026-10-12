@@ -14,13 +14,21 @@ new session has are answered there.
 
 ## Current state, so nothing is assumed
 
-Phases 1 to 4 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
+Phases 1 to 5 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
 no Starlight and no CSS framework. The design, made with Impeccable, is in
 `docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
 have real copy, and a test fails if any page still carries the
 `data-placeholder` marker. `placeholder/index.html` is still what the domain
-serves. Phase 5, GA4 and the consent gate, is next, and waits on the
-measurement ID.
+serves. Phase 6, the deploy, is next.
+
+GA4 and the consent gate, from phase 5: `src/data/analytics.ts` reads the
+measurement ID from `PUBLIC_GA_MEASUREMENT_ID` at build time. Unset, the build
+has no banner, no footer control and no script. The choice lives in
+`src/scripts/consent.ts` and the loader in `src/scripts/analytics.ts`, both
+ported with their tests from `laravel-truss-docs`. The banner is
+`src/components/ConsentBanner.astro`, and its one inline script also wires
+Analytics settings in the footer. The deploy build sets the ID from a
+repository variable, and it never goes in the code. `docs/PLAN.md` records it.
 
 SEO, from phase 4: every page passes a `description` to `Base`, which also
 writes the Open Graph tags. `src/pages/sitemap.xml.ts` builds the sitemap from
@@ -43,8 +51,8 @@ has no app checkout.
 Work is test first: the failing test is committed, then the code, one commit
 per green cycle.
 
-`docs/PLAN.md` holds the phases and the two open questions: the GA4
-measurement ID and the licence for the site content.
+`docs/PLAN.md` holds the phases and the open question: the licence for the
+site content.
 
 This repository is **private now and public later**. Everything committed while
 it is private is readable the moment it flips, so no credentials and no draft
@@ -112,8 +120,9 @@ minimum: the site builds, the home page renders its heading, and no page issues
 a third party request before consent. The last of those is the only automated
 guard the consent promise will ever have.
 
-There are two suites, and `npm run check` builds once and runs both, locally and
-in CI:
+There are two suites, and `npm run check` builds and runs both, locally and in
+CI. It builds twice: `dist/` with no measurement ID, and `dist-consent/` with
+the test ID `G-TESTING000`:
 
 - `tests/`, Vitest in a node environment, checks the files in `dist/`: the
   home page exists, every page has a non empty `<title>` and exactly one
@@ -122,14 +131,19 @@ in CI:
 - `e2e/smoke.spec.ts`, Playwright, checks the served site: the home page
   renders its heading, and no page makes a third party request before
   consent. Run it with `npm run test:e2e`
+- `e2e/consent.spec.ts` runs in its own Playwright project against
+  `dist-consent/`, on port 4322. Every page shows the banner and makes no third
+  party request before a choice; accept loads gtag once, decline contacts no
+  one, and the footer withdraws. Google is answered by the test with an empty
+  script and never contacted
 
-Neither script builds on its own: run `npm run build` first, or use
-`npm run check`.
+Neither script builds on its own: run `npm run build` and
+`npm run build:consent` first, or use `npm run check`.
 
 The consent check visits every HTML file in `dist/`, so a new page is covered
 without touching the test. Do not weaken it to make a page pass: remove the
-request instead. When GA4 arrives, the test grows a second half that accepts
-consent and expects Google, but the first half stays as it is.
+request instead. The second half, in `e2e/consent.spec.ts`, accepts consent and
+expects Google, and it checks the first half again with the banner showing.
 
 If a machine has a Chromium that does not match the Playwright version, set
 `PLAYWRIGHT_CHROMIUM_PATH` to it instead of downloading another.
