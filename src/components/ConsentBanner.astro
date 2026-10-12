@@ -2,6 +2,9 @@
 // The analytics banner. Base renders it only when a measurement ID is set.
 // It names no Google address: the tag can only arrive through loadAnalytics,
 // after an explicit accept. Ported from laravel-truss-docs.
+//
+// Its script also wires Analytics settings in the footer. One script with no
+// shared chunk is one Astro inlines, so the page loads no script file.
 import { gaMeasurementId } from '../data/analytics';
 ---
 <section id="consent" class="consent" aria-labelledby="consent-title" data-measurement-id={gaMeasurementId} hidden>
@@ -18,20 +21,21 @@ import { gaMeasurementId } from '../data/analytics';
 </section>
 
 <script>
-  import { ACCEPTED, DECLINED, analyticsAllowed, readConsent, shouldShowBanner, storeConsent } from '../scripts/consent';
+  import { ACCEPTED, DECLINED, analyticsAllowed, clearConsent, readConsent, shouldShowBanner, storeConsent } from '../scripts/consent';
   import { loadAnalytics } from '../scripts/analytics';
+
+  const storage = (() => {
+    try {
+      return window.localStorage;
+    } catch {
+      return undefined;
+    }
+  })();
 
   const banner = document.getElementById('consent');
   if (banner) {
     const id = banner.dataset.measurementId ?? '';
     const root = document.documentElement;
-    const storage = (() => {
-      try {
-        return window.localStorage;
-      } catch {
-        return undefined;
-      }
-    })();
     const stored = readConsent(storage);
 
     // A visitor who accepted before loads on this page view too. Every other
@@ -67,6 +71,17 @@ import { gaMeasurementId } from '../data/analytics';
         close();
       });
     }
+  }
+
+  // Analytics settings, in the footer. Reload rather than show the banner
+  // again: for a visitor who accepted, gtag is already running on this page,
+  // and clearing the choice does not stop it. A fresh page starts from no
+  // choice and loads nothing.
+  for (const button of document.querySelectorAll('[data-consent-reset]')) {
+    button.addEventListener('click', () => {
+      clearConsent(storage);
+      window.location.reload();
+    });
   }
 </script>
 
