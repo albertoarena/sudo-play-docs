@@ -46,4 +46,17 @@ describe('the build with a measurement ID', () => {
     expect(html).toContain('data-measurement-id="G-TESTING000"');
     expect(html).not.toMatch(/<script[^>]*\bsrc="https?:/i);
   });
+
+  // docs/DIRECTION.md: the banner script is our own and inline, so it costs
+  // the page no request at all.
+  it.each(pages)('%s has the banner script inline, with no script file', (file) => {
+    const html = readFileSync(file, 'utf8');
+
+    expect(html).toMatch(/<script\b[^>]*>[^<]*sudoplay-consent/);
+    expect(html).not.toMatch(/<script[^>]*\bsrc=/i);
+  });
+
+  it('ships no script file', () => {
+    expect(files('dist-consent', '.js')).toEqual([]);
+  });
 });
