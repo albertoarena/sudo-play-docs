@@ -134,3 +134,47 @@ it('gives every indexable page its own description', () => {
 
   expect(new Set(descriptions).size).toBe(indexable.length);
 });
+
+// The size a link preview expects. Some chat apps drop an image over 300 KB.
+const card = { width: 1200, height: 630, maxBytes: 300 * 1024 };
+
+describe.each(indexable)('%s link preview image', (file) => {
+  const html = read(file);
+  const [image] = meta(html, 'og:image');
+
+  it('is one PNG on the canonical host, and it is built', () => {
+    expect(meta(html, 'og:image')).toHaveLength(1);
+    const url = new URL(image);
+    expect(url.origin).toBe(origin);
+    expect(url.pathname).toMatch(/\.png$/);
+    expect(existsSync(join(dist, url.pathname))).toBe(true);
+  });
+
+  it('states its size, type and alt text', () => {
+    expect(meta(html, 'og:image:type')).toEqual(['image/png']);
+    expect(meta(html, 'og:image:width')).toEqual([String(card.width)]);
+    expect(meta(html, 'og:image:height')).toEqual([String(card.height)]);
+    expect(meta(html, 'og:image:alt')[0]?.trim()).toBeTruthy();
+  });
+
+  it('asks for the large card', () => {
+    expect(meta(html, 'twitter:card')).toEqual(['summary_large_image']);
+  });
+});
+
+it('ships a link preview image of the size the tags state', () => {
+  const images = new Set(indexable.flatMap((file) => meta(read(file), 'og:image')));
+  expect(images.size).toBeGreaterThan(0);
+
+  for (const image of images) {
+    const path = join(dist, new URL(image).pathname);
+    const png = existsSync(path) ? readFileSync(path) : Buffer.alloc(0);
+
+    // A PNG starts with an 8 byte signature, then the IHDR chunk, whose
+    // first two fields are the width and the height.
+    expect(png.subarray(1, 4).toString('latin1'), image).toBe('PNG');
+    expect(png.subarray(12, 16).toString('latin1')).toBe('IHDR');
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([card.width, card.height]);
+    expect(png.length).toBeLessThanOrEqual(card.maxBytes);
+  }
+});
