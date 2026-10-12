@@ -1,11 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
-import Placeholder from '../components/Placeholder.astro';
+import { genres, moods } from '../data/catalog';
+
+const app = 'https://github.com/albertoarena/sudo-play';
+const labels = genres.map((genre) => genre.label);
+const genreList = `${labels.slice(0, -1).join(', ')} and ${labels.at(-1)}`;
 ---
 <Base title="Moods">
-  <Placeholder />
   <h1>Moods</h1>
-  <p class="lead">Placeholder lead. This page will list the moods, copied from the app's catalog at each release.</p>
-  <h2>Placeholder heading</h2>
-  <p>Placeholder paragraph. One mood per entry, each with the moment it is for.</p>
+  <p class="lead">A mood is how you feel about what you are coding. You choose a genre and a mood, and the app picks one playlist for today.</p>
+  <p>The moods and genres come from the app's catalog. The genres are {genreList}.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">Mood</th><th scope="col">Description</th></tr></thead>
+      <tbody>
+        {moods.map((mood) => (
+          <tr>
+            <td><span aria-hidden="true">{mood.emoji}</span>&nbsp;{mood.label}</td>
+            <td>{mood.description}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Add a playlist</h2>
+  <p>Each playlist in the catalog has one genre and one or more moods. Anyone can add a playlist with a pull request. The app's README explains how, in <a href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</a>.</p>
 </Base>
