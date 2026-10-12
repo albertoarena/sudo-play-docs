@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "npm run build && npm test && npm run test:e2e"
+    "check": "npm run build && npm test && npm run test:e2e",
+    "check:catalog": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-catalog.ts"
   },
   "dependencies": {
     "astro": "^7.3.8"
