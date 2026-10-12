@@ -88,4 +88,12 @@ describe('Privacy', () => {
     expect(content).toMatch(/font/i);
     expect(content).toMatch(/third part/i);
   });
+
+  // The site will run GA4 behind the consent gate, so Privacy says so from the
+  // first day it is live, and never that the site has no analytics.
+  it('says Google Analytics loads only after the visitor accepts', () => {
+    expect(content).toMatch(/Google Analytics/);
+    expect(content).toMatch(/accept/i);
+    expect(content).not.toMatch(/no analytics/i);
+  });
 });
