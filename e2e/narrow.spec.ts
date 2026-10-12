@@ -49,21 +49,6 @@ test('no nav row holds a single link at 320px', async ({ page }) => {
   expect([...rows.values()].every((count) => count > 1), JSON.stringify([...rows])).toBe(true);
 });
 
-test('a code block that scrolls shows an edge fade', async ({ page }) => {
-  await page.goto('/how-it-works/');
-  const pre = page.locator('figure.code-block pre').first();
-  const scrolls = await pre.evaluate((el) => el.scrollWidth > el.clientWidth);
-  const style = await pre.evaluate((el) => {
-    const s = getComputedStyle(el);
-    return { image: s.backgroundImage, attachment: s.backgroundAttachment };
-  });
-
-  // macOS hides scrollbars until you scroll, so the fade is the only sign.
-  expect(scrolls).toBe(true);
-  expect(style.image).toContain('linear-gradient');
-  expect(style.attachment).toContain('local');
-});
-
 // The panel wraps the way the app does: a flag never ends a line, because
 // "--genre rock" and "--mood debugging" are parts that never split.
 for (const width of [320, 375, 768]) {

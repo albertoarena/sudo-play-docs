@@ -120,16 +120,6 @@ components:
     typography: "{typography.code}"
     rounded: "{rounded.block}"
     padding: "1rem 1.25rem"
-  code-block-label:
-    textColor: "{colors.fg-muted}"
-    typography: "{typography.label}"
-    padding: "0.625rem 6.5rem 0.625rem 1.25rem"
-  button-copy:
-    backgroundColor: "{colors.bg}"
-    textColor: "{colors.fg}"
-    rounded: "{rounded.control}"
-    padding: "0.25rem 0.625rem"
-    height: "1.75rem"
   inline-code:
     backgroundColor: "{colors.bg-subtle}"
     textColor: "{colors.fg}"
@@ -203,12 +193,12 @@ is in `docs/DIRECTION.md`, and `tests/tokens.test.ts` checks them.
 - **Faint Zinc** (`bg-subtle`, `bg-subtle-dark`): code blocks, inline code
   and notes.
 - **Zinc Ink** (`fg`, `fg-dark`): body text and headings.
-- **Muted Zinc** (`fg-muted`, `fg-muted-dark`): captions, code labels, list
+- **Muted Zinc** (`fg-muted`, `fg-muted-dark`): captions, list
   markers, the footer, the "Previous" and "Next" direction words.
 - **Hairline** (`border`, `border-dark`): dividers and block edges. It is
   decorative only and never the sole edge of a control.
-- **Strong Zinc** (`border-strong`, both modes): the Copy button edge, table
-  header rules and the code scrollbar.
+- **Strong Zinc** (`border-strong`, both modes): table header rules and the
+  code scrollbar.
 - **Terminal set** (`term-bg`, `term-fg`, `term-dim`, `term-edge`,
   `term-dots`, `term-focus`): the band and the panel only. `term-dim` sets the
   nav and the `$`; `term-edge` outlines the panel, and the band in dark mode;
@@ -254,8 +244,8 @@ Mono was chosen from a specimen of four pairs and is decided.
   size at 650.
 - **Small** (14px): footer and tables (tables are 15px, tabular figures).
 - **Code** (Geist Mono 14px, 1.65): code blocks; inline code is 0.875em.
-- **Label** (Geist Mono 12px, 1.4): the file or language label on a code
-  block.
+- **Label** (Geist Mono 12px, 1.4): unused since 2026-10-12, when its only
+  use, the label on a code block, was removed. Kept for small labels.
 
 Headings use balanced wrapping and the lead uses pretty wrapping. `strong` is
 650, not 700.
@@ -306,7 +296,7 @@ animation.
 ## Shapes
 
 Gently rounded rectangles, in four steps: 4px for inline code, 6px for small
-controls (the Copy button, the skip link), 10px for blocks (code blocks,
+controls (the skip link), 10px for blocks (code blocks,
 notes), and 16px for the terminal panel. The band is square and full bleed.
 The mark's bars and the "you are here" bars are small rounded rectangles; the
 window dots are circles. Borders are always 1px, except the 2px focus ring.
@@ -335,17 +325,11 @@ then `$ sudo play --genre rock --mood debugging` in Display type: the `$` in
 Copy button.
 
 ### Code Block
-Real code a reader types or pastes. A figure with a 1px hairline, 10px
-corners, `bg-subtle` ground and text in `fg`, with no syntax colours. A Label
-row on top names the file or language, over a hairline. The block scrolls
-sideways inside itself with a thin Strong Zinc scrollbar and edge shades. Bare
-`pre` without a label takes the same look.
-
-### Copy Button
-Added by the site's one inline script, so without JavaScript there is none.
-Sits top right in the label row: `bg` fill, 1px `border-strong` edge, 6px
-corners, 12px sans at 500, 28px tall. Hover darkens the edge to `fg`. A status
-word beside it says "Copied" for three seconds.
+Real code a reader types or pastes, as a bare `pre`: a 1px hairline, 10px
+corners, `bg-subtle` ground and text in `fg`, with no syntax colours. It
+scrolls sideways inside itself with a thin Strong Zinc scrollbar and edge
+shades. No page uses one yet. The labelled block with a Copy button was
+removed on 2026-10-12, because no page had real code; see `docs/DIRECTION.md`.
 
 ### Inline Code and Keys
 Inline code: `bg-subtle`, 1px hairline, 4px corners, 0.875em, breaks
@@ -380,7 +364,7 @@ Sudo Play is not affiliated with Spotify.
 - **Do** keep the band about 56px on inner pages. Only Home grows it.
 - **Do** mark the current page with `term-green` and the three bars, and
   nothing else.
-- **Do** set real code in a Code Block with a label, light in light mode.
+- **Do** set real code in a Code Block, light in light mode.
 - **Do** keep the brand line in the Terminal Panel, wrapping between parts.
 - **Do** keep running text in the system sans, in the 66ch column.
 - **Do** author focus: 2px `focus` outline at 2px offset, `term-focus` inside

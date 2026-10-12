@@ -12,3 +12,4 @@ export function builtPages(dir = 'dist'): string[] {
     return [url.replace(/(^|\/)index\.html$/, '$1')];
   });
 }
+
