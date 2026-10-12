@@ -11,7 +11,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html'];
+const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html', 'tips/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -212,5 +212,26 @@ describe('Install', () => {
   it('has no note or warning box', () => {
     expect(content).not.toContain('class="note"');
     expect(content).not.toMatch(/role="(note|alert)"/);
+  });
+});
+
+describe('Tips', () => {
+  const content = column(read('tips/index.html'));
+
+  // Drafted from the app's README, PRIVACY.md and code at checkedAt, and
+  // approved by Alberto on 2026-10-12.
+  it('gives the tips the app sources support', () => {
+    expect(content).toMatch(/same playlist/i);
+    expect(content).toMatch(/launch at login/i);
+    expect(content).toMatch(/daily reminder/i);
+    expect(content).toMatch(/default genre and mood/i);
+    expect(content).toMatch(/web player/i);
+    expect(content).toMatch(/catalog URL/i);
+    expect(content).toMatch(/within a day/i);
+  });
+
+  it('points to How it works and the README instead of copying them', () => {
+    expect(links(content)).toContain('/how-it-works/');
+    expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
   });
 });
