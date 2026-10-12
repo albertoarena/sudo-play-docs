@@ -9,10 +9,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
+    "build:consent": "SITE_OUT_DIR=dist-consent PUBLIC_GA_MEASUREMENT_ID=G-TESTING000 astro build",
     "preview": "astro preview",
+    "preview:consent": "SITE_OUT_DIR=dist-consent astro preview",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "npm run build && npm test && npm run test:e2e",
+    "check": "npm run build && npm run build:consent && npm test && npm run test:e2e",
     "check:catalog": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-catalog.ts",
     "og:image": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/og-image.ts"
   },
