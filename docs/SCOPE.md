@@ -56,6 +56,11 @@ never reaches the loader, and there is no `wait_for_update`, because nothing is
 loaded to hold. `ad_storage`, `ad_user_data` and `ad_personalization` stay
 denied forever; the site has no advertising and should never acquire any.
 
+**No Google Tag Manager**, decided 2026-10-12. The site loads `gtag.js`
+directly, as `trussphp.com` does. With a container, what runs would be set in a
+dashboard, not in this repository: the tests could not prove what loads, and a
+tag could be added without a commit.
+
 **The part that shapes the design:** analytics is fine, a third party request
 before consent is not. That rules out a font from a CDN, an iframe demo, and a
 search widget that phones home on load. Decide it on day one. Retrofitting the

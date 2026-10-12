@@ -27,8 +27,8 @@ has no banner, no footer control and no script. The choice lives in
 `src/scripts/consent.ts` and the loader in `src/scripts/analytics.ts`, both
 ported with their tests from `laravel-truss-docs`. The banner is
 `src/components/ConsentBanner.astro`, and its one inline script also wires
-Analytics settings in the footer. The real ID is still open: it goes in a
-repository variable for the deploy build.
+Analytics settings in the footer. The deploy build sets the ID from a
+repository variable, and it never goes in the code. `docs/PLAN.md` records it.
 
 SEO, from phase 4: every page passes a `description` to `Base`, which also
 writes the Open Graph tags. `src/pages/sitemap.xml.ts` builds the sitemap from
@@ -51,8 +51,8 @@ has no app checkout.
 Work is test first: the failing test is committed, then the code, one commit
 per green cycle.
 
-`docs/PLAN.md` holds the phases and the two open questions: the GA4
-measurement ID and the licence for the site content.
+`docs/PLAN.md` holds the phases and the open question: the licence for the
+site content.
 
 This repository is **private now and public later**. Everything committed while
 it is private is readable the moment it flips, so no credentials and no draft

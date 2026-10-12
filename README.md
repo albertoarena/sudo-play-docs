@@ -11,7 +11,8 @@ Lives at **https://sudoplay.dev**.
 Phases 1 to 5 of `docs/PLAN.md` are done: tooling and tests, the design, the
 copy for all six pages, SEO basics, and GA4 behind the consent gate. Phase 6,
 the deploy, is next. Analytics are on only in a build with
-`PUBLIC_GA_MEASUREMENT_ID` set, and the real ID is still to come.
+`PUBLIC_GA_MEASUREMENT_ID` set, which the deploy build takes from a repository
+variable.
 `placeholder/index.html` is a single static page, with no build step and no
 third party request, and it is what the domain serves until phase 6 deploys
 the Astro build over it.
