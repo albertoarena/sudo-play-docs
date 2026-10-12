@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -10,6 +10,25 @@ const app = 'https://github.com/albertoarena/sudo-play';
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
 const finished = ['index.html', 'privacy/index.html'];
+
+function htmlFiles(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) return htmlFiles(path);
+    return entry.name.endsWith('.html') ? [path] : [];
+  });
+}
+
+// The guard the finished list cannot give: a page left off the list would
+// ship its placeholder. This one finds every page itself, so it stays red
+// until phase 3 has written all of them.
+it('ships no page with placeholder text', () => {
+  const pages = existsSync(dist) ? htmlFiles(dist) : [];
+  const unfinished = pages.filter((file) => readFileSync(file, 'utf8').includes('data-placeholder'));
+
+  expect(pages).not.toHaveLength(0);
+  expect(unfinished, 'These pages still carry the placeholder marker').toEqual([]);
+});
 
 function read(file: string): string {
   const path = join(dist, file);
