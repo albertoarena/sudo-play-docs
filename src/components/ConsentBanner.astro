@@ -15,7 +15,7 @@ import { gaMeasurementId } from '../data/analytics';
     </div>
     <div class="consent-actions">
       <button type="button" class="consent-button" data-consent="declined">Decline</button>
-      <button type="button" class="consent-button consent-accept" data-consent="accepted">Accept analytics</button>
+      <button type="button" class="consent-button" data-consent="accepted">Accept analytics</button>
     </div>
   </div>
 </section>
@@ -132,9 +132,9 @@ import { gaMeasurementId } from '../data/analytics';
     gap: 0.75rem;
   }
 
-  /* Both buttons share this class on purpose. Refusing must be as easy as
-     agreeing: same size, same font, same hit area. Accept may differ in
-     colour, never in weight. e2e/consent.spec.ts measures them. */
+  /* Both buttons share this one class and nothing else. Refusing must be as
+     easy as agreeing: same size, same look, and no fill or green that marks
+     Accept as the expected answer. e2e/consent.spec.ts checks both. */
   .consent-button {
     min-height: 2.75rem;
     padding: 0.625rem 1.125rem;
@@ -146,12 +146,6 @@ import { gaMeasurementId } from '../data/analytics';
     font-weight: 600;
     line-height: 1.2;
     cursor: pointer;
-  }
-
-  .consent-accept {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: var(--on-accent);
   }
 
   .consent-button:hover {

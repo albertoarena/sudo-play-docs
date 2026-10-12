@@ -278,8 +278,9 @@ row for the panel.
 The consent banner is fixed to the bottom edge, on `--bg` with a
 `--border-strong` hairline on top: the title and one sentence on the left,
 Decline and Accept analytics on the right. The two buttons share one class and
-two equal grid columns, so refusing is never smaller than agreeing. Accept is
-filled with `--accent`, Decline is outlined. While the banner shows, it sets
+two equal grid columns, and both are outlined in `--border-strong` with text
+in `--fg`, so refusing is never smaller or quieter than agreeing. Neither is
+green: no answer is styled as the expected one. While the banner shows, it sets
 `--banner-space` to its height, and the footer keeps that much room at the
 bottom, so nothing at the end of a page is hidden under it. It only exists
 when a measurement ID is set.
