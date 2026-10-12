@@ -21,6 +21,8 @@ type Props =
 const { title } = Astro.props;
 const fullTitle = title ? `${title} · Sudo Play` : 'Sudo Play';
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// One preview image for every page, drawn by `npm run og:image`.
+const image = new URL('/og.png', Astro.site);
 ---
 <!doctype html>
 <html lang="en">
@@ -39,6 +41,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={Astro.props.description} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={image} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="A dark terminal with the Sudo Play tagline in green: sudo play, genre rock, mood debugging." />
+        <meta name="twitter:card" content="summary_large_image" />
       </>
     )}
     <link rel="preload" href="/fonts/geist-mono/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
