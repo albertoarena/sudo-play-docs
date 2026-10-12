@@ -42,13 +42,14 @@ commit per green cycle.
    - The deploy build sets `PUBLIC_GA_MEASUREMENT_ID` from a repository
      variable, not a secret: the ID is public. Without it the live site has no
      analytics, which is safe but measures nothing
-   - Cloudflare Web Analytics stays off. Cloudflare proxies the site, and
-     turning it on makes Cloudflare add its beacon script to every page at the
-     edge. That is a third party request before consent, and no local test
-     would see it, because the preview server is not behind Cloudflare. So
-     `curl` checks the live pages: none may carry `cloudflareinsights`, for
-     example `curl -s https://sudoplay.dev/ | grep -c cloudflareinsights`
-     prints 0 for every page in the sitemap
+   - Cloudflare Web Analytics stays off, and the DNS records stay DNS only.
+     If the records were ever proxied, Cloudflare could add its beacon script
+     to every page at the edge. That is a third party request before consent,
+     and no local test would see it, because the preview server is not behind
+     Cloudflare. So `curl` checks the live pages as a guard: none may carry
+     `cloudflareinsights`, for example
+     `curl -s https://sudoplay.dev/ | grep -c cloudflareinsights` prints 0 for
+     every page in the sitemap
    - The server pulls without credentials, which needs the repository public.
      The site goes live when Sudo Play goes public, so the two arrive together
 
