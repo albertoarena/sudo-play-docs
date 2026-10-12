@@ -34,6 +34,15 @@ describe.each(existsSync(dist) ? htmlFiles(dist) : [])('%s', (file) => {
     expect(title.trim()).not.toBe('');
   });
 
+  // The 404 is the one page without a canonical: it is served for any
+  // address that does not exist, and asks not to be indexed.
+  if (file === join(dist, '404.html')) {
+    it('has no canonical', () => {
+      expect(canonicals(html)).toEqual([]);
+    });
+    return;
+  }
+
   it(`has one canonical on ${origin}`, () => {
     const found = canonicals(html);
 

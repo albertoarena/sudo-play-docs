@@ -8,8 +8,9 @@ Lives at **https://sudoplay.dev**.
 
 ## Status
 
-Phases 1 to 3 of `docs/PLAN.md` are done: tooling and tests, the design, and
-the copy for all six pages. Phase 4, SEO basics, is next.
+Phases 1 to 4 of `docs/PLAN.md` are done: tooling and tests, the design, the
+copy for all six pages, and SEO basics. Phase 5, GA4 and the consent gate, is
+next.
 `placeholder/index.html` is a single static page, with no build step and no
 third party request, and it is what the domain serves until phase 6 deploys
 the Astro build over it.
@@ -31,9 +32,10 @@ npm run check                     # build once, then every test
 | Script | What it does |
 | --- | --- |
 | `npm run build` | `astro check`, then `astro build` into `dist/` |
-| `npm test` | Vitest checks on `dist/`: titles and canonicals, the design tokens and fonts, the copy on each page, and no placeholder text |
+| `npm test` | Vitest checks on `dist/`: titles and canonicals, the design tokens and fonts, the copy on each page, no placeholder text, and the SEO files and tags |
 | `npm run test:e2e` | Playwright against the preview server: the shell, navigation, focus, the 320px width, axe in light and dark, and **no built page makes a third party request before consent** |
 | `npm run check` | All three, in that order. CI runs this |
+| `npm run og:image` | Draws `public/og.png`, the link preview image, with Playwright. On macOS only, by hand, when the design or the tagline changes. Commit the PNG |
 | `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog in `../sudo-play` (or a path given as an argument). By hand, at each release |
 
 `npm test` and `npm run test:e2e` read `dist/` and do not build it, so run
@@ -46,7 +48,7 @@ npm run check                     # build once, then every test
 src/           the Astro site
 tests/         Vitest checks on the built site
 e2e/           Playwright tests on the served site
-scripts/       check-catalog.ts, run by npm run check:catalog
+scripts/       check-catalog.ts and og-image.ts, run by hand
 placeholder/   a single static page, no build, no external requests
 docs/          the scope and the plan for this repository
 ```

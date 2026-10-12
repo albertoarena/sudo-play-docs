@@ -6,14 +6,23 @@ import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
 import PrevNext from '../components/PrevNext.astro';
 
-interface Props {
-  // The page's own name. Home passes nothing and is titled "Sudo Play".
-  title?: string;
-}
+// A page search engines index has a description, which also goes to link
+// previews. Only the 404 is noindex: no canonical, no description, no preview.
+type Props =
+  | {
+      // The page's own name. Home passes nothing and is titled "Sudo Play".
+      title?: string;
+      // One or two plain sentences, 160 characters at most.
+      description: string;
+      noindex?: false;
+    }
+  | { title: string; noindex: true };
 
 const { title } = Astro.props;
 const fullTitle = title ? `${title} · Sudo Play` : 'Sudo Play';
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// One preview image for every page, drawn by `npm run og:image`.
+const image = new URL('/og.png', Astro.site);
 ---
 <!doctype html>
 <html lang="en">
@@ -21,7 +30,26 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    <link rel="canonical" href={canonical} />
+    {Astro.props.noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <meta name="description" content={Astro.props.description} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Sudo Play" />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={Astro.props.description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:locale" content="en" />
+        <meta property="og:image" content={image} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="A dark terminal with the Sudo Play tagline in green: sudo play, genre rock, mood debugging." />
+        <meta name="twitter:card" content="summary_large_image" />
+      </>
+    )}
     <link rel="preload" href="/fonts/geist-mono/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
