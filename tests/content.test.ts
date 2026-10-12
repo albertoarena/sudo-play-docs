@@ -10,7 +10,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'moods/index.html', 'privacy/index.html'];
+const finished = ['index.html', 'how-it-works/index.html', 'moods/index.html', 'privacy/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -132,5 +132,51 @@ describe('Moods', () => {
   // Link, do not copy: adding a playlist is documented in the app's README.
   it('links to the README section on adding a playlist', () => {
     expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
+  });
+});
+
+describe('How it works', () => {
+  const content = column(read('how-it-works/index.html'));
+  const table = content.match(/<table[\s\S]*?<\/table>/)?.[0] ?? '';
+
+  it('says the pick is the same all day and changes tomorrow', () => {
+    expect(content).toMatch(/same all day/i);
+    expect(content).toMatch(/tomorrow/i);
+  });
+
+  it('says what Play does, including when Spotify is closed', () => {
+    expect(content).toMatch(/Spotify is closed/);
+    expect(content).toMatch(/open only/);
+    expect(content).toMatch(/web player/);
+  });
+
+  it('names Next and Surprise me', () => {
+    expect(content).toMatch(/Next/);
+    expect(content).toMatch(/Surprise me/);
+    expect(content).not.toMatch(/placeholder/i);
+  });
+
+  it('lists every key in a table', () => {
+    for (const key of ['Enter', 'N', 'S', 'Esc', 'Tab']) expect(table).toContain(`<kbd>${key}</kbd>`);
+    expect(table).toMatch(/arrow keys/i);
+  });
+
+  it('mentions the optional daily reminder', () => {
+    expect(content).toMatch(/daily reminder/i);
+  });
+
+  // PRIVACY.md describes the permission; this page links to it.
+  it('explains the Automation permission and links to the app privacy policy', () => {
+    expect(content).toMatch(/Automation/);
+    expect(content).toMatch(/System Settings/);
+    expect(links(content)).toContain(`${app}/blob/main/PRIVACY.md`);
+  });
+
+  // Moods has the table, and the README explains adding a playlist.
+  it('points to Moods and the README instead of copying them', () => {
+    expect(links(content)).toContain('/moods/');
+    expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
+    expect(content).not.toContain('catalog/playlists.yaml');
+    for (const mood of moods) expect(content).not.toContain(mood.description);
   });
 });
