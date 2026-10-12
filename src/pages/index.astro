@@ -1,12 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
-import Placeholder from '../components/Placeholder.astro';
 import TerminalPanel from '../components/TerminalPanel.astro';
 ---
 <Base>
   <TerminalPanel slot="masthead" />
-  <Placeholder />
   <h1>Sudo Play</h1>
-  <p class="lead">Placeholder lead. A macOS menu bar app that picks today's Spotify playlist from a genre and a developer mood.</p>
-  <p>Placeholder paragraph. Home will say what the app does in a few lines and point to the pages that follow.</p>
+  <p class="lead">A small macOS menu bar app that picks today's Spotify playlist, based on what you are coding and how you feel about it.</p>
+  <p>Pick a genre, like rock or lofi. Pick a developer mood, like Friday Deploy or Debugging. Press Play, and the playlist opens in Spotify.</p>
+  <p>The pick is the same all day, and the same for everyone who chooses the same genre and mood. Tomorrow it changes.</p>
+  <p>The line at the top of this page is the tagline, not a command. There is nothing to type in a terminal.</p>
+
+  <h2>Your data</h2>
+  <p>Sudo Play has no accounts, no analytics and no tracking. The app downloads one catalog file and opens public playlist links. Nothing about you leaves your Mac.</p>
+
+  <h2>Where to start</h2>
+  <ul>
+    <li><a href="/how-it-works/">How it works</a>: genres, moods and the daily pick.</li>
+    <li><a href="/install/">Install</a>: how to get the app onto your Mac. There is no release yet.</li>
+    <li><a href="/moods/">Moods</a>: what each mood is for.</li>
+    <li><a href="/tips/">Tips</a>: small ways to get more from the app.</li>
+    <li><a href="/privacy/">Privacy</a>: what this website loads.</li>
+  </ul>
 </Base>

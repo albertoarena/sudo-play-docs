@@ -1,11 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
-import Placeholder from '../components/Placeholder.astro';
+
+const app = 'https://github.com/albertoarena/sudo-play';
 ---
 <Base title="Privacy">
-  <Placeholder />
   <h1>Privacy</h1>
-  <p class="lead">Placeholder lead. This page will be about this website, not the app. The app's own privacy policy is linked in the footer.</p>
-  <h2>Placeholder heading</h2>
-  <p>Placeholder paragraph. What this site loads, and what it asks before loading anything else.</p>
+  <p class="lead">This page is about this website, sudoplay.dev. The app has its own <a href={`${app}/blob/main/PRIVACY.md`}>privacy policy</a>, which says what Sudo Play sends and stores.</p>
+
+  <h2>What this site loads</h2>
+  <p>Every file on this site comes from sudoplay.dev: the pages, the styles, the icons and the font. The font, Geist Mono, is stored here. It does not come from a font service.</p>
+  <p>The pages make no request to a third party. There are no embedded videos, no maps, no social buttons and no search service.</p>
+  <p>There is one small script. It adds the Copy button to code examples, and it sends nothing.</p>
+
+  <h2>Cookies and storage</h2>
+  <p>This site sets no cookies and stores nothing in your browser.</p>
+
+  <h2>Analytics</h2>
+  <p>This site has no analytics yet. If it adds them, it will ask you first, and nothing from Google or any other third party loads until you accept. This site has no advertising.</p>
+
+  <h2>The server</h2>
+  <p>Like any web server, the server that hosts this site sees the IP address that each request comes from. That is how a page reaches your browser.</p>
+
+  <h2>Links to other sites</h2>
+  <p>Some links, like the ones to GitHub, take you to another website. That website's own privacy terms apply there.</p>
+
+  <h2>Questions</h2>
+  <p>Open an <a href={`${app}/issues`}>issue on GitHub</a>.</p>
 </Base>
