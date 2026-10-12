@@ -123,6 +123,10 @@ already serves `trussphp.com`, `cogway.dev` and `albertoarena.it`.
   domain. The www rule was added above it, testing only the host. Do not
   re-add a row in the Redirects tool: cPanel would own the file again and
   regenerate its block
+- **The site is pulled by the server, never pushed to it.** Decided
+  2026-10-12, the same model as `trussphp.com`: Actions builds `dist/` into a
+  `deploy` branch and a cron job on the server pulls it into an atomic release.
+  The steps are phase 6 of `docs/PLAN.md`
 
 Remaining: `netsons-token.sudoplay.dev` TXT is a verification artefact and can
 be deleted.
