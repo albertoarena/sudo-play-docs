@@ -33,7 +33,10 @@ commit per green cycle.
      into a fresh release folder and points a `current` symlink at it, so a
      release is atomic and a rollback is one symlink
    - The docroot `.htaccess` rewrites traffic to `current/`. It must keep the
-     `www` rule from Deployment in `docs/SCOPE.md`
+     `www` rule from Deployment in `docs/SCOPE.md`, and send `404.html` with a
+     404 status for an unknown address (`ErrorDocument 404 /404.html`). The
+     preview server does this already, and an e2e test checks it there, but
+     only `curl` on the live site can check Apache
    - The server pulls without credentials, which needs the repository public.
      The site goes live when Sudo Play goes public, so the two arrive together
 

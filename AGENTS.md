@@ -14,13 +14,20 @@ new session has are answered there.
 
 ## Current state, so nothing is assumed
 
-Phases 1 to 3 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
+Phases 1 to 4 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
 no Starlight and no CSS framework. The design, made with Impeccable, is in
 `docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
 have real copy, and a test fails if any page still carries the
-`data-placeholder` marker. There are no Open Graph tags yet, and
-`placeholder/index.html` is still what the domain serves. Phase 4, SEO basics,
-is next.
+`data-placeholder` marker. `placeholder/index.html` is still what the domain
+serves. Phase 5, GA4 and the consent gate, is next, and waits on the
+measurement ID.
+
+SEO, from phase 4: every page passes a `description` to `Base`, which also
+writes the Open Graph tags. `src/pages/sitemap.xml.ts` builds the sitemap from
+`src/data/nav.ts`, so a new page is added there and nowhere else.
+`public/robots.txt` allows every crawler. The 404 is the one `noindex` page,
+with no canonical. `public/og.png` is the one preview image: when the design
+or the tagline changes, run `npm run og:image` and commit the PNG.
 
 The copy describes the app at the commit in `src/data/release.ts`
 (`checkedAt`). The app has no release yet, so `release` is `null`, and every
@@ -109,8 +116,9 @@ There are two suites, and `npm run check` builds once and runs both, locally and
 in CI:
 
 - `tests/`, Vitest in a node environment, checks the files in `dist/`: the
-  home page exists, and every page has a non empty `<title>` and exactly one
-  canonical on `https://sudoplay.dev`. Run it with `npm test`
+  home page exists, every page has a non empty `<title>` and exactly one
+  canonical on `https://sudoplay.dev` (the 404 has none), and the SEO files
+  and tags are in place. Run it with `npm test`
 - `e2e/smoke.spec.ts`, Playwright, checks the served site: the home page
   renders its heading, and no page makes a third party request before
   consent. Run it with `npm run test:e2e`
