@@ -8,11 +8,11 @@ Lives at **https://sudoplay.dev**.
 
 ## Status
 
-Phase 1 of `docs/PLAN.md`: the Astro site is scaffolded, with tooling and smoke
-tests only. The home page is a bare document with a title, a canonical and one
-heading. There is no design and no copy yet. `placeholder/index.html` is a
-single static page, with no build step and no third party request, and it is
-what the domain serves until phase 6 deploys the Astro build over it.
+Phases 1 to 3 of `docs/PLAN.md` are done: tooling and tests, the design, and
+the copy for all six pages. Phase 4, SEO basics, is next.
+`placeholder/index.html` is a single static page, with no build step and no
+third party request, and it is what the domain serves until phase 6 deploys
+the Astro build over it.
 
 `docs/SCOPE.md` says what is decided, what is deliberately excluded and why.
 `docs/PLAN.md` says the phases and what is still open.
@@ -31,9 +31,10 @@ npm run check                     # build once, then every test
 | Script | What it does |
 | --- | --- |
 | `npm run build` | `astro check`, then `astro build` into `dist/` |
-| `npm test` | Vitest checks on `dist/`: every page has a title and one canonical on `https://sudoplay.dev` |
-| `npm run test:e2e` | Playwright against the preview server: the home page heading, and **no built page makes a third party request before consent** |
+| `npm test` | Vitest checks on `dist/`: titles and canonicals, the design tokens and fonts, the copy on each page, and no placeholder text |
+| `npm run test:e2e` | Playwright against the preview server: the shell, navigation, focus, the 320px width, axe in light and dark, and **no built page makes a third party request before consent** |
 | `npm run check` | All three, in that order. CI runs this |
+| `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog in `../sudo-play` (or a path given as an argument). By hand, at each release |
 
 `npm test` and `npm run test:e2e` read `dist/` and do not build it, so run
 `npm run build` first or use `npm run check`. Both pick up new pages from
@@ -44,7 +45,8 @@ npm run check                     # build once, then every test
 ```
 src/           the Astro site
 tests/         Vitest checks on the built site
-e2e/           Playwright smoke tests
+e2e/           Playwright tests on the served site
+scripts/       check-catalog.ts, run by npm run check:catalog
 placeholder/   a single static page, no build, no external requests
 docs/          the scope and the plan for this repository
 ```

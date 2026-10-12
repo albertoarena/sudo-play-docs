@@ -30,7 +30,9 @@ commit per green cycle.
 ## Open
 
 - **The GA4 measurement ID.** Blocks phase 5
-- **Who writes the tips.** Blocks phase 3
+- ~~Who writes the tips.~~ **Answered on 2026-10-12:** Claude drafts them
+  from the app's README, `PRIVACY.md` and code, and Alberto approves them.
+  If a release has nothing to add, Tips can wait
 - **The licence for the site content.** Blocks making the repository public
 
 ## Not in v1

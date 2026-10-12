@@ -14,17 +14,30 @@ new session has are answered there.
 
 ## Current state, so nothing is assumed
 
-Phase 1 of `docs/PLAN.md`: **scaffold and smoke tests, tooling only.** Plain
-Astro with strict TypeScript, no Starlight and no CSS framework. The home page
-is a bare document: a title, a canonical and one `<h1>`. No styles, no copy and
-no Open Graph tags. `placeholder/index.html` is still what the domain serves.
+Phases 1 to 3 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
+no Starlight and no CSS framework. The design, made with Impeccable, is in
+`docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
+have real copy, and a test fails if any page still carries the
+`data-placeholder` marker. There are no Open Graph tags yet, and
+`placeholder/index.html` is still what the domain serves. Phase 4, SEO basics,
+is next.
 
-Nothing adds styles, copy or layout before phase 2, where Alberto designs the
-site with Impeccable. Work is test first: the failing test is committed, then
-the code, one commit per green cycle.
+The copy describes the app at the commit in `src/data/release.ts`
+(`checkedAt`). The app has no release yet, so `release` is `null`, and every
+page states the release through `releaseNote()`. A test forbids writing "no
+release" anywhere else. When the first release ships, fill in `release` there,
+then recheck the Install steps against the real build.
 
-`docs/PLAN.md` holds the phases and the three open questions: the GA4
-measurement ID, who writes the tips, and the licence for the site content.
+The moods and genres are copied into `src/data/catalog.ts` from the app's
+`catalog/playlists.yaml`. `npm run check:catalog` compares the copy with a
+local `sudo-play` checkout at `checkedAt`. Run it by hand at each release: CI
+has no app checkout.
+
+Work is test first: the failing test is committed, then the code, one commit
+per green cycle.
+
+`docs/PLAN.md` holds the phases and the two open questions: the GA4
+measurement ID and the licence for the site content.
 
 This repository is **private now and public later**. Everything committed while
 it is private is readable the moment it flips, so no credentials and no draft
