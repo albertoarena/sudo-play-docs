@@ -165,6 +165,17 @@ describe('Privacy', () => {
     expect(content).toMatch(/EU-US Data Privacy Framework/);
   });
 
+  // DNS is on Cloudflare, DNS only and never proxied (AGENTS.md), so
+  // Cloudflare answers the lookup and never sees a page request.
+  it('says Cloudflare is DNS only, not a proxy', () => {
+    const table = content.match(/<table[\s\S]*?<\/table>/)?.[0] ?? '';
+    const row = [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map((match) => match[1]).find((cells) => /<td>Cloudflare/.test(cells)) ?? '';
+
+    expect(content).not.toMatch(/prox(y|ies)/i);
+    expect(content).not.toMatch(/Cloudflare[^.]*every request|every request[^.]*Cloudflare/i);
+    expect(row).toMatch(/DNS only/);
+  });
+
   it('lists the third parties in a table', () => {
     const table = content.match(/<table[\s\S]*?<\/table>/)?.[0] ?? '';
     const rows = [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map((row) => row[1]);
