@@ -30,6 +30,22 @@ function canonical(html: string): string {
   return html.match(/<link rel="canonical" href="([^"]*)"/)?.[1] ?? '';
 }
 
+function decode(text: string): string {
+  return text
+    .replace(/&#39;|&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+}
+
+// The content of a meta tag, by name or by property.
+function meta(html: string, key: string): string[] {
+  return (html.match(/<meta\b[^>]*>/g) ?? [])
+    .filter((tag) => tag.includes(`name="${key}"`) || tag.includes(`property="${key}"`))
+    .map((tag) => decode(tag.match(/\bcontent="([^"]*)"/)?.[1] ?? ''));
+}
+
 describe('robots.txt', () => {
   const robots = read('robots.txt');
 
@@ -83,4 +99,38 @@ describe('404.html', () => {
     expect(html).toMatch(/<h1>Page not found<\/h1>/);
     expect(html).toMatch(/<a\b[^>]*href="\/"/);
   });
+});
+
+describe.each(indexable)('%s', (file) => {
+  const html = read(file);
+  const [description] = meta(html, 'description');
+  const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
+
+  // Search results cut a description at about 160 characters.
+  it('has one description, short enough to show in full', () => {
+    expect(meta(html, 'description')).toHaveLength(1);
+    expect(description.trim()).not.toBe('');
+    expect(description.length).toBeLessThanOrEqual(160);
+  });
+
+  // AGENTS.md: plain English, no em dashes and no en dashes.
+  it('has no em dash and no en dash in its description', () => {
+    expect(description).not.toMatch(/[–—]/);
+  });
+
+  // .dev is HSTS preloaded, so og:url is https://sudoplay.dev like the
+  // canonical, and the same address.
+  it('describes itself to a link preview', () => {
+    expect(meta(html, 'og:type')).toEqual(['website']);
+    expect(meta(html, 'og:site_name')).toEqual(['Sudo Play']);
+    expect(meta(html, 'og:title')).toEqual([title]);
+    expect(meta(html, 'og:description')).toEqual([description]);
+    expect(meta(html, 'og:url')).toEqual([canonical(html)]);
+  });
+});
+
+it('gives every indexable page its own description', () => {
+  const descriptions = indexable.map((file) => meta(read(file), 'description')[0]);
+
+  expect(new Set(descriptions).size).toBe(indexable.length);
 });
