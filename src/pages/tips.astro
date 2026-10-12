@@ -1,11 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
-import Placeholder from '../components/Placeholder.astro';
+
+const app = 'https://github.com/albertoarena/sudo-play';
 ---
 <Base title="Tips">
-  <Placeholder />
   <h1>Tips</h1>
-  <p class="lead">Placeholder lead. This page will collect a few tips for using the app.</p>
-  <h2>Placeholder heading</h2>
-  <p>Placeholder paragraph. Who writes the tips is still open.</p>
+  <p class="lead">Small ways to get more from Sudo Play.</p>
+
+  <h2>Share today's pick</h2>
+  <p>Everyone who chooses the same genre and mood gets the same playlist all day. Tell a teammate "rock, Debugging", and you are listening to the same thing.</p>
+
+  <h2>Have a playlist waiting</h2>
+  <p>In Settings, turn on launch at login and the daily reminder. When you start work, today's pick is ready.</p>
+
+  <h2>Set your usual genre and mood</h2>
+  <p>Settings has a default genre and mood, so the window opens on what you listen to most.</p>
+
+  <h2>No Spotify app? Use the web player</h2>
+  <p>Choose the web player in Settings, and playlists open in your browser.</p>
+
+  <h2>Keep your hands on the keyboard</h2>
+  <p>Enter plays, <kbd>N</kbd> is Next, <kbd>S</kbd> is Surprise me, and Esc closes the window. The full list is in <a href="/how-it-works/">How it works</a>.</p>
+
+  <h2>Use your own catalog</h2>
+  <p>Settings has the catalog URL. Point it at a fork, or at a private catalog of your team's playlists. That server then sees the app's daily download instead of GitHub.</p>
+
+  <h2>Add a playlist without waiting for a release</h2>
+  <p>Once your pull request is merged, your playlist reaches everyone within a day. The README explains how, in <a href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</a>.</p>
 </Base>
