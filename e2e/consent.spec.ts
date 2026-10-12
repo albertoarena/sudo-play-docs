@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { builtPages } from './pages';
+import { port } from '../playwright.config';
 
 // The consent gate, on the build with a test measurement ID (dist-consent/).
 // The first half of the promise is the same as smoke.spec.ts: no third party
@@ -104,8 +105,10 @@ test('the footer withdraws an accept, and the page loads nothing after', async (
 });
 
 test('the build without an ID has no Analytics settings in the footer', async ({ page }) => {
-  await page.goto('http://localhost:4321/');
+  await page.goto(`http://localhost:${port}/`);
 
+  // Proves this is our site, so another server on the port cannot pass it.
+  await expect(page.getByRole('heading', { level: 1, name: 'Sudo Play' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Analytics settings' })).toHaveCount(0);
 });
 

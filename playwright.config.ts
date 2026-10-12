@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const port = 4321;
+export const port = 4321;
 // The consent build: the same site with a test measurement ID, in dist-consent/.
 const consentPort = 4322;
 
