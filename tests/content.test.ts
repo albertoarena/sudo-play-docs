@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { moods } from '../src/data/catalog';
 
 // Phase 3 checks on the built copy. Like dist.test.ts, these read dist/, so
 // `npm test` needs a `npm run build` before it.
@@ -9,7 +10,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'privacy/index.html'];
+const finished = ['index.html', 'moods/index.html', 'privacy/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -95,5 +96,35 @@ describe('Privacy', () => {
     expect(content).toMatch(/Google Analytics/);
     expect(content).toMatch(/accept/i);
     expect(content).not.toMatch(/no analytics/i);
+  });
+});
+
+describe('Moods', () => {
+  const content = column(read('moods/index.html'));
+
+  it('lists every mood from the catalog, in catalog order', () => {
+    const positions = moods.map((mood) => content.indexOf(mood.label));
+
+    expect(positions.every((position) => position !== -1)).toBe(true);
+    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    for (const mood of moods) expect(content).toContain(mood.description);
+  });
+
+  // The label already says what the mood is, so a screen reader skips the
+  // emoji, as it does in the app.
+  it('shows each emoji once, hidden from screen readers', () => {
+    for (const mood of moods) {
+      expect(content.split(mood.emoji), mood.id).toHaveLength(2);
+      expect(content).toMatch(new RegExp(`<[^>]*aria-hidden="true"[^>]*>${mood.emoji}<`));
+    }
+  });
+
+  it('says the moods come from the app catalog', () => {
+    expect(content).toMatch(/catalog/i);
+  });
+
+  // Link, do not copy: adding a playlist is documented in the app's README.
+  it('links to the README section on adding a playlist', () => {
+    expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
   });
 });
