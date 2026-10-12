@@ -24,8 +24,18 @@ commit per green cycle.
 4. **SEO basics:** `robots.txt`, sitemap, 404, Open Graph, `og:image`
 5. **GA4 and the consent gate**, ported with its tests from
    `laravel-truss-docs`
-6. **Deploy** over the placeholder on Netsons, with `.htaccess` in `public/`,
-   verified live with `curl`
+6. **Deploy** over the placeholder on Netsons, verified live with `curl`, the
+   way `trussphp.com` deploys (`albertoarena/laravel-truss-docs`, see its
+   `DEPLOYMENT.md`). Decided 2026-10-12:
+   - GitHub Actions builds the site on every push to `main` and force pushes
+     `dist/` to a `deploy` branch. CI never connects to the server
+   - A cron job on the server pulls the `deploy` branch over HTTPS, unpacks it
+     into a fresh release folder and points a `current` symlink at it, so a
+     release is atomic and a rollback is one symlink
+   - The docroot `.htaccess` rewrites traffic to `current/`. It must keep the
+     `www` rule from Deployment in `docs/SCOPE.md`
+   - The server pulls without credentials, which needs the repository public.
+     The site goes live when Sudo Play goes public, so the two arrive together
 
 ## Open
 
