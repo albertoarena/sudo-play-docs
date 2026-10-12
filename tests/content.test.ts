@@ -119,6 +119,12 @@ describe('Moods', () => {
     }
   });
 
+  // The catalog's text mixes feelings and moments, and reads naturally after
+  // "Feels like". Decided 2026-10-12.
+  it('heads the description column "Feels like"', () => {
+    expect(content).toMatch(/<th scope="col">Feels like<\/th>/);
+  });
+
   it('says the moods come from the app catalog', () => {
     expect(content).toMatch(/catalog/i);
   });
