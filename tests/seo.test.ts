@@ -64,3 +64,23 @@ describe('sitemap.xml', () => {
     for (const loc of locs) expect(new URL(loc).origin).toBe(origin);
   });
 });
+
+describe('404.html', () => {
+  const html = read('404.html');
+
+  it('is built', () => {
+    expect(html).not.toBe('');
+  });
+
+  // A 404 is not a page to index, and has no address of its own to call
+  // canonical: the server sends it for any address that does not exist.
+  it('asks not to be indexed and has no canonical', () => {
+    expect(html).toContain('<meta name="robots" content="noindex">');
+    expect(canonical(html)).toBe('');
+  });
+
+  it('says the page was not found and links home', () => {
+    expect(html).toMatch(/<h1>Page not found<\/h1>/);
+    expect(html).toMatch(/<a\b[^>]*href="\/"/);
+  });
+});

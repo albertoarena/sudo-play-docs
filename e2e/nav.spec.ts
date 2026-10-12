@@ -27,9 +27,14 @@ for (const path of built) {
       }
     });
 
+    // The 404 is in no list, so no link is current there.
     test('marks exactly one link as the current page', async ({ page }) => {
       const current = page.locator('[aria-current="page"]');
 
+      if (path === '/404.html') {
+        await expect(current).toHaveCount(0);
+        return;
+      }
       await expect(current).toHaveCount(1);
       await expect(current).toHaveAttribute('href', path);
     });
@@ -47,4 +52,14 @@ pages.forEach((entry, index) => {
     if (next) await expect(pager.getByRole('link', { name: next.label })).toHaveAttribute('href', next.href);
     await expect(pager.getByRole('link')).toHaveCount((previous ? 1 : 0) + (next ? 1 : 0));
   });
+});
+
+// The preview server sends 404.html for an address that does not exist, as
+// the live server must. docs/PLAN.md, phase 6.
+test('an unknown address gets the 404 page with a 404 status', async ({ page }) => {
+  const response = await page.goto('/no-such-page/');
+
+  expect(response!.status()).toBe(404);
+  await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
+  await expect(page.getByRole('main').getByRole('link', { name: /home/i })).toHaveAttribute('href', '/');
 });
