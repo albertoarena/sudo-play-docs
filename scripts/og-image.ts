@@ -4,11 +4,18 @@
 //   npm run og:image
 //
 // It draws the Home terminal panel at 1200 by 630 with the site's own tokens,
-// mark and font, so the image matches the site without a design tool. Only
-// Geist Mono is used, because a system font differs from machine to machine
-// and would make the PNG change with whoever ran the script.
+// mark and fonts, so the image matches the site without a design tool. As on
+// the site, Geist Mono sets only the brand line, and the name and the line
+// under it are the system sans, as in the masthead. That is SF Pro on a Mac,
+// the face a Mac visitor sees, so the script runs only on macOS: elsewhere the
+// system sans differs and the PNG would change with whoever ran it.
 import { readFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
+
+if (process.platform !== 'darwin') {
+  console.error('og:image draws the name in the system sans, so run it on macOS.');
+  process.exit(1);
+}
 
 const font = readFileSync('public/fonts/geist-mono/geist-mono-latin-wght-normal.woff2').toString('base64');
 
@@ -75,8 +82,9 @@ const html = `<!doctype html>
   }
 
   .mark { width: 72px; height: auto; flex: none; }
-  .name { color: ${term.fg}; font-size: 36px; font-weight: 650; letter-spacing: -0.01em; }
-  .tagline { font-size: 24px; line-height: 1.4; }
+  .brand { font-family: system-ui, -apple-system, sans-serif; }
+  .name { color: ${term.fg}; font-size: 40px; font-weight: 650; line-height: 1.2; letter-spacing: -0.015em; }
+  .tagline { font-size: 28px; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -91,7 +99,7 @@ const html = `<!doctype html>
         <rect x="36" y="12" width="4" height="16" rx="1" />
       </g>
     </svg>
-    <div>
+    <div class="brand">
       <div class="name">Sudo Play</div>
       <div class="tagline">Today's Spotify playlist for the mood you are coding in.</div>
     </div>

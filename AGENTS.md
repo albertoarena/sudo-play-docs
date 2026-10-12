@@ -27,7 +27,7 @@ writes the Open Graph tags. `src/pages/sitemap.xml.ts` builds the sitemap from
 `src/data/nav.ts`, so a new page is added there and nowhere else.
 `public/robots.txt` allows every crawler. The 404 is the one `noindex` page,
 with no canonical. `public/og.png` is the one preview image: when the design
-or the tagline changes, run `npm run og:image` and commit the PNG.
+or the tagline changes, run `npm run og:image` on a Mac and commit the PNG.
 
 The copy describes the app at the commit in `src/data/release.ts`
 (`checkedAt`). The app has no release yet, so `release` is `null`, and every

@@ -35,7 +35,7 @@ npm run check                     # build once, then every test
 | `npm test` | Vitest checks on `dist/`: titles and canonicals, the design tokens and fonts, the copy on each page, no placeholder text, and the SEO files and tags |
 | `npm run test:e2e` | Playwright against the preview server: the shell, navigation, focus, the 320px width, axe in light and dark, and **no built page makes a third party request before consent** |
 | `npm run check` | All three, in that order. CI runs this |
-| `npm run og:image` | Draws `public/og.png`, the link preview image, with Playwright. By hand, when the design or the tagline changes. Commit the PNG |
+| `npm run og:image` | Draws `public/og.png`, the link preview image, with Playwright. On macOS only, by hand, when the design or the tagline changes. Commit the PNG |
 | `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog in `../sudo-play` (or a path given as an argument). By hand, at each release |
 
 `npm test` and `npm run test:e2e` read `dist/` and do not build it, so run
