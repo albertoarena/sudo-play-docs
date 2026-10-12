@@ -53,6 +53,11 @@ language label, and a Copy button. Only the panel is dark, and the dark panel
 means identity. In dark mode the panel keeps its dots and has no label, and code
 blocks sit on `#18181b`. Nobody should mistake the tagline for a command.
 
+Changed 2026-10-12: no page in phase 3 has real code, so the labelled code
+block and its Copy button were removed, with their tests. A bare `pre` keeps
+the look above, without the label or the button. If a page ever needs real
+code, this section is the design to bring back; git has the component.
+
 ### Wayfinding
 
 Six pages do not need a sidebar. The navigation is one row. At 320px it wraps to
@@ -209,9 +214,9 @@ declined.
 
 Decided 2026-10-11.
 
-- **One small script: the Copy button.** About twenty lines, our own, inline,
-  no request. The button exists only when the script runs, so without
-  JavaScript there is no button and nothing broken
+- **No script.** The Copy button was the site's one script, and it went with
+  the code block on 2026-10-12. The consent banner in phase 5 is the next
+  script, and the same rules hold: our own, inline, no request
 - **No syntax colours.** Astro's Shiki highlighting is off. All code is set
   in `--fg`. Green never decorates. Changed 2026-10-12: keys and comments were
   to be in `--fg-muted`, but with highlighting off nothing marks a key or a

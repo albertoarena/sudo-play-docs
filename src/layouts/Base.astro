@@ -41,31 +41,5 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <PrevNext />
     </main>
     <Footer />
-    <script is:inline>
-      // The site's own script, and its only one: a Copy button on each code
-      // block. Nothing is fetched. Without JavaScript there is no button.
-      for (const block of document.querySelectorAll('figure.code-block')) {
-        const actions = document.createElement('div');
-        const status = document.createElement('span');
-        const button = document.createElement('button');
-        actions.className = 'code-actions';
-        status.className = 'copy-status';
-        status.setAttribute('role', 'status');
-        button.className = 'copy';
-        button.type = 'button';
-        button.textContent = 'Copy';
-        button.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(block.querySelector('pre').textContent);
-            status.textContent = 'Copied';
-          } catch {
-            status.textContent = 'Copy failed. Select the code instead.';
-          }
-          setTimeout(() => (status.textContent = ''), 3000);
-        });
-        actions.append(status, button);
-        block.append(actions);
-      }
-    </script>
   </body>
 </html>
