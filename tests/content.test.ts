@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { moods } from '../src/data/catalog';
+import { release, releaseNote } from '../src/data/release';
 
 // Phase 3 checks on the built copy. Like dist.test.ts, these read dist/, so
 // `npm test` needs a `npm run build` before it.
@@ -10,7 +11,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'how-it-works/index.html', 'moods/index.html', 'privacy/index.html'];
+const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -178,5 +179,32 @@ describe('How it works', () => {
     expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
     expect(content).not.toContain('catalog/playlists.yaml');
     for (const mood of moods) expect(content).not.toContain(mood.description);
+  });
+});
+
+describe('Install', () => {
+  const content = column(read('install/index.html'));
+
+  it('states the release from the data file', () => {
+    expect(content).toContain(releaseNote(release));
+  });
+
+  // The app's README: the first release is a signed DMG on a GitHub Release.
+  it('says what the first release will be, and links to the releases page', () => {
+    expect(content).toMatch(/signed DMG/);
+    expect(content).toMatch(/GitHub Release/);
+    expect(links(content)).toContain(`${app}/releases`);
+  });
+
+  // Building from source is for contributors, and CONTRIBUTING.md explains it.
+  it('links to the app contributing guide for building from source', () => {
+    expect(content).toMatch(/source/i);
+    expect(links(content)).toContain(`${app}/blob/main/CONTRIBUTING.md`);
+  });
+
+  // A warning box is design work for Impeccable, not for this page's copy.
+  it('has no note or warning box', () => {
+    expect(content).not.toContain('class="note"');
+    expect(content).not.toMatch(/role="(note|alert)"/);
   });
 });
