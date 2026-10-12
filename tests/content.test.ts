@@ -117,6 +117,78 @@ describe('Privacy', () => {
     expect(content).not.toMatch(/Copy button/i);
     expect(content).toMatch(/script[^.]*banner|banner[^.]*script/i);
   });
+
+  // The facts below were decided on 2026-10-12. The page is rewritten from
+  // laravel-truss-docs' privacy page, keeping only what is true here.
+  it('names the data controller and the contact address', () => {
+    expect(content).toMatch(/Alberto Arena/);
+    expect(content).toMatch(/data controller/i);
+    expect(links(content)).toContain('mailto:hello@albertoarena.it');
+  });
+
+  // The app repository is private, so an issue link does not work for a
+  // visitor. The email address replaces it.
+  it('does not send visitors to GitHub issues', () => {
+    expect(links(content).filter((href) => href.includes('/issues'))).toEqual([]);
+  });
+
+  it('says what Google Analytics records after an accept', () => {
+    for (const fact of [/pages you visit/i, /referring page/i, /approximate location/i, /device and browser/i, /scroll/i, /links? (leading|leaving)[^.]*site/i]) {
+      expect(content).toMatch(fact);
+    }
+    expect(content).toMatch(/Google Signals/);
+    expect(content).toMatch(/processor/i);
+  });
+
+  it('keeps the data for 14 months', () => {
+    expect(content).toMatch(/14 months/);
+  });
+
+  it('says nothing from Google loads before Accept, not even a cookieless ping', () => {
+    expect(content).toMatch(/cookieless ping/i);
+    expect(content).toMatch(/(decline|ignore)[^.]*never contacted|never contacted[^.]*(decline|ignore)/i);
+  });
+
+  it('names the Google cookies, set only after an accept', () => {
+    expect(content).toContain('<code>_ga</code>');
+    expect(content).toContain('<code>_ga_&lt;id&gt;</code>');
+  });
+
+  it('gives the legal basis for each kind of processing', () => {
+    expect(content).toMatch(/consent[^.]*Article 6\(1\)\(a\)/i);
+    expect(content).toMatch(/legitimate interest[^.]*Article 6\(1\)\(f\)/i);
+  });
+
+  it('says where the data goes and under what framework', () => {
+    expect(content).toMatch(/Google LLC/);
+    expect(content).toMatch(/United States/);
+    expect(content).toMatch(/EU-US Data Privacy Framework/);
+  });
+
+  it('lists the third parties in a table', () => {
+    const table = content.match(/<table[\s\S]*?<\/table>/)?.[0] ?? '';
+    const rows = [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map((row) => row[1]);
+
+    for (const who of ['Cloudflare', 'Google', 'hosting provider']) {
+      expect(rows.some((row) => new RegExp(`<td>[^<]*${who}`, 'i').test(row)), who).toBe(true);
+    }
+    expect(table).toMatch(/Italy/);
+  });
+
+  it('covers links to other sites, your rights and changes, with a date', () => {
+    expect(content).toMatch(/<h2>Links to other sites<\/h2>/);
+    expect(content).toMatch(/<h2>Your rights<\/h2>/);
+    expect(content).toMatch(/<h2>Changes<\/h2>/);
+    expect(content).toMatch(/Last updated: \d{1,2} [A-Z][a-z]+ \d{4}/);
+  });
+
+  // True on trussphp.com, not here. Cloudflare Web Analytics stays off: its
+  // script would be a third party request before consent.
+  it('claims nothing that is only true of the Truss site', () => {
+    for (const claim of [/Web Analytics/i, /European endpoint/i, /theme builder/i, /\bdemo\b/i, /In the wild/i]) {
+      expect(content).not.toMatch(claim);
+    }
+  });
 });
 
 describe('Moods', () => {
