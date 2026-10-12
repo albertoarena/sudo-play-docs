@@ -113,7 +113,7 @@ text and 3 for UI edges and focus.
 | Token | Hex | Use | Contrast |
 |---|---|---|---|
 | `--bg` | `#ffffff` | Page | |
-| `--bg-subtle` | `#fafafa` | Code blocks, table stripes | |
+| `--bg-subtle` | `#fafafa` | Code blocks, inline code, notes | |
 | `--fg` | `#18181b` | Body text | 17.7 on bg |
 | `--fg-muted` | `#52525c` | Secondary text, captions | 7.7 on bg |
 | `--border` | `#e4e4e7` | Dividers, code block edges (decorative only) | 1.3, not a UI edge |
@@ -121,7 +121,7 @@ text and 3 for UI edges and focus.
 | `--accent` | `#007a55` | Links, selected state | 5.4 on bg |
 | `--accent-hover` | `#006045` | Hover and pressed | 7.6 with white |
 | `--on-accent` | `#ffffff` | Text on accent fill | 5.4 on accent |
-| `--warn` | `#bb4d00` | Real warnings and errors only | 5.0 on bg |
+| `--warn` | `#bb4d00` | Real warnings and errors only. Reserved | 5.0 on bg |
 | `--focus` | `#007a55` | 2px outline, 2px offset | 5.4 on bg |
 
 ### Dark
@@ -129,7 +129,7 @@ text and 3 for UI edges and focus.
 | Token | Hex | Use | Contrast |
 |---|---|---|---|
 | `--bg` | `#09090b` | Page | |
-| `--bg-subtle` | `#18181b` | Code blocks, table stripes | |
+| `--bg-subtle` | `#18181b` | Code blocks, inline code, notes | |
 | `--fg` | `#f4f4f5` | Body text | 18.1 on bg |
 | `--fg-muted` | `#9f9fa9` | Secondary text | 7.6 on bg, 6.8 on subtle |
 | `--border` | `#27272a` | Dividers (decorative only) | |
@@ -137,7 +137,7 @@ text and 3 for UI edges and focus.
 | `--accent` | `#00d492` | Links, selected state | 10.3 on bg |
 | `--accent-hover` | `#5ee9b5` | Hover | 13.1 with dark text |
 | `--on-accent` | `#09090b` | Text on accent fill | 10.3 on accent |
-| `--warn` | `#ffb900` | Warnings and errors | 11.6 on bg |
+| `--warn` | `#ffb900` | Real warnings and errors only. Reserved | 11.6 on bg |
 | `--focus` | `#00d492` | 2px outline, 2px offset | 10.3 on bg |
 
 ### The terminal, the same in both modes
@@ -157,7 +157,15 @@ The masthead band and the Home panel.
 ### Rules
 
 - **One accent.** Green means "act here" or "you are here". Never decoration
-- **Amber is for problems only.** Information uses `--fg-muted`, never `--warn`
+- **Amber is for problems only.** Information uses `--fg-muted`, never `--warn`.
+  No phase 2 surface needs it. It stays defined for the first real warning,
+  likely on Install, rather than being removed and contrast checked again.
+  Decided 2026-10-12
+- **Tables have no stripes.** Rows are split by a `--border` hairline and the
+  header by `--border-strong`. Changed 2026-10-12: stripes were planned in
+  `--bg-subtle`, but `#fafafa` on white barely shows, and stripes beside
+  hairlines would be two ways of doing one job. Revisit if a page needs a long
+  table
 - **Never `#71717b` as text on the dark page.** It measures 4.1. Use `#9f9fa9`.
   It is fine as a border
 - **Focus is authored**, never the browser default
@@ -204,8 +212,11 @@ Decided 2026-10-11.
 - **One small script: the Copy button.** About twenty lines, our own, inline,
   no request. The button exists only when the script runs, so without
   JavaScript there is no button and nothing broken
-- **No syntax colours.** Astro's Shiki highlighting is off. Code is set in
-  `--fg`, with keys and comments in `--fg-muted`. Green never decorates
+- **No syntax colours.** Astro's Shiki highlighting is off. All code is set
+  in `--fg`. Green never decorates. Changed 2026-10-12: keys and comments were
+  to be in `--fg-muted`, but with highlighting off nothing marks a key or a
+  comment, and telling them apart takes a tokeniser for every language. If
+  phase 3's examples carry comments that should recede, mute comments alone
 - **All six routes exist from phase 2, as placeholders.** Each one shows a
   visible Placeholder label and carries a marker that a phase 3 test can
   forbid, so placeholder text cannot ship by accident
