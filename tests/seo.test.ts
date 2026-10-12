@@ -127,6 +127,14 @@ describe.each(indexable)('%s', (file) => {
     expect(meta(html, 'og:description')).toEqual([description]);
     expect(meta(html, 'og:url')).toEqual([canonical(html)]);
   });
+
+  // The same language the page declares on <html lang>.
+  it('gives its locale to a link preview', () => {
+    const lang = html.match(/<html\b[^>]*\blang="([^"]*)"/)?.[1];
+
+    expect(lang).toBe('en');
+    expect(meta(html, 'og:locale')).toEqual([lang]);
+  });
 });
 
 it('gives every indexable page its own description', () => {
