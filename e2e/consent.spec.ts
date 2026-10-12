@@ -119,6 +119,21 @@ test('Decline and Accept are the same size', async ({ page }) => {
   expect(Math.abs(decline!.width - accept!.width)).toBeLessThanOrEqual(1);
 });
 
+// Neither answer is styled as the one the site wants: no fill, colour or
+// weight sets Accept apart. Decided 2026-10-12.
+test('Decline and Accept look the same', async ({ page }) => {
+  await page.goto('/');
+  const look = (name: string) =>
+    banner(page)
+      .getByRole('button', { name })
+      .evaluate((button) => {
+        const style = getComputedStyle(button);
+        return [style.backgroundColor, style.color, style.borderColor, style.fontWeight, style.fontSize];
+      });
+
+  expect(await look('Accept analytics')).toEqual(await look('Decline'));
+});
+
 test('the banner links to the Privacy page', async ({ page }) => {
   await page.goto('/');
 
