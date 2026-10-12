@@ -162,6 +162,12 @@ describe('How it works', () => {
     expect(table).toMatch(/arrow keys/i);
   });
 
+  // The app's code at checkedAt falls back to autoplay when nothing is chosen,
+  // which is why the permission prompt appears without a visit to Settings.
+  it('says autoplay is the default player mode', () => {
+    expect(content).toMatch(/autoplay[^.]*default|default[^.]*autoplay/i);
+  });
+
   it('mentions the optional daily reminder', () => {
     expect(content).toMatch(/daily reminder/i);
   });
@@ -199,7 +205,7 @@ describe('Install', () => {
   // Building from source is for contributors, and CONTRIBUTING.md explains it.
   it('links to the app contributing guide for building from source', () => {
     expect(content).toMatch(/source/i);
-    expect(links(content)).toContain(`${app}/blob/main/CONTRIBUTING.md`);
+    expect(links(content)).toContain(`${app}/blob/main/CONTRIBUTING.md#changing-the-code`);
   });
 
   // A warning box is design work for Impeccable, not for this page's copy.
