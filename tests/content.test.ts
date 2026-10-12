@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { moods } from '../src/data/catalog';
 import { release, releaseNote } from '../src/data/release';
+import { STORAGE_KEY } from '../src/scripts/consent';
 
 // Phase 3 checks on the built copy. Like dist.test.ts, these read dist/, so
 // `npm test` needs a `npm run build` before it.
@@ -97,6 +98,24 @@ describe('Privacy', () => {
     expect(content).toMatch(/Google Analytics/);
     expect(content).toMatch(/accept/i);
     expect(content).not.toMatch(/no analytics/i);
+  });
+
+  // Claims must match behaviour: a key the code stores and the page does not
+  // name is how a privacy page becomes untrue.
+  it('names the key the choice is stored under', () => {
+    expect(content).toContain(STORAGE_KEY);
+  });
+
+  it('says how to change or withdraw the choice', () => {
+    expect(content).toMatch(/Analytics settings/);
+    expect(content).toMatch(/footer/i);
+  });
+
+  // The Copy button and its script went with the code block on 2026-10-12.
+  // The banner is the site's one script now.
+  it('describes the script the site has, not the one it removed', () => {
+    expect(content).not.toMatch(/Copy button/i);
+    expect(content).toMatch(/script[^.]*banner|banner[^.]*script/i);
   });
 });
 
