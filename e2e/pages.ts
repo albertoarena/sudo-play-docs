@@ -12,3 +12,8 @@ export function builtPages(dir = 'dist'): string[] {
     return [url.replace(/(^|\/)index\.html$/, '$1')];
   });
 }
+
+// No written page has real code yet, so the code block and its Copy button
+// are tested on the phase 2 mock, kept on a page that is still a
+// placeholder. When that page is written, move the mock or test real code.
+export const mockPage = '/tips/';

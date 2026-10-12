@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { builtPages } from './pages';
+import { builtPages, mockPage } from './pages';
 
 // PRODUCT.md: the tagline is not a command. It is never set as code and never
 // offered for copying. Real code sits in a labelled block with a Copy button.
@@ -17,7 +17,7 @@ test.describe('code blocks', () => {
   test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
 
   test('are labelled and copy their code', async ({ page }) => {
-    await page.goto('/how-it-works/');
+    await page.goto(mockPage);
     const block = page.locator('figure.code-block').first();
 
     await expect(block.locator('figcaption')).toHaveText('catalog/playlists.yaml');
@@ -33,7 +33,7 @@ test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
   test('code blocks show no Copy button', async ({ page }) => {
-    await page.goto('/how-it-works/');
+    await page.goto(mockPage);
 
     await expect(page.locator('figure.code-block pre')).not.toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Copy' })).toHaveCount(0);

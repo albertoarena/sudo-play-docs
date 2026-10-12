@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { builtPages } from './pages';
+import { builtPages, mockPage } from './pages';
 
 // The narrowest phone the site supports. Nothing may scroll sideways; code
 // that is too wide scrolls inside its own block instead.
@@ -50,7 +50,7 @@ test('no nav row holds a single link at 320px', async ({ page }) => {
 });
 
 test('a code block that scrolls shows an edge fade', async ({ page }) => {
-  await page.goto('/how-it-works/');
+  await page.goto(mockPage);
   const pre = page.locator('figure.code-block pre').first();
   const scrolls = await pre.evaluate((el) => el.scrollWidth > el.clientWidth);
   const style = await pre.evaluate((el) => {

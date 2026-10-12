@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { mockPage } from './pages';
 
 // Focus is authored: a solid outline of at least 2px in the palette's focus
 // colour, never the browser default. Inside the dark band it is --term-focus.
@@ -8,7 +9,7 @@ const focus = { light: 'rgb(0, 122, 85)', dark: 'rgb(0, 212, 146)' };
 for (const colorScheme of ['light', 'dark'] as const) {
   test(`every focus stop shows an authored outline, ${colorScheme}`, async ({ page }) => {
     await page.emulateMedia({ colorScheme });
-    await page.goto('/how-it-works/');
+    await page.goto(mockPage);
 
     const stops = await page.locator('a[href], button').count();
     for (let i = 0; i < stops; i++) {
