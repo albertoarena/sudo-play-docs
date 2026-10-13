@@ -48,6 +48,11 @@ describe.each(existsSync(dist) ? htmlFiles(dist) : [])('%s', (file) => {
     }
   });
 
+  it('links to Credits from the footer', () => {
+    const footer = html.match(/<footer\b[\s\S]*?<\/footer>/)?.[0] ?? '';
+    expect(footer).toMatch(/<a\b[^>]*\bhref="\/credits\/"[^>]*>Credits<\/a>/);
+  });
+
   // The 404 is the one page without a canonical: it is served for any
   // address that does not exist, and asks not to be indexed.
   if (file === join(dist, '404.html')) {
