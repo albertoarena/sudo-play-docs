@@ -34,11 +34,13 @@ describe.each(existsSync(dist) ? htmlFiles(dist) : [])('%s', (file) => {
     expect(title.trim()).not.toBe('');
   });
 
-  // A link that leaves the site from the footer opens in a new tab, as on
-  // trussphp.com, and says so to a screen reader. Decided 2026-10-13.
-  it('opens every external footer link in a new tab, and says so', () => {
-    const footer = html.match(/<footer\b[\s\S]*?<\/footer>/)?.[0] ?? '';
-    const external = [...footer.matchAll(/<a\b([^>]*\bhref="https?:[^"]*"[^>]*)>([\s\S]*?)<\/a>/g)];
+  // Every link that leaves the site opens in a new tab, as on trussphp.com,
+  // and says so to a screen reader. Decided 2026-10-13 for the footer, and
+  // for every page the same day.
+  it('opens every external link in a new tab, and says so', () => {
+    const external = [...html.matchAll(/<a\b([^>]*\bhref="https?:[^"]*"[^>]*)>([\s\S]*?)<\/a>/g)].filter(
+      ([, attributes]) => new URL(attributes.match(/\bhref="([^"]*)"/)![1]).origin !== origin,
+    );
 
     expect(external.length).toBeGreaterThan(0);
     for (const [, attributes, text] of external) {

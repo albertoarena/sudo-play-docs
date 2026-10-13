@@ -1,0 +1,23 @@
+---
+// A link to another site. It opens in a new tab, as on trussphp.com, and
+// hidden text tells a screen reader so, since the tab changes under them.
+// Decided 2026-10-13. Every external link on the site goes through here.
+interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+<a href={href} target="_blank" rel="noopener"><slot /><span class="new-tab"> (opens in a new tab)</span></a>
+
+<style>
+  /* Read by a screen reader, not shown: a sighted visitor sees the tab open. */
+  .new-tab {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

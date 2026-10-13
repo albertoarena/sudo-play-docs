@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 
 const app = 'https://github.com/albertoarena/sudo-play';
 ---
@@ -26,5 +27,5 @@ const app = 'https://github.com/albertoarena/sudo-play';
   <p>Settings has the catalog URL. Point it at a fork, or at a private catalog of your team's playlists. That server then sees the app's daily download instead of GitHub.</p>
 
   <h2>Add a playlist without waiting for a release</h2>
-  <p>Once your pull request is merged, your playlist reaches everyone within a day. The README explains how, in <a href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</a>.</p>
+  <p>Once your pull request is merged, your playlist reaches everyone within a day. The README explains how, in <ExternalLink href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</ExternalLink>.</p>
 </Base>

@@ -351,6 +351,8 @@ Something worth knowing that is not a warning. `bg-subtle`, 1px hairline,
 ### Links
 `accent`, 1px underline offset 0.2em. Hover: `accent-hover` and a 2px
 underline. Focus everywhere is a 2px `focus` outline at 2px offset.
+A link to another site opens in a new tab, as on trussphp.com, and says so in
+hidden text for a screen reader. It always goes through `ExternalLink`.
 
 ### Tables
 Full width in a scrolling wrap, rows split by hairlines, the header rule in
@@ -365,7 +367,7 @@ Hover turns the name and the top line `accent`.
 ### Footer
 A hairline on top, muted 14px text, links in `fg` that turn `accent` on hover.
 Links to the app's GitHub, README, CONTRIBUTING and PRIVACY, which open in a
-new tab and say so in hidden text for a screen reader. Then Credits,
+new tab like every external link. Then Credits,
 Analytics settings when analytics are on, and the line that Sudo Play is not
 affiliated with Spotify.
 

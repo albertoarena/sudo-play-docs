@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 
 const app = 'https://github.com/albertoarena/sudo-play';
 const site = 'https://github.com/albertoarena/sudo-play-docs';
@@ -10,23 +11,23 @@ const site = 'https://github.com/albertoarena/sudo-play-docs';
 
   <h2>The app</h2>
   <ul>
-    <li><strong><a href="https://laravel.com/">Laravel</a></strong> and <strong><a href="https://nativephp.com/">NativePHP</a></strong>: the app itself, packaged as a macOS menu bar app.</li>
-    <li><strong><a href="https://inertiajs.com/">Inertia</a></strong> and <strong><a href="https://vuejs.org/">Vue</a></strong>, with <strong><a href="https://tailwindcss.com/">Tailwind CSS</a></strong>: the interface.</li>
-    <li><strong><a href="https://vitest.dev/">Vitest</a></strong>: the interface tests.</li>
+    <li><strong><ExternalLink href="https://laravel.com/">Laravel</ExternalLink></strong> and <strong><ExternalLink href="https://nativephp.com/">NativePHP</ExternalLink></strong>: the app itself, packaged as a macOS menu bar app.</li>
+    <li><strong><ExternalLink href="https://inertiajs.com/">Inertia</ExternalLink></strong> and <strong><ExternalLink href="https://vuejs.org/">Vue</ExternalLink></strong>, with <strong><ExternalLink href="https://tailwindcss.com/">Tailwind CSS</ExternalLink></strong>: the interface.</li>
+    <li><strong><ExternalLink href="https://vitest.dev/">Vitest</ExternalLink></strong>: the interface tests.</li>
   </ul>
 
   <h2>This site</h2>
   <ul>
-    <li><strong><a href="https://astro.build/">Astro</a></strong> and <strong><a href="https://www.typescriptlang.org/">TypeScript</a></strong>: a static site that ships one small script, the consent banner.</li>
-    <li><strong><a href="https://vercel.com/font">Geist Mono</a></strong>: the typeface, served from this site under the SIL Open Font License.</li>
-    <li><strong><a href="https://vitest.dev/">Vitest</a></strong>, <strong><a href="https://playwright.dev/">Playwright</a></strong> and <strong><a href="https://github.com/dequelabs/axe-core">axe-core</a></strong>: the build, browser and accessibility tests.</li>
+    <li><strong><ExternalLink href="https://astro.build/">Astro</ExternalLink></strong> and <strong><ExternalLink href="https://www.typescriptlang.org/">TypeScript</ExternalLink></strong>: a static site that ships one small script, the consent banner.</li>
+    <li><strong><ExternalLink href="https://vercel.com/font">Geist Mono</ExternalLink></strong>: the typeface, served from this site under the SIL Open Font License.</li>
+    <li><strong><ExternalLink href="https://vitest.dev/">Vitest</ExternalLink></strong>, <strong><ExternalLink href="https://playwright.dev/">Playwright</ExternalLink></strong> and <strong><ExternalLink href="https://github.com/dequelabs/axe-core">axe-core</ExternalLink></strong>: the build, browser and accessibility tests.</li>
   </ul>
 
   <h2>Author</h2>
   <ul>
-    <li><a href="https://github.com/albertoarena">Alberto Arena</a></li>
+    <li><ExternalLink href="https://github.com/albertoarena">Alberto Arena</ExternalLink></li>
   </ul>
 
   <h2>Licence</h2>
-  <p>Sudo Play is open-source software under the <a href={`${app}/blob/main/LICENSE`}>MIT licence</a>. This site's code is <a href={`${site}/blob/main/LICENSE`}>MIT</a> too, and its text is <a href={`${site}/blob/main/LICENSE-CONTENT`}>CC BY 4.0</a>. The name and mark are covered by the app's <a href={`${app}/blob/main/TRADEMARK.md`}>trademark policy</a>.</p>
+  <p>Sudo Play is open-source software under the <ExternalLink href={`${app}/blob/main/LICENSE`}>MIT licence</ExternalLink>. This site's code is <ExternalLink href={`${site}/blob/main/LICENSE`}>MIT</ExternalLink> too, and its text is <ExternalLink href={`${site}/blob/main/LICENSE-CONTENT`}>CC BY 4.0</ExternalLink>. The name and mark are covered by the app's <ExternalLink href={`${app}/blob/main/TRADEMARK.md`}>trademark policy</ExternalLink>.</p>
 </Base>

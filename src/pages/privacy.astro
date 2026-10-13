@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 import { STORAGE_KEY } from '../scripts/consent';
 
 const app = 'https://github.com/albertoarena/sudo-play';
@@ -7,7 +8,7 @@ const contact = 'hello@albertoarena.it';
 ---
 <Base title="Privacy" description="What sudoplay.dev loads, and what it does not. Google Analytics runs only if you accept, and no third party is contacted before that.">
   <h1>Privacy</h1>
-  <p class="lead">This page is about this website, sudoplay.dev. The app has its own <a href={`${app}/blob/main/PRIVACY.md`}>privacy policy</a>, which says what Sudo Play sends and stores.</p>
+  <p class="lead">This page is about this website, sudoplay.dev. The app has its own <ExternalLink href={`${app}/blob/main/PRIVACY.md`}>privacy policy</ExternalLink>, which says what Sudo Play sends and stores.</p>
   <p><strong>Last updated: 12 October 2026.</strong></p>
 
   <h2>Who is responsible</h2>
@@ -50,8 +51,8 @@ const contact = 'hello@albertoarena.it';
     <table>
       <thead><tr><th scope="col">Who</th><th scope="col">What for</th><th scope="col">Where</th></tr></thead>
       <tbody>
-        <tr><td>Cloudflare</td><td>DNS only: it answers the lookup for sudoplay.dev, and never sees the pages you request</td><td><a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a></td></tr>
-        <tr><td>Google</td><td>Google Analytics, only after you accept. Never contacted otherwise</td><td><a href="https://policies.google.com/privacy">Google privacy policy</a></td></tr>
+        <tr><td>Cloudflare</td><td>DNS only: it answers the lookup for sudoplay.dev, and never sees the pages you request</td><td><ExternalLink href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</ExternalLink></td></tr>
+        <tr><td>Google</td><td>Google Analytics, only after you accept. Never contacted otherwise</td><td><ExternalLink href="https://policies.google.com/privacy">Google privacy policy</ExternalLink></td></tr>
         <tr><td>The hosting provider</td><td>The origin server and its access logs</td><td>Italy</td></tr>
       </tbody>
     </table>
