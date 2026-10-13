@@ -7,6 +7,12 @@ import { releaseNote } from '../data/release';
   <TerminalPanel slot="masthead" />
   <h1>Sudo Play</h1>
   <p class="lead">A small macOS menu bar app that picks today's Spotify playlist, based on what you are coding and how you feel about it.</p>
+  <figure class="window">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="/screenshots/window-dark.webp" />
+      <img src="/screenshots/window-light.webp" width="360" height="520" alt="The Sudo Play window. Jazz and Coffee Needed are selected, and today's pick is Jazz for deep work, with Play, Next and Surprise me below." />
+    </picture>
+  </figure>
   <p>Pick a genre, like rock or Lo-fi. Pick a developer mood, like Friday Deploy or Debugging. Press Play, and the playlist opens in Spotify.</p>
   <p>The pick is the same all day, and the same for everyone who chooses the same genre and mood. Tomorrow it changes.</p>
   <p>The line at the top of this page is the tagline, not a command. There is nothing to type in a terminal.</p>
@@ -23,3 +29,21 @@ import { releaseNote } from '../data/release';
     <li><a href="/privacy/">Privacy</a>: what this website loads.</li>
   </ul>
 </Base>
+
+<style>
+  /* The app window, at its natural size, cropped from a 2x capture without
+     the macOS shadow: the site is flat. A hairline gives it an edge on a page
+     the same colour as the window. The radius is the window's own. */
+  .window {
+    margin: 2rem 0;
+  }
+
+  .window img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 22px;
+    outline: 1px solid var(--border);
+    outline-offset: -1px;
+  }
+</style>
