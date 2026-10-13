@@ -317,10 +317,28 @@ describe('Install', () => {
     expect(links(content)).toContain(`${app}/releases`);
   });
 
-  // Building from source is for contributors, and CONTRIBUTING.md explains it.
-  it('links to the app contributing guide for building from source', () => {
-    expect(content).toMatch(/source/i);
-    expect(links(content)).toContain(`${app}/blob/main/CONTRIBUTING.md#changing-the-code`);
+  // Until the first release, a visitor still has something to do: watch for
+  // the release, or add a playlist to the empty catalog. The section goes when
+  // release.ts gets a release. Approved 2026-10-13.
+  it('says what to do until the first release, only while there is none', () => {
+    const heading = /<h2[^>]*>Until the first release<\/h2>/;
+    if (release) {
+      expect(content).not.toMatch(heading);
+      return;
+    }
+    expect(content).toMatch(heading);
+    expect(content).toMatch(/Watch, then Custom, then Releases/);
+    expect(content).toMatch(/catalog is empty/);
+    expect(links(content)).toEqual(expect.arrayContaining([app, `${app}/blob/main/CONTRIBUTING.md#adding-a-playlist`]));
+  });
+
+  // Anyone can run it from source now. The app README has the steps, and the
+  // site links to them rather than keeping a second copy that would drift.
+  it('links to the app README for running from source, without copying the steps', () => {
+    expect(content).toMatch(/<h2[^>]*>Run it from source<\/h2>/);
+    expect(content).toMatch(/PHP 8\.4, Composer and Node 22 or later/);
+    expect(links(content)).toContain(`${app}#run-it-from-source`);
+    expect(content).not.toMatch(/composer setup|native:serve|git clone/);
   });
 
   // A warning box is design work for Impeccable, not for this page's copy.
