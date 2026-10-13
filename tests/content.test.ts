@@ -62,6 +62,12 @@ describe.each(finished)('%s', (file) => {
     expect(column(html)).not.toBe('');
     expect(column(html)).not.toMatch(/[–—]|&[mn]dash;/);
   });
+
+  // The genre is "Lo-fi" in prose, as in Moods and the catalog label.
+  // `lofi` is only ever a code value. Decided 2026-10-13.
+  it('spells the genre Lo-fi', () => {
+    expect(column(html)).not.toMatch(/\blofi\b/i);
+  });
 });
 
 describe('Home', () => {
@@ -76,6 +82,12 @@ describe('Home', () => {
     const sentence = content.match(/[^.>]*no analytics[^.<]*/i)?.[0] ?? '';
 
     expect(sentence).toMatch(/Sudo Play|The app/);
+  });
+
+  // The site runs analytics after consent, so "no analytics" must be plainly
+  // about the app. Approved 2026-10-13.
+  it('says it is the app that has no analytics', () => {
+    expect(content).toContain('The app has no accounts, no analytics and no tracking.');
   });
 });
 
@@ -346,7 +358,7 @@ describe('Credits', () => {
   const page = column(html);
 
   it('credits the app stack', () => {
-    for (const tool of ['Laravel', 'NativePHP', 'Inertia', 'Vue', 'Tailwind CSS', 'Vitest']) {
+    for (const tool of ['Laravel', 'NativePHP', 'Inertia', 'Vue', 'Tailwind CSS', 'Pest', 'PHPUnit', 'Vitest', 'Larastan', 'Pint']) {
       expect(page).toContain(tool);
     }
   });
