@@ -12,7 +12,8 @@ import { gaMeasurementId } from '../data/analytics';
 // previews. Only the 404 is noindex: no canonical, no description, no preview.
 type Props =
   | {
-      // The page's own name. Home passes nothing and is titled "Sudo Play".
+      // The page's own name. Home passes nothing and is titled with what
+      // Sudo Play is, for search results and link previews.
       title?: string;
       // One or two plain sentences, 160 characters at most.
       description: string;
@@ -21,7 +22,7 @@ type Props =
   | { title: string; noindex: true };
 
 const { title } = Astro.props;
-const fullTitle = title ? `${title} · Sudo Play` : 'Sudo Play';
+const fullTitle = title ? `${title} · Sudo Play` : "Sudo Play: today's Spotify playlist for your coding mood";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // One preview image for every page, drawn by `npm run og:image`.
 const image = new URL('/og.png', Astro.site);
