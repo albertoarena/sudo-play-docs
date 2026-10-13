@@ -63,3 +63,14 @@ before the visitor has explicitly accepted. That is stricter than the usual
 Consent Mode setup and it constrains the design, not just the analytics: no
 font from a CDN, no iframe demo, no search widget that calls home on load.
 `docs/SCOPE.md` explains why.
+
+## Licence
+
+- **The code** is under the MIT licence, in `LICENSE`: the components, layouts,
+  scripts, styles, tests and configuration
+- **The text of the pages**, and the link preview image `public/og.png`, are
+  under Creative Commons Attribution 4.0 (CC BY 4.0), in `LICENSE-CONTENT`.
+  You may reuse them if you credit Sudo Play and link to https://sudoplay.dev
+- **Geist Mono** keeps its own licence, the SIL Open Font License 1.1, in
+  `public/fonts/geist-mono/OFL.txt`
+- **The Sudo Play name and mark** are not covered by either licence
