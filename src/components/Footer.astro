@@ -1,6 +1,9 @@
 ---
 import ConsentSettings from './ConsentSettings.astro';
 import { gaMeasurementId } from '../data/analytics';
+import { footerPages, normalise } from '../data/nav';
+
+const current = normalise(Astro.url.pathname);
 
 // The app's own pages, on GitHub. They leave the site, so they open in a new
 // tab, as on trussphp.com.
@@ -26,6 +29,9 @@ const links = [
       </ul>
     </nav>
     <div class="footer-end">
+      {footerPages.map((page) => (
+        <a href={page.href} aria-current={page.href === current ? 'page' : undefined}>{page.label}</a>
+      ))}
       {gaMeasurementId && <ConsentSettings />}
       <p>Sudo Play is not affiliated with Spotify.</p>
     </div>
