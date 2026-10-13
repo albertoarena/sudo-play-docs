@@ -1,15 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
 import ExternalLink from '../components/ExternalLink.astro';
-import { releaseNote } from '../data/release';
+import { release, releaseNote } from '../data/release';
 
 const app = 'https://github.com/albertoarena/sudo-play';
 ---
-<Base title="Install" description="How to get Sudo Play onto your Mac, where its releases are published, and where contributors find the steps to build it from source.">
+<Base title="Install" description="How to get Sudo Play onto your Mac, where its releases are published, and how to run it from source today.">
   <h1>Install</h1>
   <p class="lead">Sudo Play is a menu bar app for macOS. {releaseNote()}</p>
   <p>The first release will be a signed DMG attached to a GitHub Release, so it opens without a security warning. Releases are on the app's <ExternalLink href={`${app}/releases`}>releases page</ExternalLink>.</p>
 
-  <h2>Build from source</h2>
-  <p>Building from source is for contributors. The app's contributing guide explains how to run it and its checks, in <ExternalLink href={`${app}/blob/main/CONTRIBUTING.md#changing-the-code`}>Changing the code</ExternalLink>.</p>
+  {!release && (
+    <>
+      <h2>Until the first release</h2>
+      <ul>
+        <li><strong>Hear when it ships.</strong> On the app's <ExternalLink href={app}>GitHub page</ExternalLink>, choose Watch, then Custom, then Releases. GitHub tells you when the first DMG is out.</li>
+        <li><strong>Add a playlist.</strong> The catalog is empty until the first playlists are merged, so yours can be one of them. The contributing guide explains how, in <ExternalLink href={`${app}/blob/main/CONTRIBUTING.md#adding-a-playlist`}>Adding a playlist</ExternalLink>.</li>
+      </ul>
+    </>
+  )}
+
+  <h2>Run it from source</h2>
+  <p>You can run Sudo Play today on a Mac with PHP 8.4, Composer and Node 22 or later. The app's README has the steps, in <ExternalLink href={`${app}#run-it-from-source`}>Run it from source</ExternalLink>. Until the catalog has playlists, the app has nothing to suggest.</p>
 </Base>
