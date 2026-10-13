@@ -51,8 +51,9 @@ has no app checkout.
 Work is test first: the failing test is committed, then the code, one commit
 per green cycle.
 
-`docs/PLAN.md` holds the phases and the open question: the licence for the
-site content.
+`docs/PLAN.md` holds the phases and the answered questions. The code is MIT
+(`LICENSE`) and the text of the pages and `public/og.png` are CC BY 4.0
+(`LICENSE-CONTENT`); the README says which covers what.
 
 This repository is **private now and public later**. Everything committed while
 it is private is readable the moment it flips, so no credentials and no draft

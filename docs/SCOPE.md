@@ -148,9 +148,10 @@ be deleted.
    how it works, install, moods and tips, plus a short privacy page about this
    site. It links to the app's `README.md`, `CONTRIBUTING.md` and `PRIVACY.md`
    and never copies them, so there are never two copies to drift
-4. **Licence for the site content**, which need not match the app's MIT. It
-   blocks making the repository public. `docs/PLAN.md` lists it with the other
-   open questions
+4. ~~Licence for the site content.~~ **Answered on 2026-10-13:** MIT for the
+   code, as in the app, and CC BY 4.0 for the text of the pages and
+   `public/og.png`. Geist Mono keeps the OFL, and the Sudo Play name and mark
+   are covered by neither. The README's Licence section says which is which
 
 ## Order of work
 
