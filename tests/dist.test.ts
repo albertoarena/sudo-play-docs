@@ -34,6 +34,20 @@ describe.each(existsSync(dist) ? htmlFiles(dist) : [])('%s', (file) => {
     expect(title.trim()).not.toBe('');
   });
 
+  // A link that leaves the site from the footer opens in a new tab, as on
+  // trussphp.com, and says so to a screen reader. Decided 2026-10-13.
+  it('opens every external footer link in a new tab, and says so', () => {
+    const footer = html.match(/<footer\b[\s\S]*?<\/footer>/)?.[0] ?? '';
+    const external = [...footer.matchAll(/<a\b([^>]*\bhref="https?:[^"]*"[^>]*)>([\s\S]*?)<\/a>/g)];
+
+    expect(external.length).toBeGreaterThan(0);
+    for (const [, attributes, text] of external) {
+      expect(attributes).toMatch(/\btarget="_blank"/);
+      expect(attributes).toMatch(/\brel="noopener"/);
+      expect(text).toContain('(opens in a new tab)');
+    }
+  });
+
   // The 404 is the one page without a canonical: it is served for any
   // address that does not exist, and asks not to be indexed.
   if (file === join(dist, '404.html')) {
