@@ -101,7 +101,7 @@ const html = `<!doctype html>
     </svg>
     <div class="brand">
       <div class="name">Sudo Play</div>
-      <div class="tagline">Today's Spotify playlist for the mood you are coding in.</div>
+      <div class="tagline">A macOS menu bar app: today's Spotify playlist for your coding mood.</div>
     </div>
   </div>
 </body>
