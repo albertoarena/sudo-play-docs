@@ -358,6 +358,14 @@ hidden text for a screen reader. It always goes through `ExternalLink`.
 Full width in a scrolling wrap, rows split by hairlines, the header rule in
 `border-strong`, header cells at 600, tabular figures.
 
+### App Window
+One screenshot on Home, under the opening paragraph: the light or dark window
+to match the visitor, through `<picture>`. 360 by 520 from a 2x capture,
+cropped without the macOS shadow, since the site is flat. The window's own 22px
+radius, and a `border` hairline so it has an edge on a page of its own colour.
+WebP files in `public/screenshots/`, each under 80 KB. The source is the app
+repository's `art/screenshots/`: when those change, crop and convert again.
+
 ### Previous and Next
 The page's neighbours in reading order, in two cells at the end of every page.
 Home has only Next and Privacy only Previous. Each is a
