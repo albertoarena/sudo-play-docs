@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { moods } from '../src/data/catalog';
@@ -86,6 +86,30 @@ describe('Home', () => {
 
   // The site runs analytics after consent, so "no analytics" must be plainly
   // about the app. Approved 2026-10-13.
+  // One screenshot of the window, light or dark to match the visitor, at its
+  // natural width. Placement and alt text approved 2026-10-13.
+  it('shows the app window, light or dark, with its approved alt text', () => {
+    const picture = content.match(/<picture\b[^>]*>[\s\S]*?<\/picture>/)?.[0] ?? '';
+
+    expect(picture).toMatch(/<source\b[^>]*media="\(prefers-color-scheme: dark\)"[^>]*srcset="\/screenshots\/window-dark\.webp"/);
+    expect(picture).toMatch(/<img\b[^>]*src="\/screenshots\/window-light\.webp"/);
+    expect(picture).toMatch(/\bwidth="360"/);
+    expect(picture).toMatch(/\bheight="520"/);
+    // Astro may write the apostrophe as &#39;.
+    expect(picture.replace(/&#39;/g, "'")).toContain(
+      "alt=\"The Sudo Play window. Jazz and Coffee Needed are selected, and today's pick is Jazz for deep work, with Play, Next and Surprise me below.\"",
+    );
+  });
+
+  // Both captures ship with the site, and stay light enough for a phone.
+  it('ships both screenshots, each under 80 KB', () => {
+    for (const scheme of ['light', 'dark']) {
+      const file = join(dist, 'screenshots', `window-${scheme}.webp`);
+      expect(existsSync(file), file).toBe(true);
+      expect(statSync(file).size, file).toBeLessThan(80 * 1024);
+    }
+  });
+
   it('says it is the app that has no analytics', () => {
     expect(content).toContain('The app has no accounts, no analytics and no tracking.');
   });
