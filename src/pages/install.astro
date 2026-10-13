@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 import { releaseNote } from '../data/release';
 
 const app = 'https://github.com/albertoarena/sudo-play';
@@ -7,8 +8,8 @@ const app = 'https://github.com/albertoarena/sudo-play';
 <Base title="Install" description="How to get Sudo Play onto your Mac, where its releases are published, and where contributors find the steps to build it from source.">
   <h1>Install</h1>
   <p class="lead">Sudo Play is a menu bar app for macOS. {releaseNote()}</p>
-  <p>The first release will be a signed DMG attached to a GitHub Release, so it opens without a security warning. Releases are on the app's <a href={`${app}/releases`}>releases page</a>.</p>
+  <p>The first release will be a signed DMG attached to a GitHub Release, so it opens without a security warning. Releases are on the app's <ExternalLink href={`${app}/releases`}>releases page</ExternalLink>.</p>
 
   <h2>Build from source</h2>
-  <p>Building from source is for contributors. The app's contributing guide explains how to run it and its checks, in <a href={`${app}/blob/main/CONTRIBUTING.md#changing-the-code`}>Changing the code</a>.</p>
+  <p>Building from source is for contributors. The app's contributing guide explains how to run it and its checks, in <ExternalLink href={`${app}/blob/main/CONTRIBUTING.md#changing-the-code`}>Changing the code</ExternalLink>.</p>
 </Base>

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 
 const app = 'https://github.com/albertoarena/sudo-play';
 ---
@@ -41,8 +42,8 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
   <h2>The macOS permission</h2>
   <p>If you choose the autoplay player mode, macOS asks for permission to control the Spotify app. This is a standard Automation permission. It lets Sudo Play send a play command to Spotify on the same Mac, and it gives the app's makers no data.</p>
-  <p>You can take the permission back in System Settings, under Privacy and Security. The app asks for nothing else. The app's <a href={`${app}/blob/main/PRIVACY.md`}>privacy policy</a> has the details.</p>
+  <p>You can take the permission back in System Settings, under Privacy and Security. The app asks for nothing else. The app's <ExternalLink href={`${app}/blob/main/PRIVACY.md`}>privacy policy</ExternalLink> has the details.</p>
 
   <h2>Add a playlist</h2>
-  <p>The playlists come from the app's catalog, and anyone can add one with a pull request. The app's README explains how, in <a href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</a>.</p>
+  <p>The playlists come from the app's catalog, and anyone can add one with a pull request. The app's README explains how, in <ExternalLink href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</ExternalLink>.</p>
 </Base>
