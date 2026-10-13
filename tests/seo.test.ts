@@ -81,6 +81,15 @@ describe('sitemap.xml', () => {
   });
 });
 
+// The home title says what the app is, for search results and link
+// previews. Every other page is "<page> · Sudo Play". Approved 2026-10-13.
+it('titles Home with what Sudo Play is', () => {
+  const html = read('index.html');
+  const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
+
+  expect(title).toBe("Sudo Play: today's Spotify playlist for your coding mood");
+});
+
 describe('404.html', () => {
   const html = read('404.html');
 
@@ -111,6 +120,12 @@ describe.each(indexable)('%s', (file) => {
     expect(meta(html, 'description')).toHaveLength(1);
     expect(description.trim()).not.toBe('');
     expect(description.length).toBeLessThanOrEqual(160);
+  });
+
+  // And long enough to say what the page holds. The shortest was 89
+  // characters until Credits, at 38. Decided 2026-10-13.
+  it('has a description of at least 80 characters', () => {
+    expect(description.length).toBeGreaterThanOrEqual(80);
   });
 
   // AGENTS.md: plain English, no em dashes and no en dashes.
