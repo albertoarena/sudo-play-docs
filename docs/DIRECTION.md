@@ -89,7 +89,7 @@ values the app's CSS and icon already use.
 ### The footer
 
 The links to the app on GitHub and to its `README.md`, `CONTRIBUTING.md` and
-`PRIVACY.md`, which open in a new tab as on trussphp.com, a link to Credits,
+`PRIVACY.md`, a link to Credits,
 and a line saying Sudo Play is not affiliated with Spotify. The
 footer leaves room for the small consent banner, through `--banner-space`. The
 banner came in phase 5, and `DESIGN.md` describes it as built.
@@ -229,6 +229,10 @@ Decided 2026-10-11.
 - **All six routes exist from phase 2, as placeholders.** Each one shows a
   visible Placeholder label and carries a marker that a phase 3 test can
   forbid, so placeholder text cannot ship by accident
+- **Every link to another site opens in a new tab**, as on trussphp.com.
+  Decided 2026-10-13. It goes through `ExternalLink`, which adds
+  `rel="noopener"` and hidden text, "(opens in a new tab)", so a screen reader
+  is told before the tab changes. A test checks every link on every page
 - **Accessibility is tested with axe** through `@axe-core/playwright`, a dev
   dependency that runs inside the test browser and makes no request. It checks
   every page in light and dark, beside the hand written checks for landmarks,
