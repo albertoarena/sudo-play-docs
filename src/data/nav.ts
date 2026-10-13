@@ -14,6 +14,10 @@ export const pages: readonly Page[] = [
   { href: '/privacy/', label: 'Privacy' },
 ];
 
+// Pages outside the reading order, linked from the footer instead, as
+// trussphp.com does. They are in the sitemap but not the masthead.
+export const footerPages: readonly Page[] = [{ href: '/credits/', label: 'Credits' }];
+
 export const home = pages[0];
 
 // The pages the masthead lists. Home is the brand link, not a nav item.

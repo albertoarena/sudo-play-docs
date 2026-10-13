@@ -89,7 +89,8 @@ values the app's CSS and icon already use.
 ### The footer
 
 The links to the app on GitHub and to its `README.md`, `CONTRIBUTING.md` and
-`PRIVACY.md`, and a line saying Sudo Play is not affiliated with Spotify. The
+`PRIVACY.md`, which open in a new tab as on trussphp.com, a link to Credits,
+and a line saying Sudo Play is not affiliated with Spotify. The
 footer leaves room for the small consent banner, through `--banner-space`. The
 banner came in phase 5, and `DESIGN.md` describes it as built.
 

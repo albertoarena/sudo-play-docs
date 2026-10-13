@@ -17,7 +17,7 @@ new session has are answered there.
 Phases 1 to 5 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
 no Starlight and no CSS framework. The design, made with Impeccable, is in
 `docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
-have real copy, and a test fails if any page still carries the
+have real copy, and so does Credits, linked from the footer (2026-10-13), and a test fails if any page still carries the
 `data-placeholder` marker. `placeholder/index.html` is still what the domain
 serves. Phase 6, the deploy, is next.
 

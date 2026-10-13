@@ -173,7 +173,8 @@ identity.
 - One emerald accent; zinc neutrals with a faint cool violet cast
 - System sans for reading, Geist Mono for the panel, code and labels
 - Flat, borders instead of shadows, nothing moves
-- Six pages read in order, with previous and next at the end of each
+- Six pages read in order, with previous and next at the end of each, and
+  Credits outside the order, linked from the footer
 
 ## Colors
 
@@ -363,8 +364,10 @@ Hover turns the name and the top line `accent`.
 
 ### Footer
 A hairline on top, muted 14px text, links in `fg` that turn `accent` on hover.
-Links to the app's GitHub, README, CONTRIBUTING and PRIVACY, and the line that
-Sudo Play is not affiliated with Spotify.
+Links to the app's GitHub, README, CONTRIBUTING and PRIVACY, which open in a
+new tab and say so in hidden text for a screen reader. Then Credits,
+Analytics settings when analytics are on, and the line that Sudo Play is not
+affiliated with Spotify.
 
 ## Do's and Don'ts
 

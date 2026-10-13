@@ -12,7 +12,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html', 'tips/index.html'];
+const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html', 'tips/index.html', 'credits/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -39,8 +39,9 @@ function read(file: string): string {
 }
 
 // The page's own content, without the masthead, footer and previous and next.
+// A page outside the reading order, like Credits, has no previous and next.
 function column(html: string): string {
-  return html.match(/<div class="column"[^>]*>([\s\S]*?)<\/div>\s*<nav[^>]*aria-label="Previous and next"/)?.[1] ?? '';
+  return html.match(/<div class="column"[^>]*>([\s\S]*?)<\/div>\s*(?:<nav[^>]*aria-label="Previous and next"|<\/main>)/)?.[1] ?? '';
 }
 
 function links(html: string): string[] {
@@ -335,5 +336,42 @@ describe('Tips', () => {
   it('points to How it works and the README instead of copying them', () => {
     expect(links(content)).toContain('/how-it-works/');
     expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
+  });
+});
+
+// The tools and people behind Sudo Play, as trussphp.com has. Approved
+// 2026-10-13. Reached from the footer, not the masthead.
+describe('Credits', () => {
+  const html = read('credits/index.html');
+  const page = column(html);
+
+  it('credits the app stack', () => {
+    for (const tool of ['Laravel', 'NativePHP', 'Inertia', 'Vue', 'Tailwind CSS', 'Vitest']) {
+      expect(page).toContain(tool);
+    }
+  });
+
+  it('credits the site stack', () => {
+    for (const tool of ['Astro', 'TypeScript', 'Geist Mono', 'SIL Open Font License', 'Playwright', 'axe-core']) {
+      expect(page).toContain(tool);
+    }
+  });
+
+  it("names the author and links to the author's GitHub profile", () => {
+    expect(page).toContain('Alberto Arena');
+    expect(links(page)).toContain('https://github.com/albertoarena');
+  });
+
+  it('states the licences and links to them and the trademark policy', () => {
+    expect(page).toContain('MIT');
+    expect(page).toContain('CC BY 4.0');
+    expect(links(page)).toEqual(
+      expect.arrayContaining([
+        `${app}/blob/main/LICENSE`,
+        `${app}/blob/main/TRADEMARK.md`,
+        'https://github.com/albertoarena/sudo-play-docs/blob/main/LICENSE',
+        'https://github.com/albertoarena/sudo-play-docs/blob/main/LICENSE-CONTENT',
+      ]),
+    );
   });
 });

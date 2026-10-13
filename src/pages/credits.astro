@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+
+const app = 'https://github.com/albertoarena/sudo-play';
+const site = 'https://github.com/albertoarena/sudo-play-docs';
+---
+<Base title="Credits" description="The tools and people behind Sudo Play.">
+  <h1>Credits</h1>
+  <p class="lead">Sudo Play stands on excellent open-source work.</p>
+
+  <h2>The app</h2>
+  <ul>
+    <li><strong><a href="https://laravel.com/">Laravel</a></strong> and <strong><a href="https://nativephp.com/">NativePHP</a></strong>: the app itself, packaged as a macOS menu bar app.</li>
+    <li><strong><a href="https://inertiajs.com/">Inertia</a></strong> and <strong><a href="https://vuejs.org/">Vue</a></strong>, with <strong><a href="https://tailwindcss.com/">Tailwind CSS</a></strong>: the interface.</li>
+    <li><strong><a href="https://vitest.dev/">Vitest</a></strong>: the interface tests.</li>
+  </ul>
+
+  <h2>This site</h2>
+  <ul>
+    <li><strong><a href="https://astro.build/">Astro</a></strong> and <strong><a href="https://www.typescriptlang.org/">TypeScript</a></strong>: a static site that ships one small script, the consent banner.</li>
+    <li><strong><a href="https://vercel.com/font">Geist Mono</a></strong>: the typeface, served from this site under the SIL Open Font License.</li>
+    <li><strong><a href="https://vitest.dev/">Vitest</a></strong>, <strong><a href="https://playwright.dev/">Playwright</a></strong> and <strong><a href="https://github.com/dequelabs/axe-core">axe-core</a></strong>: the build, browser and accessibility tests.</li>
+  </ul>
+
+  <h2>Author</h2>
+  <ul>
+    <li><a href="https://github.com/albertoarena">Alberto Arena</a></li>
+  </ul>
+
+  <h2>Licence</h2>
+  <p>Sudo Play is open-source software under the <a href={`${app}/blob/main/LICENSE`}>MIT licence</a>. This site's code is <a href={`${site}/blob/main/LICENSE`}>MIT</a> too, and its text is <a href={`${site}/blob/main/LICENSE-CONTENT`}>CC BY 4.0</a>. The name and mark are covered by the app's <a href={`${app}/blob/main/TRADEMARK.md`}>trademark policy</a>.</p>
+</Base>

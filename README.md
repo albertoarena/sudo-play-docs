@@ -9,7 +9,7 @@ Lives at **https://sudoplay.dev**.
 ## Status
 
 Phases 1 to 5 of `docs/PLAN.md` are done: tooling and tests, the design, the
-copy for all six pages, SEO basics, and GA4 behind the consent gate. Phase 6,
+copy for all six pages and Credits, SEO basics, and GA4 behind the consent gate. Phase 6,
 the deploy, is next. Analytics are on only in a build with
 `PUBLIC_GA_MEASUREMENT_ID` set, which the deploy build takes from a repository
 variable.

@@ -1,7 +1,12 @@
 ---
 import ConsentSettings from './ConsentSettings.astro';
 import { gaMeasurementId } from '../data/analytics';
+import { footerPages, normalise } from '../data/nav';
 
+const current = normalise(Astro.url.pathname);
+
+// The app's own pages, on GitHub. They leave the site, so they open in a new
+// tab, as on trussphp.com.
 const app = 'https://github.com/albertoarena/sudo-play';
 const links = [
   { href: app, label: 'Sudo Play on GitHub' },
@@ -14,10 +19,19 @@ const links = [
   <div class="footer-inner">
     <nav aria-label="The app">
       <ul>
-        {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        {links.map((link) => (
+          <li>
+            <a href={link.href} target="_blank" rel="noopener">
+              {link.label}<span class="new-tab"> (opens in a new tab)</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
     <div class="footer-end">
+      {footerPages.map((page) => (
+        <a href={page.href} aria-current={page.href === current ? 'page' : undefined}>{page.label}</a>
+      ))}
       {gaMeasurementId && <ConsentSettings />}
       <p>Sudo Play is not affiliated with Spotify.</p>
     </div>
@@ -73,5 +87,15 @@ const links = [
 
   p {
     margin: 0;
+  }
+
+  /* Read by a screen reader, not shown: a sighted visitor sees the tab open. */
+  .new-tab {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 </style>
