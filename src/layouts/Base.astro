@@ -38,6 +38,7 @@ const image = new URL('/og.png', Astro.site);
     ) : (
       <>
         <meta name="description" content={Astro.props.description} />
+        <meta name="author" content="Alberto Arena" />
         <link rel="canonical" href={canonical} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Sudo Play" />
