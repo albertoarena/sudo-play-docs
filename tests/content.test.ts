@@ -401,8 +401,8 @@ describe('Tips', () => {
   // approved by Alberto on 2026-10-12.
   it('gives the tips the app sources support', () => {
     expect(content).toMatch(/same playlist/i);
-    expect(content).toMatch(/launch at login/i);
-    expect(content).toMatch(/daily reminder/i);
+    expect(content).toMatch(/Open Sudo Play when I log in/);
+    expect(content).toMatch(/Remind me of today(&#39;|')s pick/);
     expect(content).toMatch(/default genre and mood/i);
     expect(content).toMatch(/web player/i);
     expect(content).toMatch(/catalog URL/i);
@@ -449,5 +449,29 @@ describe('Credits', () => {
         'https://github.com/albertoarena/sudo-play-docs/blob/main/LICENSE-CONTENT',
       ]),
     );
+  });
+});
+
+// The wording pass of 2026-10-14: the humanizer and docs/sentence-clarity.md
+// on every page, each fix approved by Alberto one at a time. Each sentence is
+// checked whole, and the line it replaced must be gone.
+describe('the 2026-10-14 wording pass', () => {
+  function text(file: string): string {
+    return column(read(file)).replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+  }
+
+  it.each([
+    ['credits/index.html', 'Sudo Play and this site are built with these open-source tools.', 'stands on excellent'],
+    ['privacy/index.html', 'The server that hosts this site records each request in its access logs, with the IP address it came from.', 'Like any web server'],
+    ['privacy/index.html', 'The hosting provider holds these logs to keep the site secure and to fix problems.', 'keeps these logs'],
+    ['privacy/index.html', 'A decline is stored there too, so no server can read it.', 'refusing leaves nothing'],
+    ['privacy/index.html', 'Google Analytics, loaded only after you accept', 'Never contacted otherwise'],
+    ['privacy/index.html', 'If this site is going to collect anything new, this page changes before it does, and so does the date at the top.', 'not after'],
+    ['how-it-works/index.html', 'It lets Sudo Play send a play command to Spotify on the same Mac. It gives the app\'s makers no data.', 'on the same Mac, and it gives'],
+    ['tips/index.html', 'The app then gets its daily download from that address, instead of from the default one.', 'That server'],
+    ['tips/index.html', 'In Settings, turn on "Open Sudo Play when I log in" and "Remind me of today\'s pick".', 'launch at login'],
+  ])('%s says: %s', (file, now, before) => {
+    expect(text(file)).toContain(now);
+    expect(text(file)).not.toContain(before);
   });
 });
