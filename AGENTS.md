@@ -41,12 +41,11 @@ with no canonical. `public/og.png` is the one preview image: when the design
 or the tagline changes, run `npm run og:image` on a Mac and commit the PNG.
 
 The copy describes the app at the commit in `src/data/release.ts`
-(`checkedAt`). Since 2026-10-14 `release` is 1.0.0 beta 1, a pre-release with
-`signed: false`: Install and Home warn that it is unsigned and walk through
-Open Anyway. Every page states the release through `releaseNote()`, and a test
-forbids writing "no release" anywhere else. When the signed build ships, update
-`release` there and set `signed: true`, which removes the warnings, then
-recheck the Install steps against the real build.
+(`checkedAt`). Since 2026-10-14 `release` is 1.0.0, signed and notarized,
+which replaced the unsigned 1.0.0 beta 1 the same day. Every page states the
+release through `releaseNote()`, and a test forbids writing "no release"
+anywhere else. For each new release, update `release` there and `checkedAt`,
+then recheck the Install steps against the real build.
 
 The moods and genres are copied into `src/data/catalog.ts` from the app's
 `catalog/playlists.yaml`. `npm run check:catalog` compares the copy with a

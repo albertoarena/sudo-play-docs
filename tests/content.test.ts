@@ -117,15 +117,8 @@ describe('Home', () => {
     }
   });
 
-  // While the build is unsigned, Home says so under the opening paragraph and
-  // sends the reader to Install. Approved 2026-10-14.
-  it.runIf(release && !release.signed)('says the beta is not signed yet, linking to Install', () => {
-    expect(decode(content)).toMatch(
-      /<p class="lead">[\s\S]*?<\/p>\s*<div class="note warning">\s*<p><strong>Not signed yet\.<\/strong> The first build is a beta, and a signed build follows in a few days\. <a href="\/install\/#install-the-beta">Install<\/a> shows how to open it until then\.<\/p>\s*<\/div>/,
-    );
-  });
-
-  it.runIf(release?.signed)('has no beta note once the build is signed', () => {
+  // The beta's "Not signed yet" note went with the signed 1.0.0.
+  it('has no warning note', () => {
     expect(content).not.toContain('class="note warning"');
   });
 
@@ -368,56 +361,54 @@ describe('Install', () => {
     expect(content).toContain(releaseNote(release));
   });
 
-  // While the build is unsigned, Install walks through macOS's block, as
-  // Alberto saw it on macOS Sequoia on 2026-10-14. The dialog text is his
-  // screen's, which is in British English, so step 1 names the US English
-  // button too (2026-10-14). It all goes when release.ts says the build is signed. Wording
-  // and the warning note approved 2026-10-14.
-  describe('while the release is unsigned', () => {
+  // The signed 1.0.0, as Alberto opened it on his Mac on 2026-10-14: one
+  // "downloaded from the internet" question, then Spotify's permission prompt
+  // on the first Play. The wording is the app README's, from sudo-play PR 38.
+  describe('the signed release', () => {
     const text = decode(content);
-    const beta = text.split(/<h2[^>]*>Install the beta<\/h2>/)[1]?.split(/<h2[^>]*>Run it from source<\/h2>/)[0] ?? '';
+    const install = text.split(/<h2[^>]*>Download and install<\/h2>/)[1]?.split(/<h2/)[0] ?? '';
 
-    it.runIf(release && !release.signed)('opens with a warning note that says it is temporary', () => {
-      expect(content).toMatch(/<h2 id="install-the-beta">Install the beta<\/h2>\s*<div class="note warning">\s*<p><strong>Temporary\.<\/strong> This build is not signed yet\./);
-      expect(beta).toContain("Sudo Play's Apple Developer account is waiting for Apple's approval, and a signed and notarized build follows in a few days. That build opens with no warning, and the steps below go away.");
-      expect(content.match(/class="note warning"/g)).toHaveLength(1);
-    });
-
-    it.runIf(release && !release.signed)('says what it needs and links the DMG and the release', () => {
-      expect(beta).toContain('You need a Mac with Apple silicon, M1 or later, and the Spotify app or a browser. There is no Intel build yet.');
+    it('says what it needs and links the DMG and the release', () => {
+      expect(content).toMatch(/<h2 id="download-and-install">Download and install<\/h2>/);
+      expect(install).toContain('You need a Mac with Apple silicon, M1 or later, and the Spotify app or a browser. There is no Intel build yet.');
       expect(links(content)).toEqual(expect.arrayContaining([release!.dmg.url, release!.url]));
-      expect(beta.replace(/<span class="new-tab"[^>]*>[^<]*<\/span>/g, '')).toContain(`${release!.dmg.file}</a> (${release!.dmg.size})`);
-      expect(beta).toContain('Open the DMG and drag Sudo Play to Applications.');
     });
 
-    it.runIf(release && !release.signed)('walks through Open Anyway, with the Move to Bin warning', () => {
-      const steps = beta.split(/<h2[^>]*>Open it the first time<\/h2>/)[1]?.match(/<ol>([\s\S]*?)<\/ol>/)?.[1] ?? '';
-      const items = [...steps.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1].replace(/<[^>]+>/g, ''));
+    it('has three steps, ending with the one question macOS asks', () => {
+      const steps = install.match(/<ol>([\s\S]*?)<\/ol>/)?.[1] ?? '';
+      const items = [...steps.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) =>
+        match[1].replace(/<span class="new-tab"[^>]*>[^<]*<\/span>/g, '').replace(/<[^>]+>/g, ''),
+      );
 
       expect(items).toEqual([
-        'Open Sudo Play from Applications. macOS says "Sudo Play.app" Not Opened. Click Done, not Move to Bin (Move to Trash on a Mac set to US English).',
-        'Open System Settings, then Privacy & Security.'.replace('&', '&amp;'),
-        'Scroll down to Security. Next to "Sudo Play.app" was blocked to protect your Mac, click Open Anyway.',
-        "A last dialog asks again. Click Open Anyway. Move to Bin is the highlighted button, so don't press Return.",
-        'Enter your password or use Touch ID if macOS asks.',
+        `Download ${release!.dmg.file} (${release!.dmg.size}) from the ${release!.name} release.`,
+        'Install. Open the DMG and drag Sudo Play to Applications.',
+        'Open Sudo Play. macOS asks once whether to open an app downloaded from the internet. Click Open.',
       ]);
-      expect(beta).toContain('Open Anyway only shows for about an hour after a blocked attempt.');
-      expect(beta).toContain('If you would rather not, wait for the signed build, or <a href="#run-it-from-source">run it from source</a>.');
     });
 
-    it.runIf(release && !release.signed)('gives the checksum to check the download', () => {
-      expect(text).toMatch(/<pre[^>]*><code>shasum -a 256 ~\/Downloads\/Sudo-Play-1\.0\.0-beta\.1-arm64\.dmg<\/code><\/pre>/);
+    it('says to allow Spotify control on the first Play', () => {
+      expect(install).toContain('The first time you press Play, macOS asks whether Sudo Play may control Spotify. Click Allow, so it can start the playlist in the Spotify app.');
+    });
+
+    it('tells a beta user how to replace it', () => {
+      expect(install).toContain('<strong>Coming from the beta?</strong> Download the DMG and drag Sudo Play to Applications, then choose Replace. Your settings stay. The beta does not update itself.');
+    });
+
+    it('gives the checksum to check the download', () => {
+      expect(text).toMatch(/<h2[^>]*>Check the download<\/h2>/);
+      expect(text).toContain(`<code>shasum -a 256 ~/Downloads/${release!.dmg.file}</code>`);
       expect(text).toContain(`<code>${release!.dmg.sha256}</code>`);
     });
 
-    it.runIf(release && !release.signed)('says how to hear about the signed build', () => {
-      expect(text).toMatch(/<h2[^>]*>Hear about the signed build<\/h2>/);
+    it('says how to hear about new releases, and why the app does not check', () => {
+      expect(text).toMatch(/<h2[^>]*>Hear about new releases<\/h2>/);
       expect(text).toMatch(/Watch, then Custom, then Releases/);
+      expect(text).toContain('Sudo Play does not check for updates itself, because the daily catalog download is its only network call.');
     });
 
-    it.runIf(release?.signed)('says none of it once the build is signed', () => {
-      expect(content).not.toContain('class="note warning"');
-      expect(content).not.toMatch(/Open Anyway|Install the beta/);
+    it('has none of the unsigned steps', () => {
+      expect(content).not.toMatch(/Open Anyway|Install the beta|install-the-beta|not signed/);
     });
   });
 
@@ -433,10 +424,9 @@ describe('Install', () => {
     expect(content).not.toMatch(/composer setup|native:serve|git clone/);
   });
 
-  // The warning note is the page's only note, and it is not an alert: it is
-  // there on load, so a screen reader reads it in order.
-  it('has no other note, and no alert', () => {
-    expect(content.match(/class="note[ "]/g)?.length ?? 0).toBe(release && !release.signed ? 1 : 0);
+  // The beta's warning note went with the signed build.
+  it('has no note, and no alert', () => {
+    expect(content.match(/class="note[ "]/g)?.length ?? 0).toBe(0);
     expect(content).not.toMatch(/role="(note|alert)"/);
   });
 });

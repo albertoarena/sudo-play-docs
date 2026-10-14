@@ -26,7 +26,6 @@ describe('releaseNote', () => {
       name: '1.0.0',
       date: '2026-11-02',
       url: 'https://github.com/albertoarena/sudo-play/releases/tag/v1.0.0',
-      signed: true,
       dmg: { file: 'Sudo-Play-1.0.0-arm64.dmg', url: 'https://example.com/x.dmg', size: '167 MB', sha256: 'a'.repeat(64) },
     });
 
@@ -34,26 +33,24 @@ describe('releaseNote', () => {
   });
 });
 
-// The app's first build, published on GitHub on 2026-10-14 as a pre-release.
-// Unsigned until Apple approves the developer account, so every page that
-// warns about it reads `signed` from here, and the signed build is one edit.
-it('is the unsigned 1.0.0 beta 1', () => {
+// The first signed and notarized build, published on 2026-10-14. It replaced
+// 1.0.0 beta 1, which was unsigned, so the site no longer warns about signing.
+it('is the signed 1.0.0', () => {
   const tag = 'https://github.com/albertoarena/sudo-play/releases';
 
   expect(release).toEqual({
-    version: '1.0.0-beta.1',
-    name: '1.0.0 beta 1',
+    version: '1.0.0',
+    name: '1.0.0',
     date: '2026-10-14',
-    url: `${tag}/tag/v1.0.0-beta.1`,
-    signed: false,
+    url: `${tag}/tag/v1.0.0`,
     dmg: {
-      file: 'Sudo-Play-1.0.0-beta.1-arm64.dmg',
-      url: `${tag}/download/v1.0.0-beta.1/Sudo-Play-1.0.0-beta.1-arm64.dmg`,
-      size: '167 MB',
-      sha256: '8507c1af91e4f362376fb01bb72cb2512cbbf14ebfada94599b0795d36c52f1f',
+      file: 'Sudo-Play-1.0.0-arm64.dmg',
+      url: `${tag}/download/v1.0.0/Sudo-Play-1.0.0-arm64.dmg`,
+      size: '170 MB',
+      sha256: '2e4419bab91257a60b9dbf52ffc1f07ccf15678ad1f385d431de4c6444838212',
     },
   });
-  expect(releaseNote(release)).toBe('The current release is 1.0.0 beta 1.');
+  expect(releaseNote(release)).toBe('The current release is 1.0.0.');
 });
 
 it('Home states the release from the data file', () => {

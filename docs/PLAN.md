@@ -18,7 +18,8 @@ commit per green cycle.
    this site).
    - Moods are copied from the app's `catalog/playlists.yaml` into `src/data/`
      at each release, with a check script against `../sudo-play`
-   - The Install page is rechecked after the app's first signed release
+   - The Install page is rechecked after the app's first signed release.
+     Done for 1.0.0 on 2026-10-14
    - The site links to the app's `README.md`, `CONTRIBUTING.md` and
      `PRIVACY.md` and never copies them
 4. **SEO basics:** `robots.txt`, sitemap, 404, Open Graph, `og:image`

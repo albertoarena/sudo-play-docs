@@ -1,17 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import TerminalPanel from '../components/TerminalPanel.astro';
-import { release, releaseNote } from '../data/release';
+import { releaseNote } from '../data/release';
 ---
 <Base description="A small macOS menu bar app that picks today's Spotify playlist for the genre you like and the mood you are coding in.">
   <TerminalPanel slot="masthead" />
   <h1>Sudo Play</h1>
   <p class="lead">A small macOS menu bar app that picks today's Spotify playlist, based on what you are coding and how you feel about it.</p>
-  {release && !release.signed && (
-    <div class="note warning">
-      <p><strong>Not signed yet.</strong> The first build is a beta, and a signed build follows in a few days. <a href="/install/#install-the-beta">Install</a> shows how to open it until then.</p>
-    </div>
-  )}
   <figure class="window">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="/screenshots/window-dark.webp" />

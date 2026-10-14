@@ -22,42 +22,23 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
   {release && (
     <>
-      <h2 id="install-the-beta">{release.signed ? 'Download and install' : 'Install the beta'}</h2>
-      {!release.signed && (
-        <div class="note warning">
-          <p><strong>Temporary.</strong> This build is not signed yet. Sudo Play's Apple Developer account is waiting for Apple's approval, and a signed and notarized build follows in a few days. That build opens with no warning, and the steps below go away.</p>
-        </div>
-      )}
+      <h2 id="download-and-install">Download and install</h2>
       <p>You need a Mac with Apple silicon, M1 or later, and the Spotify app or a browser. There is no Intel build yet.</p>
       <ol>
         <li><strong>Download</strong> <ExternalLink href={release.dmg.url}>{release.dmg.file}</ExternalLink> ({release.dmg.size}) from the <ExternalLink href={release.url}>{release.name} release</ExternalLink>.</li>
         <li><strong>Install.</strong> Open the DMG and drag Sudo Play to Applications.</li>
+        <li><strong>Open</strong> Sudo Play. macOS asks once whether to open an app downloaded from the internet. Click <strong>Open</strong>.</li>
       </ol>
-    </>
-  )}
-
-  {release && !release.signed && (
-    <>
-      <h2>Open it the first time</h2>
-      <p>macOS cannot check who made an unsigned app, so it blocks the app the first time. You let it through once:</p>
-      <ol>
-        <li>Open Sudo Play from Applications. macOS says <strong>"Sudo Play.app" Not Opened</strong>. Click <strong>Done</strong>, not Move to Bin (Move to Trash on a Mac set to US English).</li>
-        <li>Open <strong>System Settings</strong>, then <strong>Privacy &amp; Security</strong>.</li>
-        <li>Scroll down to Security. Next to <strong>"Sudo Play.app" was blocked to protect your Mac</strong>, click <strong>Open Anyway</strong>.</li>
-        <li>A last dialog asks again. Click <strong>Open Anyway</strong>. Move to Bin is the highlighted button, so don't press Return.</li>
-        <li>Enter your password or use Touch ID if macOS asks.</li>
-      </ol>
-      <p>Sudo Play starts, and its icon appears in the menu bar. From now on it opens like any other app.</p>
-      <p>Open Anyway only shows for about an hour after a blocked attempt. If you don't see it, open Sudo Play again, click Done, and look again.</p>
-      <p>If you would rather not, wait for the signed build, or <a href="#run-it-from-source">run it from source</a>.</p>
+      <p>The first time you press Play, macOS asks whether Sudo Play may control Spotify. Click Allow, so it can start the playlist in the Spotify app.</p>
+      <p><strong>Coming from the beta?</strong> Download the DMG and drag Sudo Play to Applications, then choose Replace. Your settings stay. The beta does not update itself.</p>
 
       <h2>Check the download</h2>
       <p>This step is optional. In Terminal, run:</p>
       <pre><code>shasum -a 256 ~/Downloads/{release.dmg.file}</code></pre>
       <p>It should print <code>{release.dmg.sha256}</code>.</p>
 
-      <h2>Hear about the signed build</h2>
-      <p>On the app's <ExternalLink href={app}>GitHub page</ExternalLink>, choose Watch, then Custom, then Releases. GitHub tells you when the signed build is out.</p>
+      <h2>Hear about new releases</h2>
+      <p>On the app's <ExternalLink href={app}>GitHub page</ExternalLink>, choose Watch, then Custom, then Releases. Sudo Play does not check for updates itself, because the daily catalog download is its only network call.</p>
     </>
   )}
 
