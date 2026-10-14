@@ -26,7 +26,7 @@ fails to clone, and the domain keeps serving whatever it served before.
 
 ```
 ~/bin/sudoplay-dev-server-deploy.sh   the script, copied from scripts/
-~/logs/deploys/sudoplay-dev.log       what each run printed
+~/logs/deploys/sudoplay-server-dev.log       what each run printed
 ~/sudoplay.dev/                       the docroot
   .htaccess                           applied by hand from deploy/docroot.htaccess
   .deploy-src/                        a shallow clone of the deploy branch
@@ -87,7 +87,7 @@ step 5, the domain keeps serving whatever it served before.
    fails, restore the `.bak` copy and look again.
 7. **Add the cron job,** in cPanel under Cron Jobs:
    ```
-   */5 * * * * $HOME/bin/sudoplay-dev-server-deploy.sh >> $HOME/logs/deploys/sudoplay-dev.log 2>&1
+   */5 * * * * $HOME/bin/sudoplay-dev-server-deploy.sh >> $HOME/logs/deploys/sudoplay-server-dev.log 2>&1
    ```
 8. **Delete anything the old docroot served,** such as an `index.html` or
    `robots.txt` beside `current`. Every request goes to `current/` now, so
@@ -125,5 +125,5 @@ DNS and certificate.
   because `.deployed-sha` still names the newest commit. The next merge to
   `main` deploys over it, so revert on `main` too
 - **A bad docroot `.htaccess`:** restore the `.bak` copy
-- **Deploys stopped:** read `~/logs/deploys/sudoplay-dev.log`. "up to date"
+- **Deploys stopped:** read `~/logs/deploys/sudoplay-server-dev.log`. "up to date"
   every 5 minutes is the healthy line
