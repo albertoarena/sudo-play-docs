@@ -8,15 +8,12 @@ Lives at **https://sudoplay.dev**.
 
 ## Status
 
-Phases 1 to 5 of `docs/PLAN.md` are done: tooling and tests, the design, the
-copy for all six pages and Credits, SEO basics, and GA4 behind the consent gate. Phase 6,
-the deploy, is built and goes live with the repository public: see
-`docs/DEPLOYMENT.md`. Analytics are on only in a build with
+Phases 1 to 6 of `docs/PLAN.md` are done: tooling and tests, the design, the
+copy for all six pages and Credits, SEO basics, GA4 behind the consent gate,
+and the deploy. The site is live since 2026-10-14, and a merge to `main`
+deploys itself: see `docs/DEPLOYMENT.md`. Analytics are on only in a build with
 `PUBLIC_GA_MEASUREMENT_ID` set, which the deploy build takes from a repository
 variable.
-`placeholder/index.html` is a single static page, with no build step and no
-third party request, and it is what the domain serves until phase 6 deploys
-the Astro build over it.
 
 `docs/SCOPE.md` says what is decided, what is deliberately excluded and why.
 `docs/PLAN.md` says the phases and what is still open.
@@ -56,7 +53,6 @@ e2e/           Playwright tests on the served site
 scripts/       check-catalog.ts, check-redirects.ts and og-image.ts, run by hand,
                and server-deploy.sh, run by cron on the host
 deploy/        the docroot .htaccess, a reference copy applied by hand
-placeholder/   a single static page, no build, no external requests
 docs/          the scope, the plan and the deployment
 ```
 

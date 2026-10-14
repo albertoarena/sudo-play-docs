@@ -14,15 +14,15 @@ new session has are answered there.
 
 ## Current state, so nothing is assumed
 
-Phases 1 to 5 of `docs/PLAN.md` are done. Plain Astro with strict TypeScript,
+Phases 1 to 6 of `docs/PLAN.md` are done, and https://sudoplay.dev is live
+since 2026-10-14. Plain Astro with strict TypeScript,
 no Starlight and no CSS framework. The design, made with Impeccable, is in
 `docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
 have real copy, and so does Credits, linked from the footer (2026-10-13), and a test fails if any page still carries the
-`data-placeholder` marker. `placeholder/index.html` is still what the domain
-serves. Phase 6, the deploy, is built (2026-10-14) and goes live when the
-repository is public and the host is set up: read `docs/DEPLOYMENT.md` before
-touching `publish.yml`, `scripts/server-deploy.sh` or either `.htaccess`, and
-run `npm run check:redirects` after any change to them.
+`data-placeholder` marker. A merge to `main` deploys itself: read
+`docs/DEPLOYMENT.md` before touching `publish.yml`, `scripts/server-deploy.sh`
+or either `.htaccess`, and run `npm run check:redirects` after any change to
+them.
 
 GA4 and the consent gate, from phase 5: `src/data/analytics.ts` reads the
 measurement ID from `PUBLIC_GA_MEASUREMENT_ID` at build time. Unset, the build
@@ -58,9 +58,9 @@ per green cycle.
 (`LICENSE`) and the text of the pages and `public/og.png` are CC BY 4.0
 (`LICENSE-CONTENT`); the README says which covers what.
 
-This repository is **private now and public later**. Everything committed while
-it is private is readable the moment it flips, so no credentials and no draft
-copy worth hiding. A GA4 measurement ID is public by nature and is not a secret.
+This repository is **public** since 2026-10-14, so nothing committed may be a
+credential or draft copy worth hiding. A GA4 measurement ID is public by nature
+and is not a secret. Secret scanning and push protection are on.
 
 ## Source of truth: the app drives the docs
 
@@ -89,7 +89,7 @@ sets no cookie but still sends a request carrying the visitor's IP.
 Before writing any analytics, read `laravel-truss-docs/src/scripts/analytics.js`.
 Its header explains the choice and the tests beside it are the specification.
 
-**What this rules out, on every page including the placeholder:** a font from a
+**What this rules out, on every page:** a font from a
 CDN, an iframe demo, a search widget that calls home on load, an embedded map,
 a hosted icon set. Decide it when choosing the design, not afterwards.
 Retrofitting the promise means pulling out furniture that already works.
@@ -100,19 +100,6 @@ site has no advertising and should never acquire any.
 **Before quoting any number this produces:** GA4 behind this gate counts
 acceptors, not visitors, so every figure is a floor. Developers decline consent
 and run blockers more than most audiences.
-
-## The placeholder
-
-`placeholder/index.html` is static, buildless and makes no external request. It
-exists so the domain is not empty while the real site is written, and it is
-deliberately small so it cannot rot.
-
-- **No analytics on it.** It has nothing worth measuring, and adding the consent
-  machinery for a holding page means writing that machinery twice
-- **Do not promote it.** A social card is warmed per page, and a cold URL draws
-  nothing on its first paste, so a post spent on a placeholder spends the
-  domain's first impression on an empty page
-- Replace it with the real site rather than growing it into one
 
 ## Testing
 
@@ -173,12 +160,12 @@ If a machine has a Chromium that does not match the Playwright version, set
 component, a workflow, this file. There is no change small enough to push
 straight to `main`.
 
-`main` is not protected yet, because protection needs a public repository or a
-paid plan. That makes the rule more important rather than less: nothing but the
-rule is enforcing it.
+`main` is protected since 2026-10-14: a pull request and the `Checks` job are
+required, for admins too, with no force push and no deletion. Merges are merge
+commits only, and GitHub deletes the branch after a merge. The Publish workflow
+pushes to `deploy`, which is not protected.
 
-Do not change the repository's visibility. Alberto flips it, and the app
-repository waits on this site serving something real first.
+Do not change the repository's settings or visibility unless Alberto asks.
 
 ## Conventions
 

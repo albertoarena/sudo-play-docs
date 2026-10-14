@@ -51,9 +51,8 @@ belong here.
   nothing Google related is on the page. Advertising consent stays denied for
   ever
 - One canonical host, `https://sudoplay.dev`, HSTS preloaded
-- The repository is private now and public later, so nothing committed may be a
-  secret or draft copy worth hiding
-- Open: who writes the tips, and the licence for the site content
+- The repository is public, so nothing committed may be a secret or draft copy
+  worth hiding
 
 ## Brand Commitments
 
