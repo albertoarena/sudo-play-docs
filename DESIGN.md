@@ -359,12 +359,20 @@ Full width in a scrolling wrap, rows split by hairlines, the header rule in
 `border-strong`, header cells at 600, tabular figures.
 
 ### App Window
-One screenshot on Home, under the opening paragraph: the light or dark window
-to match the visitor, through `<picture>`. 360 by 520 from a 2x capture,
-cropped without the macOS shadow, since the site is flat. The window's own 22px
-radius, and a `border` hairline so it has an edge on a page of its own colour.
-WebP files in `public/screenshots/`, each under 80 KB. The source is the app
-repository's `art/screenshots/`: when those change, crop and convert again.
+A screenshot of an app window, in a `figure class="window"` styled in
+`global.css`. Cropped from a 2x capture without the macOS shadow, since the site
+is flat, and shown at its natural size. The window's own 22px radius, and a
+`border` hairline so it has an edge on a page of its own colour. WebP files in
+`public/screenshots/`, each under 80 KB.
+
+- **Home**, under the opening paragraph: the menu bar window, light or dark to
+  match the visitor, through `<picture>`. 360 by 520. Light and dark show
+  different picks, so the one alt text names neither
+- **How it works**, at the end of Play: the Settings window, 440 by 680. There
+  is one capture, light, so it stays light on a dark page
+
+The source is the app repository's `art/screenshots/`: when those change, crop
+and convert again.
 
 ### Previous and Next
 The page's neighbours in reading order, in two cells at the end of every page.
