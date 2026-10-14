@@ -206,8 +206,8 @@ is in `docs/DIRECTION.md`, and `tests/tokens.test.ts` checks them.
   `term-dots` fills the window dots.
 
 ### Tertiary
-- **Warning Amber** (`warn`, `warn-dark`): defined and reserved for real
-  warnings and errors. No phase 2 surface uses it yet.
+- **Warning Amber** (`warn`, `warn-dark`): reserved for real warnings and
+  errors. Its one use is the Warning Note, below.
 
 ### Named Rules
 **The One Green Rule.** Green means "act here" or "you are here". It never
@@ -347,6 +347,15 @@ anywhere. `kbd`: `bg`, 1px hairline with a 2px bottom, 5px corners, centred.
 ### Note
 Something worth knowing that is not a warning. `bg-subtle`, 1px hairline,
 10px corners, 1rem by 1.25rem padding, opening with a bold word.
+
+### Warning Note
+A note, `.note.warning`, for a real warning: today, that the beta is not
+signed. The same block with its whole 1px edge in `warn` and the bold lead
+word in `warn`, 4.8 to 1 on `bg-subtle` in light and 10.3 in dark. The text
+stays in `fg`. Never a thick stripe on one side and never an amber fill. It
+sits on Install, under the first heading, and on Home, under the lead, and
+shows only while `release.signed` is false. Not an alert: it is there on load,
+so a screen reader reads it in order.
 
 ### Links
 `accent`, 1px underline offset 0.2em. Hover: `accent-hover` and a 2px

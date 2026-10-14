@@ -247,6 +247,18 @@ th {
   margin-bottom: 0;
 }
 
+/* A real warning, such as an unsigned build: the only place amber appears.
+   The whole edge turns amber, never a thick stripe on one side, and the text
+   stays in fg so it reads like the rest of the page. The bold lead word
+   carries the colour: 4.8 on bg-subtle in light, 10.3 in dark. */
+.note.warning {
+  border-color: var(--warn);
+}
+
+.note.warning strong:first-child {
+  color: var(--warn);
+}
+
 .placeholder {
   margin: 0 0 2rem;
   padding: 0.75rem 1rem;
