@@ -260,3 +260,19 @@ th {
 .placeholder strong {
   color: var(--fg);
 }
+
+/* An app window, at its natural size, cropped from a 2x capture without the
+   macOS shadow: the site is flat. A hairline gives it an edge on a page the
+   same colour as the window. The radius is the window's own. */
+.window {
+  margin: 2rem 0;
+}
+
+.window img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 22px;
+  outline: 1px solid var(--border);
+  outline-offset: -1px;
+}
