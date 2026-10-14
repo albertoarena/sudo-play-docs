@@ -15,3 +15,12 @@ for (const colorScheme of ['light', 'dark'] as const) {
     expect(await window.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(720);
   });
 }
+
+// How it works shows the Settings window, from its 2x capture.
+test('How it works shows the Settings window', async ({ page }) => {
+  await page.goto('/how-it-works/');
+  const settings = page.getByRole('img', { name: /^The Sudo Play Settings window,/ });
+
+  await expect(settings).toBeVisible();
+  expect(await settings.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(880);
+});

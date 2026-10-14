@@ -87,7 +87,9 @@ describe('Home', () => {
   // The site runs analytics after consent, so "no analytics" must be plainly
   // about the app. Approved 2026-10-13.
   // One screenshot of the window, light or dark to match the visitor, at its
-  // natural width. Placement and alt text approved 2026-10-13.
+  // natural width. Placement approved 2026-10-13. Retaken with real playlists
+  // on 2026-10-14: light and dark show different picks, and one alt serves
+  // both, so it names no pick. Approved 2026-10-14.
   it('shows the app window, light or dark, with its approved alt text', () => {
     const picture = content.match(/<picture\b[^>]*>[\s\S]*?<\/picture>/)?.[0] ?? '';
 
@@ -97,14 +99,14 @@ describe('Home', () => {
     expect(picture).toMatch(/\bheight="520"/);
     // Astro may write the apostrophe as &#39;.
     expect(picture.replace(/&#39;/g, "'")).toContain(
-      "alt=\"The Sudo Play window. Jazz and Coffee Needed are selected, and today's pick is Jazz for deep work, with Play, Next and Surprise me below.\"",
+      "alt=\"The Sudo Play window. A genre and a mood are selected, and today's pick is shown with its curator, with Play, Next and Surprise me below.\"",
     );
   });
 
-  // Both captures ship with the site, and stay light enough for a phone.
-  it('ships both screenshots, each under 80 KB', () => {
-    for (const scheme of ['light', 'dark']) {
-      const file = join(dist, 'screenshots', `window-${scheme}.webp`);
+  // Every capture ships with the site, and stays light enough for a phone.
+  it('ships every screenshot, each under 80 KB', () => {
+    for (const name of ['window-light', 'window-dark', 'settings']) {
+      const file = join(dist, 'screenshots', `${name}.webp`);
       expect(existsSync(file), file).toBe(true);
       expect(statSync(file).size, file).toBeLessThan(80 * 1024);
     }
@@ -278,6 +280,21 @@ describe('Moods', () => {
 describe('How it works', () => {
   const content = column(read('how-it-works/index.html'));
   const table = content.match(/<table[\s\S]*?<\/table>/)?.[0] ?? '';
+
+  // The Settings window, after Play, which sends the reader to Settings for
+  // the other player modes. Light only: there is one capture. Placement
+  // approved 2026-10-14.
+  it('shows the Settings window after Play, with its alt text', () => {
+    const play = content.split(/<h2[^>]*>Play<\/h2>/)[1]?.split(/<h2/)[0] ?? '';
+    const img = play.match(/<figure\b[^>]*>\s*<img\b[^>]*>\s*<\/figure>/)?.[0] ?? '';
+
+    expect(img).toMatch(/\bsrc="\/screenshots\/settings\.webp"/);
+    expect(img).toMatch(/\bwidth="440"/);
+    expect(img).toMatch(/\bheight="680"/);
+    expect(img).toContain(
+      'alt="The Sudo Play Settings window, with a default genre and mood, the three ways to play, the daily reminder, opening when you log in, and the catalog URL."',
+    );
+  });
 
   it('says the pick is the same all day and changes tomorrow', () => {
     expect(content).toMatch(/same all day/i);
