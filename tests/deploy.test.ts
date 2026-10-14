@@ -92,12 +92,11 @@ describe('the docroot .htaccess, applied by hand', () => {
     expect(deny).toBeLessThan(toCurrent);
   });
 
-  // AutoSSL proves the domain with a file under /.well-known/. Rewritten into
-  // current/ it would 404, and the certificate would not renew.
-  it('leaves /.well-known/ to the host', () => {
-    const wellKnown = at(/^RewriteRule \^\\\.well-known\/ - \[L\]$/);
-    expect(wellKnown).toBeGreaterThan(-1);
-    expect(wellKnown).toBeLessThan(at(/^RewriteCond %\{HTTPS\} off$/));
+  // The host answers AutoSSL's /.well-known/ paths before this file runs, so
+  // it needs no rule for them. trussphp.com renewed with that layout on
+  // 2026-09-27. Checked 2026-10-14.
+  it('has no rule of its own for /.well-known/', () => {
+    expect(lines.filter((line) => line.includes('well-known'))).toEqual([]);
   });
 
   // A redirect below the rewrite into current/ never fires. The two rules
