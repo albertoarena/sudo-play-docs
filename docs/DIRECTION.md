@@ -166,7 +166,10 @@ The masthead band and the Home panel.
 - **Amber is for problems only.** Information uses `--fg-muted`, never `--warn`.
   No phase 2 surface needs it. It stays defined for the first real warning,
   likely on Install, rather than being removed and contrast checked again.
-  Decided 2026-10-12
+  Decided 2026-10-12. First used on 2026-10-14, for the unsigned beta: a
+  note with a 1px amber edge all round and an amber lead word, never a thick
+  stripe or an amber fill. It shows on Install and Home only while the build
+  is unsigned
 - **Tables have no stripes.** Rows are split by a `--border` hairline and the
   header by `--border-strong`. Changed 2026-10-12: stripes were planned in
   `--bg-subtle`, but `#fafafa` on white barely shows, and stripes beside

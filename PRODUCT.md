@@ -76,9 +76,9 @@ belong here.
 
 - App icon and menu bar mark: `../sudo-play/art/`
 - Moods and their one line descriptions: the app's README and catalog
-- No screenshots, testimonials or download counts. The app has no release yet,
-  so the Install page is rechecked after the first signed release. Do not
-  invent any of these
+- No testimonials or download counts. Do not invent any. The first build,
+  1.0.0 beta 1, is unsigned, so the Install page is rechecked after the first
+  signed release
 
 ## Product Principles
 
