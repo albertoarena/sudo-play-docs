@@ -342,8 +342,9 @@ describe('Install', () => {
   });
 
   // Until the first release, a visitor still has something to do: watch for
-  // the release, or add a playlist to the empty catalog. The section goes when
-  // release.ts gets a release. Approved 2026-10-13.
+  // the release, or add a playlist. The section goes when release.ts gets a
+  // release. Approved 2026-10-13. The catalog has playlists since the app's
+  // db3d53a, so the page no longer calls it empty. Approved 2026-10-14.
   it('says what to do until the first release, only while there is none', () => {
     const heading = /<h2[^>]*>Until the first release<\/h2>/;
     if (release) {
@@ -352,16 +353,20 @@ describe('Install', () => {
     }
     expect(content).toMatch(heading);
     expect(content).toMatch(/Watch, then Custom, then Releases/);
-    expect(content).toMatch(/catalog is empty/);
+    expect(content).toMatch(/Anyone can add one to the catalog with a pull request\./);
+    expect(content).not.toMatch(/catalog is empty/);
     expect(links(content)).toEqual(expect.arrayContaining([app, `${app}/blob/main/CONTRIBUTING.md#adding-a-playlist`]));
   });
 
   // Anyone can run it from source now. The app README has the steps, and the
   // site links to them rather than keeping a second copy that would drift.
+  // Since db3d53a the app ships a copy of the catalog, as its README says.
   it('links to the app README for running from source, without copying the steps', () => {
     expect(content).toMatch(/<h2[^>]*>Run it from source<\/h2>/);
     expect(content).toMatch(/PHP 8\.4, Composer and Node 22 or later/);
     expect(links(content)).toContain(`${app}#run-it-from-source`);
+    expect(content).toMatch(/A copy of the catalog ships with the app, so it has playlists to suggest from the first run, even offline\./);
+    expect(content).not.toMatch(/nothing to suggest/);
     expect(content).not.toMatch(/composer setup|native:serve|git clone/);
   });
 

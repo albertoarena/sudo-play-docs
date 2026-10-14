@@ -12,7 +12,7 @@ export const release: Release | null = null;
 
 // The sudo-play commit the copy was last checked against. Without a release,
 // this is what the pages describe.
-export const checkedAt = '91e0fd9';
+export const checkedAt = 'db3d53a';
 
 export function releaseNote(current: Release | null = release): string {
   return current ? `The current release is ${current.version}.` : 'There is no release yet.';
