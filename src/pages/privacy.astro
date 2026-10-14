@@ -26,11 +26,11 @@ const contact = 'hello@albertoarena.it';
   <p>Every advertising feature is switched off: no ad personalisation, no ad storage and no Google Signals, so there is no profile of you across sites. The data is kept for 14 months. Google acts as a processor, and its own privacy policy applies.</p>
 
   <h2>Server logs</h2>
-  <p>Like any web server, the server that hosts this site records each request in its access logs, with the IP address it came from. The hosting provider keeps these logs to keep the site secure and to fix problems. They are not used for analytics.</p>
+  <p>The server that hosts this site records each request in its access logs, with the IP address it came from. The hosting provider holds these logs to keep the site secure and to fix problems. They are not used for analytics.</p>
 
   <h2>Cookies and storage</h2>
   <p>Unless you accept analytics, this site sets no cookies.</p>
-  <p>Your choice is remembered in your browser's local storage, under the name <code>{STORAGE_KEY}</code>, so you are not asked again. Local storage is not a cookie and is never sent to the server. A decline is remembered there too, so refusing leaves nothing that a server can read.</p>
+  <p>Your choice is remembered in your browser's local storage, under the name <code>{STORAGE_KEY}</code>, so you are not asked again. Local storage is not a cookie and is never sent to the server. A decline is stored there too, so no server can read it.</p>
   <p>Only if you accept, Google Analytics sets its own cookies, <code>_ga</code> and <code>_ga_&lt;id&gt;</code>, to tell repeat visits apart. If you decline, they are never created.</p>
   <p>You can clear all of this at any time in your browser's settings for this site. If you clear <code>{STORAGE_KEY}</code>, the site asks you again.</p>
 
@@ -52,7 +52,7 @@ const contact = 'hello@albertoarena.it';
       <thead><tr><th scope="col">Who</th><th scope="col">What for</th><th scope="col">Where</th></tr></thead>
       <tbody>
         <tr><td>Cloudflare</td><td>DNS only: it answers the lookup for sudoplay.dev, and never sees the pages you request</td><td><ExternalLink href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</ExternalLink></td></tr>
-        <tr><td>Google</td><td>Google Analytics, only after you accept. Never contacted otherwise</td><td><ExternalLink href="https://policies.google.com/privacy">Google privacy policy</ExternalLink></td></tr>
+        <tr><td>Google</td><td>Google Analytics, loaded only after you accept</td><td><ExternalLink href="https://policies.google.com/privacy">Google privacy policy</ExternalLink></td></tr>
         <tr><td>The hosting provider</td><td>The origin server and its access logs</td><td>Italy</td></tr>
       </tbody>
     </table>
@@ -66,5 +66,5 @@ const contact = 'hello@albertoarena.it';
   <p>To use any of these rights, write to <a href={`mailto:${contact}`}>{contact}</a>. Every request gets an answer.</p>
 
   <h2>Changes</h2>
-  <p>If this site starts to collect anything new, this page changes before that happens, not after, and the date at the top changes too.</p>
+  <p>If this site is going to collect anything new, this page changes before it does, and so does the date at the top.</p>
 </Base>
