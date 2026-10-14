@@ -44,6 +44,11 @@ function column(html: string): string {
   return html.match(/<div class="column"[^>]*>([\s\S]*?)<\/div>\s*(?:<nav[^>]*aria-label="Previous and next"|<\/main>)/)?.[1] ?? '';
 }
 
+// Astro may write an apostrophe as &#39; and a quote as &quot;.
+function decode(html: string): string {
+  return html.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+}
+
 function links(html: string): string[] {
   return [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((match) => match[1]);
 }
@@ -110,6 +115,18 @@ describe('Home', () => {
       expect(existsSync(file), file).toBe(true);
       expect(statSync(file).size, file).toBeLessThan(80 * 1024);
     }
+  });
+
+  // While the build is unsigned, Home says so under the opening paragraph and
+  // sends the reader to Install. Approved 2026-10-14.
+  it.runIf(release && !release.signed)('says the beta is not signed yet, linking to Install', () => {
+    expect(decode(content)).toMatch(
+      /<p class="lead">[\s\S]*?<\/p>\s*<div class="note warning">\s*<p><strong>Not signed yet\.<\/strong> The first build is a beta, and a signed build follows in a few days\. <a href="\/install\/#install-the-beta">Install<\/a> shows how to open it until then\.<\/p>\s*<\/div>/,
+    );
+  });
+
+  it.runIf(release?.signed)('has no beta note once the build is signed', () => {
+    expect(content).not.toContain('class="note warning"');
   });
 
   it('says it is the app that has no analytics', () => {
@@ -351,45 +368,74 @@ describe('Install', () => {
     expect(content).toContain(releaseNote(release));
   });
 
-  // The app's README: the first release is a signed DMG on a GitHub Release.
-  it('says what the first release will be, and links to the releases page', () => {
-    expect(content).toMatch(/signed DMG/);
-    expect(content).toMatch(/GitHub Release/);
-    expect(links(content)).toContain(`${app}/releases`);
-  });
+  // While the build is unsigned, Install walks through macOS's block, as
+  // Alberto saw it on macOS Sequoia on 2026-10-14. The dialog text is his
+  // screen's. It all goes when release.ts says the build is signed. Wording
+  // and the warning note approved 2026-10-14.
+  describe('while the release is unsigned', () => {
+    const text = decode(content);
+    const beta = text.split(/<h2[^>]*>Install the beta<\/h2>/)[1]?.split(/<h2[^>]*>Run it from source<\/h2>/)[0] ?? '';
 
-  // Until the first release, a visitor still has something to do: watch for
-  // the release, or add a playlist. The section goes when release.ts gets a
-  // release. Approved 2026-10-13. The catalog has playlists since the app's
-  // db3d53a, so the page no longer calls it empty. Approved 2026-10-14.
-  it('says what to do until the first release, only while there is none', () => {
-    const heading = /<h2[^>]*>Until the first release<\/h2>/;
-    if (release) {
-      expect(content).not.toMatch(heading);
-      return;
-    }
-    expect(content).toMatch(heading);
-    expect(content).toMatch(/Watch, then Custom, then Releases/);
-    expect(content).toMatch(/Anyone can add one to the catalog with a pull request\./);
-    expect(content).not.toMatch(/catalog is empty/);
-    expect(links(content)).toEqual(expect.arrayContaining([app, `${app}/blob/main/CONTRIBUTING.md#adding-a-playlist`]));
+    it.runIf(release && !release.signed)('opens with a warning note that says it is temporary', () => {
+      expect(content).toMatch(/<h2 id="install-the-beta">Install the beta<\/h2>\s*<div class="note warning">\s*<p><strong>Temporary\.<\/strong> This build is not signed yet\./);
+      expect(beta).toContain("Sudo Play's Apple Developer account is waiting for Apple's approval, and a signed and notarized build follows in a few days. That build opens with no warning, and the steps below go away.");
+      expect(content.match(/class="note warning"/g)).toHaveLength(1);
+    });
+
+    it.runIf(release && !release.signed)('says what it needs and links the DMG and the release', () => {
+      expect(beta).toContain('You need a Mac with Apple silicon, M1 or later, and the Spotify app or a browser. There is no Intel build yet.');
+      expect(links(content)).toEqual(expect.arrayContaining([release!.dmg.url, release!.url]));
+      expect(beta.replace(/<span class="new-tab"[^>]*>[^<]*<\/span>/g, '')).toContain(`${release!.dmg.file}</a> (${release!.dmg.size})`);
+      expect(beta).toContain('Open the DMG and drag Sudo Play to Applications.');
+    });
+
+    it.runIf(release && !release.signed)('walks through Open Anyway, with the Move to Bin warning', () => {
+      const steps = beta.split(/<h2[^>]*>Open it the first time<\/h2>/)[1]?.match(/<ol>([\s\S]*?)<\/ol>/)?.[1] ?? '';
+      const items = [...steps.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1].replace(/<[^>]+>/g, ''));
+
+      expect(items).toEqual([
+        'Open Sudo Play from Applications. macOS says "Sudo Play.app" Not Opened. Click Done, not Move to Bin.',
+        'Open System Settings, then Privacy & Security.'.replace('&', '&amp;'),
+        'Scroll down to Security. Next to "Sudo Play.app" was blocked to protect your Mac, click Open Anyway.',
+        "A last dialog asks again. Click Open Anyway. Move to Bin is the highlighted button, so don't press Return.",
+        'Enter your password or use Touch ID if macOS asks.',
+      ]);
+      expect(beta).toContain('Open Anyway only shows for about an hour after a blocked attempt.');
+      expect(beta).toContain('If you would rather not, wait for the signed build, or <a href="#run-it-from-source">run it from source</a>.');
+    });
+
+    it.runIf(release && !release.signed)('gives the checksum to check the download', () => {
+      expect(text).toMatch(/<pre[^>]*><code>shasum -a 256 ~\/Downloads\/Sudo-Play-1\.0\.0-beta\.1-arm64\.dmg<\/code><\/pre>/);
+      expect(text).toContain(`<code>${release!.dmg.sha256}</code>`);
+    });
+
+    it.runIf(release && !release.signed)('says how to hear about the signed build', () => {
+      expect(text).toMatch(/<h2[^>]*>Hear about the signed build<\/h2>/);
+      expect(text).toMatch(/Watch, then Custom, then Releases/);
+    });
+
+    it.runIf(release?.signed)('says none of it once the build is signed', () => {
+      expect(content).not.toContain('class="note warning"');
+      expect(content).not.toMatch(/Open Anyway|Install the beta/);
+    });
   });
 
   // Anyone can run it from source now. The app README has the steps, and the
   // site links to them rather than keeping a second copy that would drift.
   // Since db3d53a the app ships a copy of the catalog, as its README says.
   it('links to the app README for running from source, without copying the steps', () => {
-    expect(content).toMatch(/<h2[^>]*>Run it from source<\/h2>/);
-    expect(content).toMatch(/PHP 8\.4, Composer and Node 22 or later/);
+    expect(content).toMatch(/<h2 id="run-it-from-source">Run it from source<\/h2>/);
+    expect(content).toMatch(/You can also run Sudo Play on a Mac with PHP 8\.4, Composer and Node 22 or later\./);
     expect(links(content)).toContain(`${app}#run-it-from-source`);
     expect(content).toMatch(/A copy of the catalog ships with the app, so it has playlists to suggest from the first run, even offline\./);
     expect(content).not.toMatch(/nothing to suggest/);
     expect(content).not.toMatch(/composer setup|native:serve|git clone/);
   });
 
-  // A warning box is design work for Impeccable, not for this page's copy.
-  it('has no note or warning box', () => {
-    expect(content).not.toContain('class="note"');
+  // The warning note is the page's only note, and it is not an alert: it is
+  // there on load, so a screen reader reads it in order.
+  it('has no other note, and no alert', () => {
+    expect(content.match(/class="note[ "]/g)?.length ?? 0).toBe(release && !release.signed ? 1 : 0);
     expect(content).not.toMatch(/role="(note|alert)"/);
   });
 });
