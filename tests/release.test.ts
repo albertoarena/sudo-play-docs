@@ -33,24 +33,24 @@ describe('releaseNote', () => {
   });
 });
 
-// The first signed and notarized build, published on 2026-10-14. It replaced
-// 1.0.0 beta 1, which was unsigned, so the site no longer warns about signing.
-it('is the signed 1.0.0', () => {
+// 1.0.1, published on 2026-10-14, signed and notarized like 1.0.0. It only
+// stops the menu bar footer wrapping.
+it('is the signed 1.0.1', () => {
   const tag = 'https://github.com/albertoarena/sudo-play/releases';
 
   expect(release).toEqual({
-    version: '1.0.0',
-    name: '1.0.0',
+    version: '1.0.1',
+    name: '1.0.1',
     date: '2026-10-14',
-    url: `${tag}/tag/v1.0.0`,
+    url: `${tag}/tag/v1.0.1`,
     dmg: {
-      file: 'Sudo-Play-1.0.0-arm64.dmg',
-      url: `${tag}/download/v1.0.0/Sudo-Play-1.0.0-arm64.dmg`,
-      size: '170 MB',
-      sha256: '2e4419bab91257a60b9dbf52ffc1f07ccf15678ad1f385d431de4c6444838212',
+      file: 'Sudo-Play-1.0.1-arm64.dmg',
+      url: `${tag}/download/v1.0.1/Sudo-Play-1.0.1-arm64.dmg`,
+      size: '169 MB',
+      sha256: 'abe61bcd9d03d9372930bf7dca2e013220479f14012f9614cf0763e68c01dda9',
     },
   });
-  expect(releaseNote(release)).toBe('The current release is 1.0.0.');
+  expect(releaseNote(release)).toBe('The current release is 1.0.1.');
 });
 
 it('Home states the release from the data file', () => {
