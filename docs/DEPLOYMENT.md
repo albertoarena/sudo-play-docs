@@ -54,7 +54,8 @@ Two `.htaccess` files apply, and each has its own job:
 
 ## Setting it up, once
 
-Do these in order. Until step 5, the domain keeps serving the placeholder.
+Done on 2026-10-14. Kept for a rebuild of the host. Do these in order. Until
+step 5, the domain keeps serving whatever it served before.
 
 1. **Make the repository public.** Nothing below works before it.
 2. **Check the `deploy` branch exists.** Publish runs on the first green push
@@ -74,7 +75,7 @@ Do these in order. Until step 5, the domain keeps serving the placeholder.
    rm -rf ~/sudoplay.dev/_test
    ~/bin/sudoplay-dev-server-deploy.sh                       # the real docroot
    ```
-   The old `.htaccess` still serves the placeholder, so nothing visible
+   The old `.htaccess` still serves the old docroot, so nothing visible
    changes yet.
 5. **Apply the docroot `.htaccess`.**
    ```sh
@@ -88,11 +89,10 @@ Do these in order. Until step 5, the domain keeps serving the placeholder.
    ```
    */5 * * * * $HOME/bin/sudoplay-dev-server-deploy.sh >> $HOME/logs/deploys/sudoplay-dev.log 2>&1
    ```
-8. **Move the placeholder out of the docroot.** `index.html` and
-   `robots.txt` in `~/sudoplay.dev/` are no longer served, because every
-   request goes to `current/`, and each release has its own. Keep a copy
-   outside the docroot, then delete `placeholder/` from this repository in a
-   pull request. Leave `.well-known/` and `cgi-bin/`: they are the host's.
+8. **Delete anything the old docroot served,** such as an `index.html` or
+   `robots.txt` beside `current`. Every request goes to `current/` now, so
+   they are never served. Leave `.well-known/` and `cgi-bin/`: they are the
+   host's.
 
 ## After a deploy, or any edit to the docroot `.htaccess`
 

@@ -58,8 +58,10 @@ commit per green cycle.
      The site goes live when Sudo Play goes public, so the two arrive together
    - Built on 2026-10-14. `docs/DEPLOYMENT.md` has the path, the one time setup
      on the host, `npm run check:redirects` and rolling back. The rules were
-     checked against a local Apache laid out like the docroot. Live once
-     Alberto has made the repository public and done the host steps
+     checked against a local Apache laid out like the docroot
+   - **Live on 2026-10-14.** The repository went public, the host steps were
+     done, `npm run check:redirects` passed every case, and no live page made
+     a third party request before consent
 
 ## Open
 

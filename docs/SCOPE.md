@@ -33,7 +33,8 @@ a marketing site and does not need to persuade anyone.
 - **This repository is public**, since 2026-10-14. No credentials and no draft
   copy worth hiding. A GA4 measurement ID is public by nature
 - **A placeholder page goes up first**, in `placeholder/`, so the domain serves
-  something before Astro exists
+  something before Astro exists. Retired on 2026-10-14, when the site went
+  live; git has it
 - **Test first**, decided 2026-10-10. The failing test is committed, then the
   code. One commit per green cycle
 - **No implementation before the design**, decided 2026-10-10. Alberto
