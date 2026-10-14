@@ -150,6 +150,13 @@ describe.each(indexable)('%s', (file) => {
     expect(lang).toBe('en');
     expect(meta(html, 'og:locale')).toEqual([lang]);
   });
+
+  // LinkedIn's Post Inspector reports a page with no author. There is no
+  // publish date to go with it: the build cannot know when the copy last
+  // changed, as the sitemap says. Decided 2026-10-14.
+  it('names its author', () => {
+    expect(meta(html, 'author')).toEqual(['Alberto Arena']);
+  });
 });
 
 it('gives every indexable page its own description', () => {
