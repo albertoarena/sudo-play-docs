@@ -3,37 +3,33 @@
 // Install steps, which a person checks against the real build.
 export interface Release {
   version: string;
-  // The version as a reader says it: "1.0.0 beta 1".
+  // The version as a reader says it: "1.0.0".
   name: string;
   date: string;
   url: string;
-  // False until Apple approves the developer account. While it is false,
-  // Install opens with a warning and the Open Anyway steps, and Home says the
-  // build is not signed yet. Setting it true removes all of that.
-  signed: boolean;
   dmg: { file: string; url: string; size: string; sha256: string };
 }
 
 const releases = 'https://github.com/albertoarena/sudo-play/releases';
 
-// The first build, a pre-release published on 2026-10-14.
+// The first signed and notarized build, published on 2026-10-14. It replaced
+// 1.0.0 beta 1, which was unsigned.
 export const release: Release | null = {
-  version: '1.0.0-beta.1',
-  name: '1.0.0 beta 1',
+  version: '1.0.0',
+  name: '1.0.0',
   date: '2026-10-14',
-  url: `${releases}/tag/v1.0.0-beta.1`,
-  signed: false,
+  url: `${releases}/tag/v1.0.0`,
   dmg: {
-    file: 'Sudo-Play-1.0.0-beta.1-arm64.dmg',
-    url: `${releases}/download/v1.0.0-beta.1/Sudo-Play-1.0.0-beta.1-arm64.dmg`,
-    size: '167 MB',
-    sha256: '8507c1af91e4f362376fb01bb72cb2512cbbf14ebfada94599b0795d36c52f1f',
+    file: 'Sudo-Play-1.0.0-arm64.dmg',
+    url: `${releases}/download/v1.0.0/Sudo-Play-1.0.0-arm64.dmg`,
+    size: '170 MB',
+    sha256: '2e4419bab91257a60b9dbf52ffc1f07ccf15678ad1f385d431de4c6444838212',
   },
 };
 
 // The sudo-play commit the copy was last checked against. Without a release,
 // this is what the pages describe.
-export const checkedAt = 'de23e8d';
+export const checkedAt = '3661324';
 
 export function releaseNote(current: Release | null = release): string {
   return current ? `The current release is ${current.name}.` : 'There is no release yet.';

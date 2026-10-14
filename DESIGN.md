@@ -349,13 +349,13 @@ Something worth knowing that is not a warning. `bg-subtle`, 1px hairline,
 10px corners, 1rem by 1.25rem padding, opening with a bold word.
 
 ### Warning Note
-A note, `.note.warning`, for a real warning: today, that the beta is not
-signed. The same block with its whole 1px edge in `warn` and the bold lead
+A note, `.note.warning`, for a real warning. First used for the unsigned
+beta, and unused since the signed 1.0.0 on 2026-10-14; the style stays for the
+next real warning. The same block with its whole 1px edge in `warn` and the bold lead
 word in `warn`, 4.8 to 1 on `bg-subtle` in light and 10.3 in dark. The text
 stays in `fg`. Never a thick stripe on one side and never an amber fill. It
-sits on Install, under the first heading, and on Home, under the lead, and
-shows only while `release.signed` is false. Not an alert: it is there on load,
-so a screen reader reads it in order.
+sat on Install, under the first heading, and on Home, under the lead. Not an
+alert: it is there on load, so a screen reader reads it in order.
 
 ### Links
 `accent`, 1px underline offset 0.2em. Hover: `accent-hover` and a 2px
