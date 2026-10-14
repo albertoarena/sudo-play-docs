@@ -30,13 +30,17 @@ commit per green cycle.
    way `trussphp.com` deploys (`albertoarena/laravel-truss-docs`, see its
    `DEPLOYMENT.md`). Decided 2026-10-12:
    - GitHub Actions builds the site on every push to `main` and force pushes
-     `dist/` to a `deploy` branch. CI never connects to the server
+     `dist/` to a `deploy` branch. CI never connects to the server. Changed
+     2026-10-14: Publish waits for CI to pass on that push, so a red `main`
+     never deploys
    - A cron job on the server pulls the `deploy` branch over HTTPS, unpacks it
      into a fresh release folder and points a `current` symlink at it, so a
      release is atomic and a rollback is one symlink
    - The docroot `.htaccess` rewrites traffic to `current/`. It must keep the
      `www` rule from Deployment in `docs/SCOPE.md`, and send `404.html` with a
-     404 status for an unknown address (`ErrorDocument 404 /404.html`). The
+     404 status for an unknown address. Corrected 2026-10-14: the line is
+     `ErrorDocument 404 /current/404.html`, in the release's own `.htaccess`,
+     because the path resolves from the docroot, which has no `404.html`. The
      preview server does this already, and an e2e test checks it there, but
      only `curl` on the live site can check Apache
    - The deploy build sets `PUBLIC_GA_MEASUREMENT_ID` from a repository
@@ -52,6 +56,10 @@ commit per green cycle.
      every page in the sitemap
    - The server pulls without credentials, which needs the repository public.
      The site goes live when Sudo Play goes public, so the two arrive together
+   - Built on 2026-10-14. `docs/DEPLOYMENT.md` has the path, the one time setup
+     on the host, `npm run check:redirects` and rolling back. The rules were
+     checked against a local Apache laid out like the docroot. Live once
+     Alberto has made the repository public and done the host steps
 
 ## Open
 

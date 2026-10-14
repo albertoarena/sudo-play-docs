@@ -19,7 +19,10 @@ no Starlight and no CSS framework. The design, made with Impeccable, is in
 `docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
 have real copy, and so does Credits, linked from the footer (2026-10-13), and a test fails if any page still carries the
 `data-placeholder` marker. `placeholder/index.html` is still what the domain
-serves. Phase 6, the deploy, is next.
+serves. Phase 6, the deploy, is built (2026-10-14) and goes live when the
+repository is public and the host is set up: read `docs/DEPLOYMENT.md` before
+touching `publish.yml`, `scripts/server-deploy.sh` or either `.htaccess`, and
+run `npm run check:redirects` after any change to them.
 
 GA4 and the consent gate, from phase 5: `src/data/analytics.ts` reads the
 measurement ID from `PUBLIC_GA_MEASUREMENT_ID` at build time. Unset, the build
