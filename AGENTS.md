@@ -179,9 +179,24 @@ repository waits on this site serving something real first.
 
 ## Conventions
 
-- Prose and UI copy: plain English, short sentences, **no em dashes and no en
-  dashes**. If quoted material from someone else contains them, reproduce it
-  verbatim: never edit another person's words to fit our punctuation
+- Prose and UI copy: plain English, short sentences
+- **No em dashes and no en dashes, anywhere we write**: page copy, alt text,
+  descriptions, docs, code comments, commit messages, pull request titles and
+  descriptions, and messages to other sessions. Use a period, a comma, a colon
+  or parentheses instead, and a plain hyphen only inside a word or a range in
+  code. `tests/dashes.test.ts` checks every built page and every Markdown
+  file. Commits and pull requests have no test, so check them before sending.
+  If quoted material from someone else contains dashes, reproduce it verbatim:
+  never edit another person's words to fit our punctuation
+- **Every copy change goes through two passes before Alberto sees it**, in this
+  order:
+  1. The `humanizer` skill, on the changed text, to remove AI writing tells.
+     Return only the final text, and keep every claim, number, name and link
+  2. The checklist in [`docs/sentence-clarity.md`](docs/sentence-clarity.md),
+     walked item by item on the built page, so each sentence reads once
+
+  A new page gets both passes on all of it. Pull request text and commit
+  bodies get the humanizer pass too
 - Never commit generated or fetched directories: `dist/`, `.astro/`,
   `node_modules/`
 - Personal notes and planning live in `.docs/`, which is gitignored and
