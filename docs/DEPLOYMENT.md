@@ -39,9 +39,11 @@ Two `.htaccess` files apply, and each has its own job:
 
 - **The docroot's**, `deploy/docroot.htaccess` in this repository. It is a
   reference copy and is never deployed: the live file is applied by hand. It
-  refuses `/releases/`, leaves `/.well-known/` to AutoSSL, sends http and www
+  refuses `/releases/`, sends http and www
   to `https://sudoplay.dev`, and then rewrites everything into `current/`.
-  Every redirect must sit above that last rewrite, or it never fires. Never
+  Every redirect must sit above that last rewrite, or it never fires. AutoSSL
+  needs no rule: the host answers its `/.well-known/` paths before this file
+  runs Never
   add a redirect through cPanel's Redirects tool: it lands below the rewrite
   and fails without an error
 - **The release's**, `public/.htaccess`. It ships inside every release, so a
