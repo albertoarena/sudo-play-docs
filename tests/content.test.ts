@@ -370,7 +370,8 @@ describe('Install', () => {
 
   // While the build is unsigned, Install walks through macOS's block, as
   // Alberto saw it on macOS Sequoia on 2026-10-14. The dialog text is his
-  // screen's. It all goes when release.ts says the build is signed. Wording
+  // screen's, which is in British English, so step 1 names the US English
+  // button too (2026-10-14). It all goes when release.ts says the build is signed. Wording
   // and the warning note approved 2026-10-14.
   describe('while the release is unsigned', () => {
     const text = decode(content);
@@ -394,7 +395,7 @@ describe('Install', () => {
       const items = [...steps.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1].replace(/<[^>]+>/g, ''));
 
       expect(items).toEqual([
-        'Open Sudo Play from Applications. macOS says "Sudo Play.app" Not Opened. Click Done, not Move to Bin.',
+        'Open Sudo Play from Applications. macOS says "Sudo Play.app" Not Opened. Click Done, not Move to Bin (Move to Trash on a Mac set to US English).',
         'Open System Settings, then Privacy & Security.'.replace('&', '&amp;'),
         'Scroll down to Security. Next to "Sudo Play.app" was blocked to protect your Mac, click Open Anyway.',
         "A last dialog asks again. Click Open Anyway. Move to Bin is the highlighted button, so don't press Return.",
