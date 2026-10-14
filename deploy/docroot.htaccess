@@ -37,11 +37,6 @@ RewriteEngine On
 # The release folders are never served directly.
 RewriteRule ^releases(/.*)?$ - [F,L]
 
-# AutoSSL proves the domain with a file under /.well-known/, and it may ask
-# over http. Leave those requests to the host: redirected or rewritten into
-# current/, they would fail, and the certificate would not renew.
-RewriteRule ^\.well-known/ - [L]
-
 # ---- one host: https://sudoplay.dev ---------------------------------------
 #
 # Both rules MUST stay above the rewrite into current/.
