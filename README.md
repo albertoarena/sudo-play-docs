@@ -10,7 +10,8 @@ Lives at **https://sudoplay.dev**.
 
 Phases 1 to 5 of `docs/PLAN.md` are done: tooling and tests, the design, the
 copy for all six pages and Credits, SEO basics, and GA4 behind the consent gate. Phase 6,
-the deploy, is next. Analytics are on only in a build with
+the deploy, is built and goes live with the repository public: see
+`docs/DEPLOYMENT.md`. Analytics are on only in a build with
 `PUBLIC_GA_MEASUREMENT_ID` set, which the deploy build takes from a repository
 variable.
 `placeholder/index.html` is a single static page, with no build step and no
@@ -39,6 +40,7 @@ npm run check                     # build once, then every test
 | `npm run test:e2e` | Playwright against the preview server: the shell, navigation, focus, the 320px width, axe in light and dark, and **no built page makes a third party request before consent**. A second project serves `dist-consent/` and tests the banner: accept, decline and withdraw |
 | `npm run check` | Both builds, then both suites. CI runs this |
 | `npm run og:image` | Draws `public/og.png`, the link preview image, with Playwright. On macOS only, by hand, when the design or the tagline changes. Commit the PNG |
+| `npm run check:redirects` | Follows the live redirects, status codes and 404 page, and fails if a hop shows `/current/`. By hand, after every deploy change. Pass a local Apache address to check before deploying |
 | `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog in `../sudo-play` (or a path given as an argument). By hand, at each release |
 
 `npm test` and `npm run test:e2e` read `dist/` and `dist-consent/` and do not
@@ -51,9 +53,11 @@ build them, so run both builds first or use `npm run check`. Both pick up new pa
 src/           the Astro site
 tests/         Vitest checks on the built site
 e2e/           Playwright tests on the served site
-scripts/       check-catalog.ts and og-image.ts, run by hand
+scripts/       check-catalog.ts, check-redirects.ts and og-image.ts, run by hand,
+               and server-deploy.sh, run by cron on the host
+deploy/        the docroot .htaccess, a reference copy applied by hand
 placeholder/   a single static page, no build, no external requests
-docs/          the scope and the plan for this repository
+docs/          the scope, the plan and the deployment
 ```
 
 ## The one rule worth knowing before contributing

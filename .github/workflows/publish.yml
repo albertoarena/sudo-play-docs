@@ -1,0 +1,60 @@
+name: Publish
+
+# Builds the site and force pushes dist/ to the `deploy` branch. A cron job on
+# the host pulls that branch (scripts/server-deploy.sh), so CI never connects
+# to the server. docs/DEPLOYMENT.md has the whole path.
+#
+# It runs when CI finishes on a push to main, and only if CI passed, so a red
+# main never reaches the host. It checks out the commit CI tested, not
+# whatever main is by then.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Publish
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Build
+        env:
+          # A repository variable, not a secret: the ID is in every page's
+          # source anyway. It is set here and nowhere in the code, so only the
+          # live site carries analytics. Unset, the build has no banner and no
+          # script.
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
+        run: npm run build
+      - name: Publish dist to the deploy branch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          cd dist
+          git init -q
+          git checkout -q -b deploy
+          git add -A
+          git -c user.email=actions@github.com -c user.name="github-actions[bot]" \
+            commit -q -m "build: ${{ github.event.workflow_run.head_sha || github.sha }}"
+          git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" deploy

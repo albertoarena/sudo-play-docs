@@ -1,0 +1,70 @@
+# The docroot .htaccess for sudoplay.dev: a reference copy.
+#
+# THIS FILE IS NOT DEPLOYED. It sits outside public/, so no release contains
+# it. The live file is ~/sudoplay.dev/.htaccess on the host, one level above
+# releases/, and it is applied by hand. Editing this copy changes nothing until
+# someone applies it. docs/DEPLOYMENT.md has the steps.
+#
+# It is kept here because CI cannot see the live file, and the same setup on
+# another site of the same host lost a redirect for days that way.
+#
+# ---------------------------------------------------------------------------
+# The order is the point
+# ---------------------------------------------------------------------------
+#
+# The last rule rewrites every request into current/ and ends with [L]. A rule
+# below it never runs. So every redirect goes ABOVE it. A redirect added
+# through cPanel's Redirects tool lands below it and never fires, without an
+# error, so never use that tool for this domain.
+#
+# ---------------------------------------------------------------------------
+# Applying it
+# ---------------------------------------------------------------------------
+#
+#   cp ~/sudoplay.dev/.htaccess ~/sudoplay.dev/.htaccess.bak-<date>
+#   then replace ~/sudoplay.dev/.htaccess with the rules below
+#
+# Then, before walking away:
+#
+#   npm run check:redirects
+#
+# If a check fails, or /current/ shows in any Location header, restore the
+# .bak copy.
+
+Options +FollowSymLinks -Indexes
+RewriteEngine On
+
+# The release folders are never served directly.
+RewriteRule ^releases(/.*)?$ - [F,L]
+
+# AutoSSL proves the domain with a file under /.well-known/, and it may ask
+# over http. Leave those requests to the host: redirected or rewritten into
+# current/, they would fail, and the certificate would not renew.
+RewriteRule ^\.well-known/ - [L]
+
+# ---- one host: https://sudoplay.dev ---------------------------------------
+#
+# Both rules MUST stay above the rewrite into current/.
+#
+# http to https, dropping www in the same hop, so http://www reaches the apex
+# in one redirect. The proxy conditions stop a loop if a proxy ever terminates
+# TLS in front of the host and speaks plain http to it. DNS is DNS only today.
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTP_HOST} ^(www\.)?sudoplay\.dev$ [NC]
+RewriteRule ^(.*)$ https://sudoplay.dev/$1 [R=301,L]
+
+# www over https. A second rule, because mod_rewrite cannot group an AND inside
+# an OR. .dev is HSTS preloaded, so this is the www request a browser sends.
+RewriteCond %{HTTP_HOST} ^www\.sudoplay\.dev$ [NC]
+RewriteRule ^(.*)$ https://sudoplay.dev/$1 [R=301,L]
+
+# ---- serve the current release --------------------------------------------
+#
+# Last, by design: it takes every request left. The condition stops it
+# rewriting current/ into itself. The release's own .htaccess, public/.htaccess
+# in the repository, handles /current/ and /releases/ addresses, the trailing
+# slash and the 404 page.
+RewriteCond %{REQUEST_URI} !^/current/
+RewriteRule ^(.*)$ current/$1 [L]
