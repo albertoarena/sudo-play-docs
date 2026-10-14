@@ -58,9 +58,9 @@ per green cycle.
 (`LICENSE`) and the text of the pages and `public/og.png` are CC BY 4.0
 (`LICENSE-CONTENT`); the README says which covers what.
 
-This repository is **private now and public later**. Everything committed while
-it is private is readable the moment it flips, so no credentials and no draft
-copy worth hiding. A GA4 measurement ID is public by nature and is not a secret.
+This repository is **public** since 2026-10-14, so nothing committed may be a
+credential or draft copy worth hiding. A GA4 measurement ID is public by nature
+and is not a secret. Secret scanning and push protection are on.
 
 ## Source of truth: the app drives the docs
 
@@ -173,12 +173,12 @@ If a machine has a Chromium that does not match the Playwright version, set
 component, a workflow, this file. There is no change small enough to push
 straight to `main`.
 
-`main` is not protected yet, because protection needs a public repository or a
-paid plan. That makes the rule more important rather than less: nothing but the
-rule is enforcing it.
+`main` is protected since 2026-10-14: a pull request and the `Checks` job are
+required, for admins too, with no force push and no deletion. Merges are merge
+commits only, and GitHub deletes the branch after a merge. The Publish workflow
+pushes to `deploy`, which is not protected.
 
-Do not change the repository's visibility. Alberto flips it, and the app
-repository waits on this site serving something real first.
+Do not change the repository's settings or visibility unless Alberto asks.
 
 ## Conventions
 

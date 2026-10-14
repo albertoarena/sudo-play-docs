@@ -30,8 +30,7 @@ a marketing site and does not need to persuade anyone.
 - **Astro** carries the site
 - **The design is original.** The analytics pattern is copied from
   `laravel-truss-docs`; the look is not. Alberto designs it himself
-- **This repository is private now and public later.** Everything committed
-  while private is readable the moment it flips, so no credentials and no draft
+- **This repository is public**, since 2026-10-14. No credentials and no draft
   copy worth hiding. A GA4 measurement ID is public by nature
 - **A placeholder page goes up first**, in `placeholder/`, so the domain serves
   something before Astro exists
