@@ -391,9 +391,9 @@ describe('Install', () => {
       expect(install).toContain('The first time you press Play, macOS asks whether Sudo Play may control Spotify. Click Allow, so it can start the playlist in the Spotify app.');
     });
 
-    // Widened for 1.0.1, as in sudo-play PR 40: no version updates itself.
-    it('tells a 1.0.0 or beta user how to replace it', () => {
-      expect(install).toContain('<strong>Coming from 1.0.0 or the beta?</strong> Download the DMG and drag Sudo Play to Applications, then choose Replace. Your settings stay. The app does not update itself.');
+    // Any earlier version, as in sudo-play PR 46: no version updates itself.
+    it('tells a user of an earlier version how to replace it', () => {
+      expect(install).toContain('<strong>Coming from an earlier version?</strong> Download the DMG and drag Sudo Play to Applications, then choose Replace. Your settings stay. The app does not update itself.');
     });
 
     it('gives the checksum to check the download', () => {
