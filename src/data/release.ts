@@ -12,24 +12,24 @@ export interface Release {
 
 const releases = 'https://github.com/albertoarena/sudo-play/releases';
 
-// 1.0.1, published on 2026-10-14, signed and notarized like 1.0.0 before it,
-// which replaced the unsigned 1.0.0 beta 1 the same day.
+// 1.0.2, published on 2026-10-15. It repackages 1.0.1: the app inside the DMG
+// now carries its own notarization ticket, so it opens offline the first time.
 export const release: Release | null = {
-  version: '1.0.1',
-  name: '1.0.1',
-  date: '2026-10-14',
-  url: `${releases}/tag/v1.0.1`,
+  version: '1.0.2',
+  name: '1.0.2',
+  date: '2026-10-15',
+  url: `${releases}/tag/v1.0.2`,
   dmg: {
-    file: 'Sudo-Play-1.0.1-arm64.dmg',
-    url: `${releases}/download/v1.0.1/Sudo-Play-1.0.1-arm64.dmg`,
-    size: '169 MB',
-    sha256: 'abe61bcd9d03d9372930bf7dca2e013220479f14012f9614cf0763e68c01dda9',
+    file: 'Sudo-Play-1.0.2-arm64.dmg',
+    url: `${releases}/download/v1.0.2/Sudo-Play-1.0.2-arm64.dmg`,
+    size: '148 MB',
+    sha256: 'b40e25cd44002387ebcbe54707ad56636d16c7c0d1f649bbc862d31e5d875d0f',
   },
 };
 
 // The sudo-play commit the copy was last checked against. Without a release,
 // this is what the pages describe.
-export const checkedAt = 'e6bf50f';
+export const checkedAt = 'f1974fa';
 
 export function releaseNote(current: Release | null = release): string {
   return current ? `The current release is ${current.name}.` : 'There is no release yet.';

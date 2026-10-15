@@ -41,8 +41,9 @@ with no canonical. `public/og.png` is the one preview image: when the design
 or the tagline changes, run `npm run og:image` on a Mac and commit the PNG.
 
 The copy describes the app at the commit in `src/data/release.ts`
-(`checkedAt`). Since 2026-10-14 `release` is 1.0.1, signed and notarized. The
-signed 1.0.0 replaced the unsigned 1.0.0 beta 1 earlier the same day. Every page states the
+(`checkedAt`). Since 2026-10-15 `release` is 1.0.2, signed and notarized, the
+1.0.1 app repackaged. The signed 1.0.0 replaced the unsigned 1.0.0 beta 1 on
+2026-10-14. Every page states the
 release through `releaseNote()`, and a test forbids writing "no release"
 anywhere else. For each new release, update `release` there and `checkedAt`,
 then recheck the Install steps against the real build.
