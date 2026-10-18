@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { compareCatalog, parseCatalog } from '../scripts/check-catalog';
+import { catalogUrl, compareCatalog, parseCatalog } from '../scripts/check-catalog';
 
 // The comparison logic of `npm run check:catalog`, on small fixtures. The
-// script itself needs a sudo-play checkout, so it runs by hand, not in CI.
+// script itself downloads the app's catalog, so it runs by hand, not in CI.
 const fixture = `# A comment
 version: 1
 
@@ -84,4 +84,11 @@ describe('compareCatalog', () => {
       'moods are in a different order: here shipped-it, friday-deploy; in the app friday-deploy, shipped-it',
     ]);
   });
+});
+
+// The app downloads its catalog from catalog-live, so a new mood reaches users
+// without a release. The site is checked against that same file. Decided
+// 2026-10-18.
+it('reads the catalog the shipped app downloads', () => {
+  expect(catalogUrl).toBe('https://raw.githubusercontent.com/albertoarena/sudo-play/catalog-live/catalog/playlists.yaml');
 });

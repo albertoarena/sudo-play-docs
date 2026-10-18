@@ -96,6 +96,7 @@ This is a wording pass, not a claim change. It does not need the app checked
 again, with one exception: **if the rewrite changes what a sentence says about
 the app or about this site's data, it is not a wording pass any more.** Stop,
 and check the claim the way it was checked the first time: against the app at
-`checkedAt` in `src/data/release.ts`, or, for Privacy, against
+`checkedAt` in `src/data/release.ts`, for moods and genres against the
+catalog on `catalog-live`, or, for Privacy, against
 `src/scripts/consent.ts`, `src/scripts/analytics.ts` and their tests. A change
 to what Privacy says also moves its "Last updated" date.

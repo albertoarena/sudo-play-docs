@@ -1,7 +1,7 @@
-// The genres and moods from the app's catalog/playlists.yaml at checkedAt in
-// src/data/release.ts, copied word for word and in the catalog's order.
-// Playlists are not copied: they rotate daily and belong to the app.
-// `npm run check:catalog` compares this file with a local sudo-play checkout.
+// The genres and moods from the app's catalog/playlists.yaml on catalog-live,
+// the file the shipped app downloads, copied word for word and in the
+// catalog's order. Playlists are not copied: they rotate daily and belong to
+// the app. `npm run check:catalog` compares this file with catalog-live.
 export interface Genre {
   id: string;
   label: string;
@@ -31,4 +31,6 @@ export const moods: readonly Mood[] = [
   { id: 'flow-state', label: 'Flow State', emoji: '🎧', description: 'Deep focus, no distractions.' },
   { id: 'debugging', label: 'Debugging', emoji: '🐛', description: 'Calm and patient, a long investigation.' },
   { id: 'friday-deploy', label: 'Friday Deploy', emoji: '🚀', description: 'Brave, energetic, a bit risky.' },
+  { id: 'agent-mode', label: 'Agent Mode', emoji: '🤖', description: 'Calm, watching the machines work.' },
+  { id: 'night-shift', label: 'Night Shift', emoji: '🌙', description: 'Wired, past midnight, one more commit.' },
 ];
