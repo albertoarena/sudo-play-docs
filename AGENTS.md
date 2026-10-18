@@ -50,8 +50,9 @@ then recheck the Install steps against the real build.
 
 The moods and genres are copied into `src/data/catalog.ts` from the app's
 `catalog/playlists.yaml`. `npm run check:catalog` compares the copy with a
-local `sudo-play` checkout at `checkedAt`. Run it by hand at each release: CI
-has no app checkout.
+local `sudo-play` checkout at `checkedAt`. Run it by hand at each release, and
+at each catalog change after moving `checkedAt` to the app commit that made
+it: CI has no app checkout.
 
 Work is test first: the failing test is committed, then the code, one commit
 per green cycle.
@@ -75,6 +76,11 @@ disagree, the app is right and this site is the bug to fix.**
 ships as a signed build rather than a package, so there is no release for this
 repository to read from automatically. The update is manual and lands with the
 release. Work merged in the app but not yet released does not belong here.
+
+**Catalog changes are the exception.** A new mood, genre or playlist in the
+app's `catalog/playlists.yaml` reaches the shipped apps through `catalog-live`
+within a day, with no release, so the site follows as soon as it is merged
+there. The app's `AGENTS.md` has the same rule from its side.
 
 One thing to decide rather than drift into: the app already has `README.md`,
 `CONTRIBUTING.md` and `PRIVACY.md`. Copying them here creates two versions of
