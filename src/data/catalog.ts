@@ -1,7 +1,7 @@
-// The genres and moods from the app's catalog/playlists.yaml at checkedAt in
-// src/data/release.ts, copied word for word and in the catalog's order.
-// Playlists are not copied: they rotate daily and belong to the app.
-// `npm run check:catalog` compares this file with a local sudo-play checkout.
+// The genres and moods from the app's catalog/playlists.yaml on catalog-live,
+// the file the shipped app downloads, copied word for word and in the
+// catalog's order. Playlists are not copied: they rotate daily and belong to
+// the app. `npm run check:catalog` compares this file with catalog-live.
 export interface Genre {
   id: string;
   label: string;

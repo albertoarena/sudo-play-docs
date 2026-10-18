@@ -49,10 +49,12 @@ anywhere else. For each new release, update `release` there and `checkedAt`,
 then recheck the Install steps against the real build.
 
 The moods and genres are copied into `src/data/catalog.ts` from the app's
-`catalog/playlists.yaml`. `npm run check:catalog` compares the copy with a
-local `sudo-play` checkout at `checkedAt`. Run it by hand at each release, and
-at each catalog change after moving `checkedAt` to the app commit that made
-it: CI has no app checkout.
+`catalog/playlists.yaml`. `npm run check:catalog` compares the copy with the
+catalog on the app's `catalog-live` branch, the file the shipped app
+downloads, so `checkedAt` stays on the release. Run it by hand after each
+catalog change in the app and at each release. CI does not run it: a mood
+merged in the app would fail every pull request here until the site caught
+up.
 
 Work is test first: the failing test is committed, then the code, one commit
 per green cycle.

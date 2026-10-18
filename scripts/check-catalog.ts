@@ -1,20 +1,23 @@
-// Compares src/data/catalog.ts with catalog/playlists.yaml in a local sudo-play
-// checkout, at the commit in checkedAt. Run it by hand at each release:
+// Compares src/data/catalog.ts with the catalog the shipped app downloads,
+// catalog/playlists.yaml on the app's catalog-live branch. A catalog change
+// reaches users without a release, so run it by hand after each one, and at
+// each release:
 //
-//   npm run check:catalog                  # reads ../sudo-play
-//   npm run check:catalog -- path/to/sudo-play
+//   npm run check:catalog
 //
-// CI has no app checkout, so it does not run this. The tests beside the site
-// cover parseCatalog and compareCatalog with small fixtures.
+// It downloads the file, so CI does not run it: a mood merged in the app would
+// fail every docs pull request until the site caught up. The tests beside the
+// site cover parseCatalog and compareCatalog with small fixtures.
 //
 // The catalog's genres and moods are lists of flat maps of strings, so this
 // reads that shape alone and adds no YAML dependency. Any other line inside
 // those two lists is an error, so a new YAML form stops the check instead of
 // passing it.
-import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { genres, moods, type Genre, type Mood } from '../src/data/catalog.ts';
-import { checkedAt } from '../src/data/release.ts';
+
+// The same URL as DEFAULT_CATALOG_URL in the app's app/Settings/SettingKey.php.
+export const catalogUrl = 'https://raw.githubusercontent.com/albertoarena/sudo-play/catalog-live/catalog/playlists.yaml';
 
 export interface Catalog {
   genres: readonly Genre[];
@@ -126,18 +129,19 @@ function required(list: Entry[] | undefined, name: string, keys: string[]): Entr
   return list;
 }
 
-function main(path = '../sudo-play'): void {
-  const yaml = execFileSync('git', ['-C', path, 'show', `${checkedAt}:catalog/playlists.yaml`], { encoding: 'utf8' });
-  const differences = compareCatalog({ genres, moods }, parseCatalog(yaml));
+async function main(): Promise<void> {
+  const response = await fetch(catalogUrl);
+  if (!response.ok) throw new Error(`${catalogUrl}: HTTP ${response.status}`);
+  const differences = compareCatalog({ genres, moods }, parseCatalog(await response.text()));
 
   if (differences.length) {
-    console.error(`src/data/catalog.ts differs from sudo-play at ${checkedAt}:`);
+    console.error('src/data/catalog.ts differs from the catalog on catalog-live:');
     for (const difference of differences) console.error(`- ${difference}`);
     process.exit(1);
   }
-  console.log(`src/data/catalog.ts matches sudo-play at ${checkedAt}: ${genres.length} genres, ${moods.length} moods.`);
+  console.log(`src/data/catalog.ts matches the catalog on catalog-live: ${genres.length} genres, ${moods.length} moods.`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main(process.argv[2]);
+  await main();
 }

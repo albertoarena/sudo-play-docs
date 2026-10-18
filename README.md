@@ -38,7 +38,7 @@ npm run check                     # build once, then every test
 | `npm run check` | Both builds, then both suites. CI runs this |
 | `npm run og:image` | Draws `public/og.png`, the link preview image, with Playwright. On macOS only, by hand, when the design or the tagline changes. Commit the PNG |
 | `npm run check:redirects` | Follows the live redirects, status codes and 404 page, and fails if a hop shows `/current/`. By hand, after every deploy change. Pass a local Apache address to check before deploying |
-| `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog in `../sudo-play` (or a path given as an argument). By hand, at each release |
+| `npm run check:catalog` | Compares `src/data/catalog.ts` with the app's catalog on `catalog-live`, the file the shipped app downloads. By hand, after each catalog change and at each release |
 
 `npm test` and `npm run test:e2e` read `dist/` and `dist-consent/` and do not
 build them, so run both builds first or use `npm run check`. Both pick up new pages from
