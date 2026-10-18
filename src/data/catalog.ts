@@ -31,4 +31,6 @@ export const moods: readonly Mood[] = [
   { id: 'flow-state', label: 'Flow State', emoji: '🎧', description: 'Deep focus, no distractions.' },
   { id: 'debugging', label: 'Debugging', emoji: '🐛', description: 'Calm and patient, a long investigation.' },
   { id: 'friday-deploy', label: 'Friday Deploy', emoji: '🚀', description: 'Brave, energetic, a bit risky.' },
+  { id: 'agent-mode', label: 'Agent Mode', emoji: '🤖', description: 'Calm, watching the machines work.' },
+  { id: 'night-shift', label: 'Night Shift', emoji: '🌙', description: 'Wired, past midnight, one more commit.' },
 ];
