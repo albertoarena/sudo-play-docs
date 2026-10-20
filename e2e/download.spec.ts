@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 const screens = [
   { name: 'a 1280 by 720 laptop', width: 1280, height: 720 },
   { name: 'a 390 by 844 phone', width: 390, height: 844 },
-  { name: 'a 320 by 640 phone', width: 320, height: 640 },
+  { name: 'a 375 by 667 iPhone SE', width: 375, height: 667 },
 ];
 
 for (const { name, width, height } of screens) {

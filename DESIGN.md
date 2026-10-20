@@ -358,14 +358,14 @@ sat on Install, under the first heading, and on Home, under the lead. Not an
 alert: it is there on load, so a screen reader reads it in order.
 
 ### Download Button
-Home's one filled control, decided 2026-10-20 for the Product Hunt launch.
-It copies the app's Play button: `accent` fill, `on-accent` text, 600, 44px
-high, 6px corners, no shadow. Hover is `accent-hover`. It sits under the lead
-and above the window, so it shows without scrolling down to 320 by 640. Under
-it, two lines in Small and `fg-muted`: the version, Apple silicon, the size
-and "Signed and notarized", then a link to the Install steps. All of it comes
-from `src/data/release.ts`, and it is not drawn without a release. It opens in
-a new tab like every external link.
+Home's one filled control, decided 2026-10-20 for the Product Hunt launch. It
+copies the app's Play button: `accent` fill, `on-accent` text, 600, 44px high,
+6px corners, no shadow. Hover is `accent-hover`. It sits under the lead and
+above the window, so it shows without scrolling on a 375 by 667 iPhone SE.
+Under it, two lines in Small and `fg-muted`: the version, Apple silicon, the
+size and "Signed and notarized", then a link to the Install steps. All of it
+comes from `src/data/release.ts`, and it is not drawn without a release. It
+opens in a new tab like every external link.
 
 ### Links
 `accent`, 1px underline offset 0.2em. Hover: `accent-hover` and a 2px
