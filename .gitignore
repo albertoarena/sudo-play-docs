@@ -19,5 +19,5 @@ playwright-report/
 .env.*
 !.env.example
 
-# Impeccable review captures, regenerated on demand
-.impeccable/review/
+# Impeccable's local files: critique records can hold absolute local paths
+.impeccable/
