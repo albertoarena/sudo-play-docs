@@ -117,6 +117,40 @@ describe('Home', () => {
     }
   });
 
+  // A download on Home, under the lead and above the window, so a visitor
+  // from a launch post finds it without scrolling. The DMG link and the
+  // details come from src/data/release.ts, so a release changes them with
+  // the rest of the site. Approved 2026-10-20.
+  describe('download', () => {
+    const block = content.match(/<div class="download"[\s\S]*?<\/div>/)?.[0] ?? '';
+    const text = decode(block).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ');
+
+    it('sits under the lead and above the window', () => {
+      expect(block).not.toBe('');
+      expect(content.indexOf('class="lead"')).toBeLessThan(content.indexOf('class="download"'));
+      expect(content.indexOf('class="download"')).toBeLessThan(content.indexOf('class="window"'));
+    });
+
+    it('links the DMG from the data file', () => {
+      expect(links(block)[0]).toBe(release!.dmg.url);
+      expect(text).toContain('Download for Mac');
+    });
+
+    it('says what the download is, and where the first open is explained', () => {
+      expect(text).toContain(`${release!.name} for Apple silicon (M1 or later), ${release!.dmg.size}. Signed and notarized.`);
+      expect(text).toContain('Install has the steps for opening Sudo Play the first time.');
+      expect(links(block)).toContain('/install/#download-and-install');
+    });
+
+    // A screen reader hears the details line with the button itself.
+    it('describes the button with the details line', () => {
+      const id = block.match(/<a\b[^>]*\baria-describedby="([^"]+)"/)?.[1] ?? '';
+
+      expect(id).not.toBe('');
+      expect(block).toMatch(new RegExp(`<p\\b[^>]*\\bid="${id}"[^>]*>[^<]*Apple silicon`));
+    });
+  });
+
   // The beta's "Not signed yet" note went with the signed 1.0.0.
   it('has no warning note', () => {
     expect(content).not.toContain('class="note warning"');

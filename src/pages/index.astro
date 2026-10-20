@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Download from '../components/Download.astro';
 import TerminalPanel from '../components/TerminalPanel.astro';
 import { releaseNote } from '../data/release';
 ---
@@ -7,6 +8,7 @@ import { releaseNote } from '../data/release';
   <TerminalPanel slot="masthead" />
   <h1>Sudo Play</h1>
   <p class="lead">A small macOS menu bar app that picks today's Spotify playlist, based on what you are coding and how you feel about it.</p>
+  <Download />
   <figure class="window">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="/screenshots/window-dark.webp" />
