@@ -184,7 +184,7 @@ is in `docs/DIRECTION.md`, and `tests/tokens.test.ts` checks them.
 
 ### Primary
 - **Deep Emerald** (`accent`, light) and **Signal Emerald** (`accent-dark`):
-  links, the selected state and the skip link fill. Hover deepens in light
+  links, the selected state, the skip link fill and the download button. Hover deepens in light
   (`accent-hover`) and brightens in dark (`accent-hover-dark`).
 - **Terminal Green** (`term-green`): the command in the panel, the current
   nav link and its three bars, and the mark's bars.
@@ -356,6 +356,16 @@ word in `warn`, 4.8 to 1 on `bg-subtle` in light and 10.3 in dark. The text
 stays in `fg`. Never a thick stripe on one side and never an amber fill. It
 sat on Install, under the first heading, and on Home, under the lead. Not an
 alert: it is there on load, so a screen reader reads it in order.
+
+### Download Button
+Home's one filled control, decided 2026-10-20 for the Product Hunt launch.
+It copies the app's Play button: `accent` fill, `on-accent` text, 600, 44px
+high, 6px corners, no shadow. Hover is `accent-hover`. It sits under the lead
+and above the window, so it shows without scrolling down to 320 by 640. Under
+it, two lines in Small and `fg-muted`: the version, Apple silicon, the size
+and "Signed and notarized", then a link to the Install steps. All of it comes
+from `src/data/release.ts`, and it is not drawn without a release. It opens in
+a new tab like every external link.
 
 ### Links
 `accent`, 1px underline offset 0.2em. Hover: `accent-hover` and a 2px
