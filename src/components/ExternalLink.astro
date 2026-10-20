@@ -2,13 +2,13 @@
 // A link to another site. It opens in a new tab, as on trussphp.com, and
 // hidden text tells a screen reader so, since the tab changes under them.
 // Decided 2026-10-13. Every external link on the site goes through here.
-interface Props {
-  href: string;
-}
+import type { HTMLAttributes } from 'astro/types';
 
-const { href } = Astro.props;
+type Props = HTMLAttributes<'a'> & { href: string };
+
+const { href, ...attributes } = Astro.props;
 ---
-<a href={href} target="_blank" rel="noopener"><slot /><span class="new-tab"> (opens in a new tab)</span></a>
+<a {...attributes} href={href} target="_blank" rel="noopener"><slot /><span class="new-tab"> (opens in a new tab)</span></a>
 
 <style>
   /* Read by a screen reader, not shown: a sighted visitor sees the tab open. */

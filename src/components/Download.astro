@@ -1,0 +1,49 @@
+---
+// Home's download button, under the lead, for a visitor who came to get the
+// app. The link and the details come from src/data/release.ts, so a release
+// updates them with the rest of the site. Without a release it is not drawn.
+// Approved 2026-10-20.
+import ExternalLink from './ExternalLink.astro';
+import { release } from '../data/release';
+---
+{release && (
+  <div class="download">
+    <ExternalLink href={release.dmg.url} class="download-button" aria-describedby="download-details">Download for Mac</ExternalLink>
+    <p id="download-details" class="download-details">{release.name} for Apple silicon (M1 or later), {release.dmg.size}. Signed and notarized.</p>
+    <p class="download-details"><a href="/install/#download-and-install">Install</a> has the steps for opening Sudo Play the first time.</p>
+  </div>
+)}
+
+<style>
+  .download {
+    margin-bottom: 2rem;
+  }
+
+  /* The app's Play button: one filled green control, nothing else filled. */
+  .download :global(.download-button) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 6px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .download :global(.download-button:hover) {
+    background: var(--accent-hover);
+    color: var(--on-accent);
+  }
+
+  .download-details {
+    margin: 0;
+    color: var(--fg-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+</style>
