@@ -578,8 +578,12 @@ describe('Troubleshooting', () => {
     }
   });
 
-  it('says to quit from the menu bar icon, with killall as the fallback', () => {
+  // Alberto tested ⌘Q in the broken state on 2026-10-21, with the window
+  // open: it quits. The right-click menu skips PHP too.
+  it('says to quit with ⌘Q or from the menu bar icon, with killall as the fallback', () => {
+    expect(content).toMatch(/open the window, then press <kbd>⌘<\/kbd>\s*<kbd>Q<\/kbd>/);
     expect(content).toContain('Quit Sudo Play');
+    expect(content).toContain('If neither way works');
     expect(content).toContain('<code>killall "Sudo Play"</code>');
   });
 
