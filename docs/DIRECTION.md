@@ -64,7 +64,12 @@ Six pages do not need a sidebar. The navigation is one row. At 320px it wraps to
 a second line under the logo: no hamburger, and no JavaScript for the
 navigation. Every page ends with previous and next links in reading order:
 
-Home, How it works, Install, Moods, Tips, Privacy.
+Home, How it works, Install, Moods, Tips, Privacy, Help.
+
+Troubleshooting joined at the end on 2026-10-21. Nobody reads it in turn,
+and the right end of the masthead is where people look for help. Its nav
+label is "Help", because "Troubleshooting" made the 320px masthead three
+rows. The URL and the page heading say Troubleshooting.
 
 A page gets its own table of contents only if phase 3 makes it long.
 

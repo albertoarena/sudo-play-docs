@@ -12,7 +12,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html', 'tips/index.html', 'credits/index.html'];
+const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html', 'tips/index.html', 'troubleshooting/index.html', 'credits/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -545,5 +545,72 @@ describe('the 2026-10-14 wording pass', () => {
   ])('%s says: %s', (file, now, before) => {
     expect(text(file)).toContain(now);
     expect(text(file)).not.toContain(before);
+  });
+});
+
+// For the problem seen on 2026-10-21: the app's background PHP process stops,
+// every action in the window fails and the reminder still arrives. The
+// messages are the app's own words, from the 1.0.2 tag. Where the fix lives
+// is undecided, so the page promises none. Asked for on 2026-10-21. The
+// nav says Help, so the masthead keeps two rows at 320px. It ends the
+// order: nobody reads it in turn, and Help sits where people look for it.
+describe('Troubleshooting', () => {
+  const html = read('troubleshooting/index.html');
+  const content = decode(column(html));
+
+  it('ends the masthead, after Privacy, as Help', () => {
+    const header = html.match(/<header[\s\S]*?<\/header>/)?.[0] ?? '';
+    const hrefs = links(header);
+
+    expect(hrefs.indexOf('/troubleshooting/')).toBe(hrefs.indexOf('/privacy/') + 1);
+    expect(hrefs.at(-1)).toBe('/troubleshooting/');
+    expect(header).toMatch(/<a\b[^>]*href="\/troubleshooting\/"[^>]*>Help\b/);
+  });
+
+  it('quotes the messages the window shows', () => {
+    for (const message of [
+      'Something went wrong. Please try again.',
+      'Could not open the settings. Please try again.',
+      'Could not open the browser.',
+      'Could not quit. Please try again.',
+    ]) {
+      expect(content).toContain(message);
+    }
+  });
+
+  // Alberto tested ⌘Q in the broken state on 2026-10-21, with the window
+  // open: it quits. The right-click menu skips PHP too.
+  it('says to quit with ⌘Q or from the menu bar icon, with killall as the fallback', () => {
+    expect(content).toMatch(/open the window, then press <kbd>⌘<\/kbd>\s*<kbd>Q<\/kbd>/);
+    expect(content).toContain('Quit Sudo Play');
+    expect(content).toContain('If neither way works');
+    expect(content).toContain('<code>killall "Sudo Play"</code>');
+  });
+
+  it('says where the log is, and that this problem leaves none', () => {
+    expect(content).toContain('<code>~/Library/Application Support/sudo-play/storage/logs/</code>');
+    expect(content).toMatch(/empty/);
+  });
+
+  // A stuck user searches the words on their screen.
+  it('quotes the main error in its description', () => {
+    const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
+
+    expect(description).toContain('Something went wrong. Please try again.');
+  });
+
+  // A user whose app breaks goes back to the page they installed from.
+  it('is linked from Install, after the upgrade note', () => {
+    const install = decode(column(read('install/index.html')));
+    const upgrade = install.indexOf('Coming from an earlier version?');
+    const line = install.indexOf('If every button in the window shows an error, see');
+
+    expect(upgrade).toBeGreaterThan(-1);
+    expect(line).toBeGreaterThan(upgrade);
+    expect(links(install)).toContain('/troubleshooting/');
+  });
+
+  it('promises no fix and no version', () => {
+    expect(content).not.toMatch(/will be fixed|next (release|version)|\b\d+\.\d+\.\d+\b/i);
   });
 });

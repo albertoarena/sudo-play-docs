@@ -173,7 +173,7 @@ identity.
 - One emerald accent; zinc neutrals with a faint cool violet cast
 - System sans for reading, Geist Mono for the panel, code and labels
 - Flat, borders instead of shadows, nothing moves
-- Six pages read in order, with previous and next at the end of each, and
+- Seven pages read in order, with previous and next at the end of each, and
   Credits outside the order, linked from the footer
 
 ## Colors
@@ -272,7 +272,7 @@ sit 4rem below the column, centred with it, in two equal cells.
 
 The masthead is one row, at least 56px: brand on the left, nav on the right.
 Below 40rem it stacks, with the nav wrapping under the name in compact rows.
-Below 22rem the five links sit in a three column grid, so a row never strands
+Below 22rem the six links sit in a three column grid, so a row never strands
 one link. There is never a menu button. Home's band adds a hero area under the
 row for the panel.
 
@@ -319,7 +319,7 @@ wide) and "Sudo Play" in `term-fg`. Inside the band the focus ring switches to
 `term-focus`.
 
 ### Navigation
-- **Style:** five text links in `term-dim`, no underline, 24px apart.
+- **Style:** six text links in `term-dim`, no underline, 24px apart.
 - **Hover:** `term-fg`.
 - **Current:** `term-green`, with `aria-current="page"` and three small
   equaliser bars (3px wide, 6px tall at most, heights 45%, 100% and 73%)
@@ -395,7 +395,7 @@ and convert again.
 
 ### Previous and Next
 The page's neighbours in reading order, in two cells at the end of every page.
-Home has only Next and Privacy only Previous. Each is a
+Home has only Next and Help only Previous. Each is a
 hairline on top, a muted direction word, and the page name at 650 in `fg`.
 Hover turns the name and the top line `accent`.
 

@@ -17,7 +17,7 @@ new session has are answered there.
 Phases 1 to 6 of `docs/PLAN.md` are done, and https://sudoplay.dev is live
 since 2026-10-14. Plain Astro with strict TypeScript,
 no Starlight and no CSS framework. The design, made with Impeccable, is in
-`docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All six pages
+`docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All seven pages
 have real copy, and so does Credits, linked from the footer (2026-10-13), and a test fails if any page still carries the
 `data-placeholder` marker. A merge to `main` deploys itself: read
 `docs/DEPLOYMENT.md` before touching `publish.yml`, `scripts/server-deploy.sh`

@@ -9,7 +9,7 @@ Lives at **https://sudoplay.dev**.
 ## Status
 
 Phases 1 to 6 of `docs/PLAN.md` are done: tooling and tests, the design, the
-copy for all six pages and Credits, SEO basics, GA4 behind the consent gate,
+copy for all seven pages and Credits, SEO basics, GA4 behind the consent gate,
 and the deploy. The site is live since 2026-10-14, and a merge to `main`
 deploys itself: see `docs/DEPLOYMENT.md`. Analytics are on only in a build with
 `PUBLIC_GA_MEASUREMENT_ID` set, which the deploy build takes from a repository
