@@ -588,6 +588,13 @@ describe('Troubleshooting', () => {
     expect(content).toMatch(/empty/);
   });
 
+  // A stuck user searches the words on their screen.
+  it('quotes the main error in its description', () => {
+    const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
+
+    expect(description).toContain('Something went wrong. Please try again.');
+  });
+
   // A user whose app breaks goes back to the page they installed from.
   it('is linked from Install, after the upgrade note', () => {
     const install = decode(column(read('install/index.html')));
