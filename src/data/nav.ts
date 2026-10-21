@@ -11,8 +11,8 @@ export const pages: readonly Page[] = [
   { href: '/install/', label: 'Install' },
   { href: '/moods/', label: 'Moods' },
   { href: '/tips/', label: 'Tips' },
-  { href: '/troubleshooting/', label: 'Help' },
   { href: '/privacy/', label: 'Privacy' },
+  { href: '/troubleshooting/', label: 'Help' },
 ];
 
 // Pages outside the reading order, linked from the footer instead, as
