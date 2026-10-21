@@ -552,16 +552,18 @@ describe('the 2026-10-14 wording pass', () => {
 // every action in the window fails and the reminder still arrives. The
 // messages are the app's own words, from the 1.0.2 tag. Where the fix lives
 // is undecided, so the page promises none. Asked for on 2026-10-21. The
-// nav says Help, so the masthead keeps two rows at 320px.
+// nav says Help, so the masthead keeps two rows at 320px. It ends the
+// order: nobody reads it in turn, and Help sits where people look for it.
 describe('Troubleshooting', () => {
   const html = read('troubleshooting/index.html');
   const content = decode(column(html));
 
-  it('follows Tips in the masthead, as Help', () => {
+  it('ends the masthead, after Privacy, as Help', () => {
     const header = html.match(/<header[\s\S]*?<\/header>/)?.[0] ?? '';
     const hrefs = links(header);
 
-    expect(hrefs.indexOf('/troubleshooting/')).toBe(hrefs.indexOf('/tips/') + 1);
+    expect(hrefs.indexOf('/troubleshooting/')).toBe(hrefs.indexOf('/privacy/') + 1);
+    expect(hrefs.at(-1)).toBe('/troubleshooting/');
     expect(header).toMatch(/<a\b[^>]*href="\/troubleshooting\/"[^>]*>Help\b/);
   });
 
