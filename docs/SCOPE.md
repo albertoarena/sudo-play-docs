@@ -21,6 +21,11 @@ Home has had a Download for Mac button since 2026-10-20, under the lead. It is
 not persuasion: it serves visitors who arrive from a launch post already
 wanting the app, who would otherwise scroll to Install to find the DMG.
 
+Troubleshooting has been in the reading order since 2026-10-21, after Tips,
+labelled Help in the nav. It serves users whose app already misbehaves. It
+states what to do today and never promises a fix or a fix version until the
+app has shipped one.
+
 ## Decided
 
 - **Domain: `sudoplay.dev`**, bought 2026-10-09, hyphenless on purpose. The repo
