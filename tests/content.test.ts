@@ -588,6 +588,17 @@ describe('Troubleshooting', () => {
     expect(content).toMatch(/empty/);
   });
 
+  // A user whose app breaks goes back to the page they installed from.
+  it('is linked from Install, after the upgrade note', () => {
+    const install = decode(column(read('install/index.html')));
+    const upgrade = install.indexOf('Coming from an earlier version?');
+    const line = install.indexOf('If every button in the window shows an error, see');
+
+    expect(upgrade).toBeGreaterThan(-1);
+    expect(line).toBeGreaterThan(upgrade);
+    expect(links(install)).toContain('/troubleshooting/');
+  });
+
   it('promises no fix and no version', () => {
     expect(content).not.toMatch(/will be fixed|next (release|version)|\b\d+\.\d+\.\d+\b/i);
   });
