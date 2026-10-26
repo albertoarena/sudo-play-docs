@@ -96,7 +96,8 @@ describe('Home', () => {
   // on 2026-10-14: light and dark show different picks, and one alt serves
   // both, so it names no pick. Approved 2026-10-14.
   it('shows the app window, light or dark, with its approved alt text', () => {
-    const picture = content.match(/<picture\b[^>]*>[\s\S]*?<\/picture>/)?.[0] ?? '';
+    const window = content.match(/<figure class="window"[\s\S]*?<\/figure>/)?.[0] ?? '';
+    const picture = window.match(/<picture\b[^>]*>[\s\S]*?<\/picture>/)?.[0] ?? '';
 
     expect(picture).toMatch(/<source\b[^>]*media="\(prefers-color-scheme: dark\)"[^>]*srcset="\/screenshots\/window-dark\.webp"/);
     expect(picture).toMatch(/<img\b[^>]*src="\/screenshots\/window-light\.webp"/);
@@ -148,6 +149,50 @@ describe('Home', () => {
 
       expect(id).not.toBe('');
       expect(block).toMatch(new RegExp(`<p\\b[^>]*\\bid="${id}"[^>]*>[^<]*Apple silicon`));
+    });
+  });
+
+  // The Product Hunt badge, under the download and above the window, from the
+  // launch on 2026-10-26. It is a copy of Product Hunt's SVG served from this
+  // site, because their live embed is a third party request on every load.
+  // The vote count is taken out: a copy cannot update it. Approved 2026-10-26.
+  describe('Product Hunt badge', () => {
+    const badge = content.match(/<p class="product-hunt"[\s\S]*?<\/p>/)?.[0] ?? '';
+
+    it('sits under the download and above the window', () => {
+      expect(badge).not.toBe('');
+      expect(content.indexOf('class="download"')).toBeLessThan(content.indexOf('class="product-hunt"'));
+      expect(content.indexOf('class="product-hunt"')).toBeLessThan(content.indexOf('class="window"'));
+    });
+
+    it('links to the Product Hunt page', () => {
+      expect(links(badge)).toEqual(['https://www.producthunt.com/products/sudo-play']);
+    });
+
+    it('shows the light or dark badge from this site', () => {
+      expect(badge).toMatch(/<source\b[^>]*media="\(prefers-color-scheme: dark\)"[^>]*srcset="\/badges\/product-hunt-dark\.svg"/);
+      expect(badge).toMatch(/<img\b[^>]*src="\/badges\/product-hunt-light\.svg"/);
+      expect(badge).toMatch(/\bwidth="200"/);
+      expect(badge).toMatch(/\bheight="54"/);
+      expect(badge).toContain('alt="Find us on Product Hunt"');
+    });
+
+    // An SVG that pulled a font or an image would bring the request back.
+    describe.each(['product-hunt-light', 'product-hunt-dark'])('%s.svg', (name) => {
+      const file = join(dist, 'badges', `${name}.svg`);
+      const svg = existsSync(file) ? readFileSync(file, 'utf8') : '';
+
+      it('ships, and loads nothing else', () => {
+        expect(svg, file).toContain('<svg');
+        expect(svg).not.toMatch(/\b(?:xlink:)?href=|url\(|@import|<image\b|<foreignObject\b/i);
+        expect(svg.replace(/xmlns(?::\w+)?="[^"]*"/g, '')).not.toMatch(/https?:\/\//);
+      });
+
+      it('has no vote count', () => {
+        const words = [...svg.matchAll(/<tspan\b[^>]*>([^<]*)<\/tspan>/g)].map((match) => match[1].trim());
+
+        expect(words).toEqual(['FIND US ON', 'Product Hunt']);
+      });
     });
   });
 
