@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Download from '../components/Download.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 import TerminalPanel from '../components/TerminalPanel.astro';
 import { releaseNote } from '../data/release';
 ---
@@ -9,6 +10,14 @@ import { releaseNote } from '../data/release';
   <h1>Sudo Play</h1>
   <p class="lead">A small macOS menu bar app that picks today's Spotify playlist, based on what you are coding and how you feel about it.</p>
   <Download />
+  <p class="product-hunt">
+    <ExternalLink href="https://www.producthunt.com/products/sudo-play">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="/badges/product-hunt-dark.svg" />
+        <img src="/badges/product-hunt-light.svg" width="200" height="54" alt="Find us on Product Hunt" />
+      </picture>
+    </ExternalLink>
+  </p>
   <figure class="window">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="/screenshots/window-dark.webp" />
