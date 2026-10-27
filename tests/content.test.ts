@@ -364,6 +364,38 @@ describe('Moods', () => {
   it('links to the README section on adding a playlist', () => {
     expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
   });
+
+  // Words people search for, in the title, the description and the lead.
+  // Approved by Alberto on 2026-10-27, from an SEO idea dev-reputation passed on.
+  describe('says what people search for', () => {
+    const html = read('moods/index.html');
+    const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
+    const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
+    const named = ['Debugging', 'Flow State', 'Friday Deploy'];
+
+    it('is titled with Spotify playlists and the coding mood', () => {
+      expect(title).toBe('Spotify playlists by coding mood · Sudo Play');
+    });
+
+    it('names real moods in its description', () => {
+      expect(description).toBe(
+        'The coding moods in Sudo Play, such as Debugging, Flow State and Friday Deploy. Choose one and a genre, and the app picks a Spotify playlist for today.',
+      );
+    });
+
+    // The description types mood names by hand, so a renamed mood fails here.
+    it('names only moods that are in the catalog', () => {
+      const labels = moods.map((mood) => mood.label);
+
+      for (const mood of named) expect(labels).toContain(mood);
+    });
+
+    it('gives debugging and a Friday deploy as examples in the lead', () => {
+      expect(decode(content)).toContain(
+        'A mood is how you feel about what you are coding, for example a long debugging session or a Friday deploy. You choose a genre and a mood, and the app picks one Spotify playlist for today.',
+      );
+    });
+  });
 });
 
 describe('How it works', () => {
