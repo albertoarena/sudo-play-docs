@@ -33,24 +33,24 @@ describe('releaseNote', () => {
   });
 });
 
-// 1.0.2, published on 2026-10-15. Packaging only: the app is 1.0.1, now
-// stapled inside the DMG so it opens offline on its first launch.
-it('is the signed 1.0.2', () => {
+// 1.0.3, published on 2026-10-27. The app starts its background PHP
+// process again when it stops, and keeps a second log file.
+it('is the signed 1.0.3', () => {
   const tag = 'https://github.com/albertoarena/sudo-play/releases';
 
   expect(release).toEqual({
-    version: '1.0.2',
-    name: '1.0.2',
-    date: '2026-10-15',
-    url: `${tag}/tag/v1.0.2`,
+    version: '1.0.3',
+    name: '1.0.3',
+    date: '2026-10-27',
+    url: `${tag}/tag/v1.0.3`,
     dmg: {
-      file: 'Sudo-Play-1.0.2-arm64.dmg',
-      url: `${tag}/download/v1.0.2/Sudo-Play-1.0.2-arm64.dmg`,
-      size: '148 MB',
-      sha256: 'b40e25cd44002387ebcbe54707ad56636d16c7c0d1f649bbc862d31e5d875d0f',
+      file: 'Sudo-Play-1.0.3-arm64.dmg',
+      url: `${tag}/download/v1.0.3/Sudo-Play-1.0.3-arm64.dmg`,
+      size: '163 MB',
+      sha256: '43ad8b4b56c47856fa266b807e114efcbbbca26955e964608a1e78ddee46d479',
     },
   });
-  expect(releaseNote(release)).toBe('The current release is 1.0.2.');
+  expect(releaseNote(release)).toBe('The current release is 1.0.3.');
 });
 
 it('Home states the release from the data file', () => {

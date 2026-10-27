@@ -1,22 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Troubleshooting" description='What to do when Sudo Play shows "Something went wrong. Please try again." on every button, and where the app writes its log.'>
+<Base title="Troubleshooting" description='What to do when Sudo Play says "Sudo Play stopped in the background." or "Something went wrong. Please try again." on every button, and where the logs are.'>
   <h1>Troubleshooting</h1>
   <p class="lead">What to do when Sudo Play does not work as expected.</p>
 
   <h2>Every button in the window shows an error</h2>
-  <p>You open Sudo Play from the menu bar, and nothing in the window works:</p>
+  <p>Sudo Play runs a small PHP process in the background. Every button in the window goes through it. Sometimes something else stops that process, such as another app or macOS.</p>
+  <p>Since 1.0.3, Sudo Play starts the process again on its own, after about a second. If the restart does not work, the app opens again by itself.</p>
+  <p>If the process stops 3 times in 5 minutes, Sudo Play stops trying. The window then shows "Sudo Play stopped in the background. Press ⌘Q and open it again."</p>
+
+  <h3>On 1.0.2 or earlier</h3>
+  <p>Sudo Play does not start the process again. Nothing in the window works:</p>
   <ul>
     <li>Play, Next, Surprise me and the genre and mood chips show "Something went wrong. Please try again."</li>
     <li>Settings shows "Could not open the settings. Please try again."</li>
     <li>Add a playlist shows "Could not open the browser."</li>
     <li>Quit shows "Could not quit. Please try again."</li>
   </ul>
-  <p>The daily reminder still arrives.</p>
-
-  <h3>Why it happens</h3>
-  <p>Sudo Play runs a small PHP process in the background. Every button in the window goes through it. Sometimes something else stops that process, such as another app or macOS. Sudo Play does not start it again on its own. The reminder does not use this process, so the reminder keeps working.</p>
+  <p>The daily reminder still arrives, because it does not use this process. To get the automatic restart, <a href="/install/">install the current release</a>.</p>
 
   <h3>What to do</h3>
   <ol>
@@ -28,8 +30,12 @@ import Base from '../layouts/Base.astro';
   <pre><code>killall "Sudo Play"</code></pre>
   <p>Then open Sudo Play again.</p>
 
-  <h2>Where the log is</h2>
+  <h2>Where the logs are</h2>
   <p>Sudo Play writes its log files in:</p>
   <pre><code>~/Library/Application Support/sudo-play/storage/logs/</code></pre>
-  <p>There is one file per day, named <code>laravel-YYYY-MM-DD.log</code>. The problem above writes nothing to the log. So the log may be empty even when every button fails.</p>
+  <ul>
+    <li><code>laravel-YYYY-MM-DD.log</code> has the app's warnings and errors. There is one file per day.</li>
+    <li><code>electron.log</code> is new in 1.0.3. It comes from the part of the app that runs the window, and records when the background process stopped and started again. At about 1 MB, it becomes <code>electron.old.log</code>. Together, the two files stay at about 2 MB.</li>
+  </ul>
+  <p>On 1.0.2 or earlier, the problem above writes nothing to the log. So the log may be empty even when every button fails.</p>
 </Base>

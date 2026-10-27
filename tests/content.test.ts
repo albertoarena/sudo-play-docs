@@ -594,9 +594,10 @@ describe('the 2026-10-14 wording pass', () => {
 });
 
 // For the problem seen on 2026-10-21: the app's background PHP process stops,
-// every action in the window fails and the reminder still arrives. The
-// messages are the app's own words, from the 1.0.2 tag. Where the fix lives
-// is undecided, so the page promises none. Asked for on 2026-10-21. The
+// every action in the window fails and the reminder still arrives. 1.0.3
+// starts the process again on its own, and says "stopped in the background"
+// when it gives up. The messages are the app's own words, from the 1.0.2 and
+// 1.0.3 tags. Asked for on 2026-10-21, updated for 1.0.3 on 2026-10-27. The
 // nav says Help, so the masthead keeps two rows at 320px. It ends the
 // order: nobody reads it in turn, and Help sits where people look for it.
 describe('Troubleshooting', () => {
@@ -612,7 +613,15 @@ describe('Troubleshooting', () => {
     expect(header).toMatch(/<a\b[^>]*href="\/troubleshooting\/"[^>]*>Help\b/);
   });
 
-  it('quotes the messages the window shows', () => {
+  it('says 1.0.3 starts the process again, and quotes what it shows when it gives up', () => {
+    expect(content).toMatch(/Since 1\.0\.3, Sudo Play starts the process again on its own/);
+    expect(content).toContain('3 times in 5 minutes');
+    expect(content).toContain('Sudo Play stopped in the background. Press ⌘Q and open it again.');
+  });
+
+  it('quotes the messages the window shows on 1.0.2 or earlier', () => {
+    expect(content).toContain('On 1.0.2 or earlier');
+
     for (const message of [
       'Something went wrong. Please try again.',
       'Could not open the settings. Please try again.',
@@ -632,15 +641,18 @@ describe('Troubleshooting', () => {
     expect(content).toContain('<code>killall "Sudo Play"</code>');
   });
 
-  it('says where the log is, and that this problem leaves none', () => {
+  it('says where the logs are, with electron.log from 1.0.3', () => {
     expect(content).toContain('<code>~/Library/Application Support/sudo-play/storage/logs/</code>');
-    expect(content).toMatch(/empty/);
+    expect(content).toContain('<code>laravel-YYYY-MM-DD.log</code>');
+    expect(content).toContain('<code>electron.log</code>');
+    expect(content).toContain('about 2 MB');
   });
 
   // A stuck user searches the words on their screen.
   it('quotes the main error in its description', () => {
     const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
 
+    expect(description).toContain('Sudo Play stopped in the background.');
     expect(description).toContain('Something went wrong. Please try again.');
   });
 
@@ -655,7 +667,8 @@ describe('Troubleshooting', () => {
     expect(links(install)).toContain('/troubleshooting/');
   });
 
-  it('promises no fix and no version', () => {
-    expect(content).not.toMatch(/will be fixed|next (release|version)|\b\d+\.\d+\.\d+\b/i);
+  // It names only versions that have shipped.
+  it('promises no future fix', () => {
+    expect(content).not.toMatch(/will be fixed|next (release|version)/i);
   });
 });
