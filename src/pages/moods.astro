@@ -7,9 +7,9 @@ const app = 'https://github.com/albertoarena/sudo-play';
 const labels = genres.map((genre) => genre.label);
 const genreList = `${labels.slice(0, -1).join(', ')} and ${labels.at(-1)}`;
 ---
-<Base title="Moods" description="Every developer mood in Sudo Play, from the app's catalog, with what each one feels like.">
+<Base title="Spotify playlists by coding mood" description="The coding moods in Sudo Play, such as Debugging, Flow State and Friday Deploy. Choose one and a genre, and the app picks a Spotify playlist for today.">
   <h1>Moods</h1>
-  <p class="lead">A mood is how you feel about what you are coding. You choose a genre and a mood, and the app picks one playlist for today.</p>
+  <p class="lead">A mood is how you feel about what you are coding, for example a long debugging session or a Friday deploy. You choose a genre and a mood, and the app picks one Spotify playlist for today.</p>
   <p>The moods and genres come from the app's catalog. The genres are {genreList}.</p>
 
   <div class="table-wrap">
