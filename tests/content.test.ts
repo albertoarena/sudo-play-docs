@@ -614,7 +614,7 @@ describe('Troubleshooting', () => {
   });
 
   it('says 1.0.3 starts the process again, and quotes what it shows when it gives up', () => {
-    expect(content).toMatch(/Since 1\.0\.3, Sudo Play starts it again on its own/);
+    expect(content).toMatch(/Since 1\.0\.3, Sudo Play starts the process again on its own/);
     expect(content).toContain('3 times in 5 minutes');
     expect(content).toContain('Sudo Play stopped in the background. Press ⌘Q and open it again.');
   });
