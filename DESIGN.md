@@ -163,7 +163,8 @@ panel, code, and small labels. The page is flat and still. There are no
 shadows, no motion and no syntax colours, and one green that only ever means
 "act here" or "you are here".
 
-Light and dark follow `prefers-color-scheme`, with no toggle. The band and the
+Light and dark follow `prefers-color-scheme` until the visitor picks one with
+the theme toggle. The band and the
 panel are dark in both modes. Code blocks follow the page, so in light mode
 they are light, and the dark panel stays the one dark object that means
 identity.
@@ -322,6 +323,20 @@ The app's header, as chrome. Dark `term-bg` in both modes; in dark mode a 1px
 under it, since the row is pinned on its own. The brand link is the mark (28px
 wide) and "Sudo Play" in `term-fg`. Inside the band the focus ring switches to
 `term-focus`.
+
+### Theme toggle
+A 32px button at the end of the masthead row, after the nav: a 1px
+`term-dots` border, 6px corners, a 16px icon in `term-dim`, `term-fg` on
+hover. A click moves to the next mode: light, dark, then system. The icon
+shows the current mode (a sun, a moon or a screen), and its name says it, for
+example "Theme: system". Light and dark are stored in local storage as
+`sudoplay-theme`; system removes the key. A stored choice sets `data-theme` on
+the html element in the head, before the first paint. `tokens.css` writes the
+dark values twice, for the system unless the choice is light, and for a
+chosen dark. Home's badge and screenshot pick dark with a media query, so the
+toggle rewrites their `source` media to follow a choice. The button shows
+only when its script runs; without JavaScript the page follows the system.
+Below 40rem it shares the first line with the name.
 
 ### Navigation
 - **Style:** six text links in `term-dim`, no underline, 24px apart.

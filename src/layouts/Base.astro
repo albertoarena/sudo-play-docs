@@ -58,6 +58,10 @@ const image = new URL('/og.png', Astro.site);
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script is:inline>
+      // The theme the visitor chose, before the first paint. With no choice, the system decides.
+      try { const theme = localStorage.getItem('sudoplay-theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch {}
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -74,5 +78,36 @@ const image = new URL('/og.png', Astro.site);
     </main>
     <Footer />
     {gaMeasurementId && <ConsentBanner />}
+    <script is:inline>
+      // The theme toggle in the masthead: light, dark, then system. Light and
+      // dark stay in the browser. System removes the choice.
+      (() => {
+        const root = document.documentElement;
+        const toggle = document.querySelector('.theme-toggle');
+        if (!toggle) return;
+        const system = '(prefers-color-scheme: dark)';
+        // A picture picks its dark source with a media query, which cannot
+        // see the choice, so a choice rewrites the query.
+        const sources = [...document.querySelectorAll(`picture source[media="${system}"]`)];
+        const order = ['light', 'dark', 'system'];
+        const mode = () => root.dataset.theme || 'system';
+        const show = () => {
+          const current = mode();
+          toggle.dataset.mode = current;
+          toggle.setAttribute('aria-label', `Theme: ${current}`);
+          toggle.title = `Theme: ${current}`;
+          for (const source of sources) source.media = { system, dark: 'all', light: 'not all' }[current];
+        };
+        toggle.hidden = false;
+        show();
+        toggle.addEventListener('click', () => {
+          const next = order[(order.indexOf(mode()) + 1) % order.length];
+          if (next === 'system') delete root.dataset.theme;
+          else root.dataset.theme = next;
+          try { next === 'system' ? localStorage.removeItem('sudoplay-theme') : localStorage.setItem('sudoplay-theme', next); } catch {}
+          show();
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -80,8 +80,10 @@ frame, so on a wide screen the mark sits left of the column's edge.
 
 ### Light and dark
 
-Both follow `prefers-color-scheme`. There is no toggle. The band is dark in both
-modes.
+Both follow `prefers-color-scheme` until the visitor picks one with the theme
+toggle at the end of the masthead row. Added 2026-11-04, as on sudohire.dev:
+one button moves through light, dark and system, and its icon shows the
+current mode. The band is dark in both modes.
 
 ### One colour addition
 
@@ -223,12 +225,14 @@ declined.
 
 Decided 2026-10-11.
 
-- **One script, the consent banner.** The Copy button was the site's first
-  script, and it went with the code block on 2026-10-12. The banner script
-  from phase 5 follows the same rules: our own, inline, no request. It also
-  wires Analytics settings in the footer, because one script with no shared
-  chunk is what Astro inlines. A build without a measurement ID has no script
-  at all
+- **Scripts: the consent banner and the theme toggle.** The Copy button was
+  the site's first script, and it went with the code block on 2026-10-12. The
+  banner script from phase 5 follows the same rules: our own, inline, no
+  request. It also wires Analytics settings in the footer, because one script
+  with no shared chunk is what Astro inlines. The theme toggle, added
+  2026-11-04, is two short inline scripts: one in the head applies a stored
+  choice before the first paint, and one at the end of the body runs the
+  button. A build without a measurement ID has only those two
 - **No syntax colours.** Astro's Shiki highlighting is off. All code is set
   in `--fg`. Green never decorates. Changed 2026-10-12: keys and comments were
   to be in `--fg-muted`, but with highlighting off nothing marks a key or a
