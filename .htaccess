@@ -1,0 +1,57 @@
+# Apache rules that ship inside every release.
+#
+# The build copies this file into dist/, and the host unpacks dist/ into
+# releases/<timestamp>/ behind a `current` symlink. So these rules travel with
+# the site, and this repository can change them without touching the host.
+#
+# One job cannot live here: sending http and www to https://sudoplay.dev. That
+# has to happen before the docroot rewrites a request into current/, so the
+# docroot .htaccess owns it. Its reference copy is deploy/docroot.htaccess.
+#
+# A test checks every rule below is present. Only `npm run check:redirects`
+# against the live site checks that Apache runs them.
+
+# No directory listings. The docroot file says this too, but it is edited by
+# hand on the host and can drift, and this file ships with every release.
+#
+# Keep the minus. `Options -Indexes` merges with the docroot's Options. An
+# absolute `Options Indexes` or `Options None` replaces them, which drops the
+# +FollowSymLinks the docroot sets, and the whole deploy is a symlink.
+Options -Indexes
+
+RewriteEngine On
+
+# /current/ and /releases/<ts>/ would serve the whole site a second time, at
+# addresses search engines and analytics would count apart. Send them back to
+# the real address.
+#
+# The match is on %{THE_REQUEST}, the line the client sent. The docroot's own
+# rewrite into current/ never changes it, so ordinary page views pass. Per
+# directory rewriting has already removed the prefix, so $1 is the rest of the
+# path: /current/moods/ goes to /moods/.
+#
+# %{HTTP_HOST}, not the domain, so a preview host redirects to itself.
+RewriteCond %{THE_REQUEST} \s/+(current|releases)(/|\?|\s) [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# One page, one address: /moods/index.html goes to /moods/, and /index.html
+# to /. The match is on the request line again, because Apache serves /moods/
+# by reading index.html internally, and a match on that would loop.
+RewriteCond %{THE_REQUEST} \s/+[^?\s]*index\.html[\s?] [NC]
+RewriteRule ^(.*/)?index\.html$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Add the trailing slash to a folder address here, before Apache's mod_dir
+# does. mod_dir builds its redirect from the path after the docroot's rewrite,
+# so /moods would go to a visible /current/moods/ first.
+#
+# The -d test keeps files out: /favicon.svg is not a folder, so it is served.
+# The pattern cannot match an empty path, so the site root gets no second
+# slash. QSA keeps the query string.
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*[^/])$ https://%{HTTP_HOST}/$1/ [R=301,L,QSA]
+
+# ErrorDocument looks for its file from the docroot, not from this folder. The
+# docroot has no 404.html, since the page is built into each release, so the
+# path goes through the symlink. A plain /404.html would fail silently, and
+# Apache would send its own error page.
+ErrorDocument 404 /current/404.html
