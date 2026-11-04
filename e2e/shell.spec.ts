@@ -60,3 +60,41 @@ test('centres the reading column on a wide screen', async ({ page }) => {
     expect(Math.abs(box!.x + box!.width / 2 - middle)).toBeLessThanOrEqual(2);
   }
 });
+
+// Decided 2026-11-04: on a wide screen the masthead row stays at the top
+// while the page scrolls, Home included, where the panel scrolls away under
+// it. Below 40rem the masthead stacks to about 120px, so it scrolls away
+// as before and the phone keeps its reading space.
+for (const path of builtPages()) {
+  test(`${path} keeps the masthead row at the top on a wide screen`, async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 600 });
+    await page.goto(path);
+    // The 404 is shorter than the window, so give every page room to scroll.
+    await page.locator('main').evaluate((main) => (main.style.paddingBottom = '100vh'));
+    await page.mouse.wheel(0, 2000);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+    const box = await page.getByRole('banner').boundingBox();
+    expect(box!.y).toBe(0);
+    expect(box!.height).toBeLessThanOrEqual(64);
+  });
+}
+
+test('the masthead scrolls away on a phone', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/install/');
+  await page.mouse.wheel(0, 1000);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+  const box = await page.getByRole('banner').boundingBox();
+  expect(box!.y + box!.height).toBeLessThanOrEqual(0);
+});
+
+test('a linked heading lands below the pinned masthead', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 600 });
+  await page.goto('/install/#run-it-from-source');
+
+  const banner = await page.getByRole('banner').boundingBox();
+  const heading = await page.locator('#run-it-from-source').boundingBox();
+  expect(heading!.y).toBeGreaterThanOrEqual(banner!.y + banner!.height);
+});
