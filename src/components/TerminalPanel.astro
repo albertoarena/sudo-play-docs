@@ -16,7 +16,7 @@ const parts = ['sudo play', `--genre ${genre}`, `--mood ${mood}`];
 ---
 <div class="terminal-panel" data-testid="terminal-panel">
   <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-  <p class="line">
+  <p class="line" id="tagline">
     <span class="prompt">$</span>{parts.map((part) => [' ', <span class="part">{part}</span>])}
   </p>
 </div>

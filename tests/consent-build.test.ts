@@ -22,11 +22,15 @@ describe('the build without a measurement ID', () => {
   });
 
   // A banner with no tag behind it would ask visitors to agree to nothing.
-  it.each(pages)('%s has no banner, no script and no Google', (file) => {
+  // The theme toggle's two scripts are the only ones left, since 2026-11-04.
+  it.each(pages)('%s has no banner, no consent script and no Google', (file) => {
     const html = readFileSync(file, 'utf8');
+    const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(([, body]) => body);
 
     expect(html).not.toContain('id="consent"');
-    expect(html).not.toMatch(/<script/i);
+    expect(scripts).toHaveLength(2);
+    for (const script of scripts) expect(script).toContain('sudoplay-theme');
+    expect(html).not.toMatch(/<script\b[^>]*\bsrc=/i);
     expect(html).not.toMatch(/googletagmanager|google-analytics/i);
   });
 });

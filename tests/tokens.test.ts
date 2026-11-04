@@ -15,9 +15,13 @@ function rootBlock(source: string): string {
   return source.match(/:root\s*{([^}]*)}/)?.[1] ?? '';
 }
 
+// Dark is written twice: for the system, unless the visitor chose light,
+// and for a visitor who chose dark with the theme toggle.
 const darkMedia = css.match(/@media\s*\(prefers-color-scheme:\s*dark\)\s*{([\s\S]*?})\s*}/)?.[1] ?? '';
+const darkSystem = darkMedia.match(/:root:not\(\[data-theme="light"\]\)\s*{([^}]*)}/)?.[1] ?? '';
+const darkChosen = css.match(/:root\[data-theme="dark"\]\s*{([^}]*)}/)?.[1] ?? '';
 const light = declarations(rootBlock(css.replace(darkMedia, '')));
-const dark = { ...light, ...declarations(rootBlock(darkMedia)) };
+const dark = { ...light, ...declarations(darkSystem) };
 
 function luminance(hex: string): number {
   const [r, g, b] = [1, 3, 5].map((i) => {
@@ -86,4 +90,9 @@ it('keeps the terminal the same in both modes', () => {
   for (const name of Object.keys(light).filter((n) => n.startsWith('--term-'))) {
     expect(dark[name], name).toBe(light[name]);
   }
+});
+
+it('writes the same dark tokens for the system and for a chosen dark', () => {
+  expect(Object.keys(declarations(darkSystem)).length).toBeGreaterThan(0);
+  expect(declarations(darkChosen)).toEqual(declarations(darkSystem));
 });

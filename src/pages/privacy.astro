@@ -9,7 +9,7 @@ const contact = 'hello@albertoarena.it';
 <Base title="Privacy" description="What sudoplay.dev loads, and what it does not. Google Analytics runs only if you accept, and no third party is contacted before that.">
   <h1>Privacy</h1>
   <p class="lead">This page is about this website, sudoplay.dev. The app has its own <ExternalLink href={`${app}/blob/main/PRIVACY.md`}>privacy policy</ExternalLink>, which says what Sudo Play sends and stores.</p>
-  <p><strong>Last updated: 12 October 2026.</strong></p>
+  <p><strong>Last updated: 4 November 2026.</strong></p>
 
   <h2>Who is responsible</h2>
   <p>Alberto Arena maintains this site and is the data controller for it. For any question about this page, or to use one of your rights below, write to <a href={`mailto:${contact}`}>{contact}</a>.</p>
@@ -17,7 +17,7 @@ const contact = 'hello@albertoarena.it';
   <h2>What this site loads</h2>
   <p>Every file on this site comes from sudoplay.dev: the pages, the styles, the icons and the font. The font, Geist Mono, is stored here. It does not come from a font service.</p>
   <p>Until you accept analytics, the pages make no request to a third party. There are no embedded videos, no maps, no social buttons and no search service.</p>
-  <p>The one small script on this site shows the analytics banner and remembers your choice. It comes from sudoplay.dev too, and it loads Google Analytics only after you accept.</p>
+  <p>This site runs two small scripts, both from sudoplay.dev. One shows the analytics banner and remembers your choice, and it loads Google Analytics only after you accept. The other remembers the theme you pick.</p>
 
   <h2>Analytics</h2>
   <p>This site uses Google Analytics to learn which pages people read, but only if you accept. Until you press Accept analytics, nothing from Google loads: not the script, and not a cookieless ping. If you decline, or ignore the banner, Google is never contacted.</p>
@@ -31,6 +31,7 @@ const contact = 'hello@albertoarena.it';
   <h2>Cookies and storage</h2>
   <p>Unless you accept analytics, this site sets no cookies.</p>
   <p>Your choice is remembered in your browser's local storage, under the name <code>{STORAGE_KEY}</code>, so you are not asked again. Local storage is not a cookie and is never sent to the server. A decline is stored there too, so no server can read it.</p>
+  <p>If you pick light or dark with the theme button at the top of the page, that is stored in local storage too, under the name <code>sudoplay-theme</code>. Picking system removes it.</p>
   <p>Only if you accept, Google Analytics sets its own cookies, <code>_ga</code> and <code>_ga_&lt;id&gt;</code>, to tell repeat visits apart. If you decline, they are never created.</p>
   <p>You can clear all of this at any time in your browser's settings for this site. If you clear <code>{STORAGE_KEY}</code>, the site asks you again.</p>
 
