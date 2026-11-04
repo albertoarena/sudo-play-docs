@@ -234,16 +234,22 @@ describe('Privacy', () => {
     expect(content).toContain(STORAGE_KEY);
   });
 
+  // The theme toggle, 2026-11-04. Text approved the same day.
+  it('names the key the theme is stored under', () => {
+    expect(content).toContain('<code>sudoplay-theme</code>');
+    expect(content).toMatch(/Picking system removes it\./);
+  });
+
   it('says how to change or withdraw the choice', () => {
     expect(content).toMatch(/Analytics settings/);
     expect(content).toMatch(/footer/i);
   });
 
   // The Copy button and its script went with the code block on 2026-10-12.
-  // The banner is the site's one script now.
-  it('describes the script the site has, not the one it removed', () => {
+  // The banner and, since 2026-11-04, the theme toggle are the scripts now.
+  it('describes the scripts the site has, not the one it removed', () => {
     expect(content).not.toMatch(/Copy button/i);
-    expect(content).toMatch(/script[^.]*banner|banner[^.]*script/i);
+    expect(content).toMatch(/two small scripts[^<]*analytics banner[^<]*theme/);
   });
 
   // The facts below were decided on 2026-10-12. The page is rewritten from
