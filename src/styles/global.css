@@ -15,6 +15,14 @@ html {
   text-size-adjust: 100%;
 }
 
+/* Room for the pinned masthead row, so a linked heading or a focused link
+   never lands under it. Masthead.astro pins it from the same width. */
+@media (min-width: 40.0625rem) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100dvh;

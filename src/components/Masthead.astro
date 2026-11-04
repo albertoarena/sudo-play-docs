@@ -26,21 +26,39 @@ const isHome = current === home.href;
       </ul>
     </nav>
   </div>
-  {Astro.slots.has('default') && (
-    <div class="masthead-hero"><slot /></div>
-  )}
 </header>
+{Astro.slots.has('default') && (
+  <section class="masthead-band" aria-labelledby="tagline">
+    <div class="masthead-hero"><slot /></div>
+  </section>
+)}
 
 <style>
-  .masthead {
+  /* Home's hero sits in its own band after the header, so that only the
+     row is pinned and the panel scrolls away under it. Outside the header
+     the band needs a landmark of its own, named by the panel's line. */
+  .masthead,
+  .masthead-band {
     background: var(--term-bg);
     color: var(--term-dim);
     border-bottom: 1px solid transparent;
   }
 
   @media (prefers-color-scheme: dark) {
-    .masthead {
+    .masthead,
+    .masthead-band {
       border-bottom-color: var(--term-edge);
+    }
+  }
+
+  /* On a wide screen the row stays at the top while the page scrolls.
+     Stacked on a phone it is about 120px, so there it scrolls away. Under
+     the consent banner and the skip link. */
+  @media (min-width: 40.0625rem) {
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 4;
     }
   }
 

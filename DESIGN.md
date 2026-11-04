@@ -276,6 +276,10 @@ Below 22rem the six links sit in a three column grid, so a row never strands
 one link. There is never a menu button. Home's band adds a hero area under the
 row for the panel.
 
+From 40rem up the row is pinned to the top while the page scrolls, and a
+linked heading lands below it. Home's panel band scrolls away under it. On a
+phone the stacked masthead is about 120px, so it scrolls away with the page.
+
 The consent banner is fixed to the bottom edge, on `--bg` with a
 `--border-strong` hairline on top: the title and one sentence on the left,
 Decline and Accept analytics on the right. The two buttons share one class and
@@ -314,7 +318,8 @@ window dots are circles. Borders are always 1px, except the 2px focus ring.
 
 ### Masthead
 The app's header, as chrome. Dark `term-bg` in both modes; in dark mode a 1px
-`term-edge` line separates it from the page. The brand link is the mark (28px
+`term-edge` line separates it from the page, and on Home from the panel band
+under it, since the row is pinned on its own. The brand link is the mark (28px
 wide) and "Sudo Play" in `term-fg`. Inside the band the focus ring switches to
 `term-focus`.
 
