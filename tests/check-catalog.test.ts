@@ -27,8 +27,16 @@ moods:
 playlists:
   - id: rock-friday-deploy-01
     title: Riffs for risky releases
+    url: https://open.spotify.com/playlist/6GpGexxx5zYkTAbwsKvrw6
     genre: rock
-    moods: [friday-deploy]
+    moods: [friday-deploy, shipped-it]
+    curator: albertoarena
+
+  - id: lofi-shipped-it-01
+    title: "Warm cache, cold coffee"
+    url: https://open.spotify.com/playlist/71AG4C3e54W6cYK8FAiAU2
+    genre: lofi
+    moods: [shipped-it]
 `;
 
 const parsed = {
@@ -40,11 +48,32 @@ const parsed = {
     { id: 'shipped-it', label: 'Shipped It', emoji: '🎉', description: 'Happy, something just went live.' },
     { id: 'friday-deploy', label: 'Friday Deploy', emoji: '🚀', description: 'Brave, energetic, a bit risky.' },
   ],
+  playlists: [
+    {
+      id: 'rock-friday-deploy-01',
+      title: 'Riffs for risky releases',
+      url: 'https://open.spotify.com/playlist/6GpGexxx5zYkTAbwsKvrw6',
+      genre: 'rock',
+      moods: ['friday-deploy', 'shipped-it'],
+    },
+    {
+      id: 'lofi-shipped-it-01',
+      title: 'Warm cache, cold coffee',
+      url: 'https://open.spotify.com/playlist/71AG4C3e54W6cYK8FAiAU2',
+      genre: 'lofi',
+      moods: ['shipped-it'],
+    },
+  ],
 };
 
 describe('parseCatalog', () => {
-  it('reads genres and moods in order, and skips playlists', () => {
+  // The curator is not shown on the site, so it is not read.
+  it('reads genres, moods and playlists in order', () => {
     expect(parseCatalog(fixture)).toEqual(parsed);
+  });
+
+  it('refuses a playlist without moods', () => {
+    expect(() => parseCatalog(fixture.replace('    moods: [shipped-it]\n', ''))).toThrow(/lofi-shipped-it-01 has no moods/);
   });
 
   it('refuses a line it cannot read, instead of guessing', () => {
@@ -75,6 +104,20 @@ describe('compareCatalog', () => {
     const app = { ...parsed, genres: [...parsed.genres.slice(0, 1), { id: 'jazz', label: 'Jazz' }] };
 
     expect(compareCatalog(parsed, app)).toEqual(['genre jazz is in the app but not here', 'genre lofi is here but not in the app']);
+  });
+
+  it('names a playlist whose moods changed', () => {
+    const app = parseCatalog(fixture.replace('moods: [shipped-it]', 'moods: [shipped-it, friday-deploy]'));
+
+    expect(compareCatalog(parsed, app)).toEqual([
+      'playlist lofi-shipped-it-01: moods is "shipped-it" here and "shipped-it, friday-deploy" in the app',
+    ]);
+  });
+
+  it('names a playlist added in the app', () => {
+    const app = { ...parsed, playlists: [...parsed.playlists, { ...parsed.playlists[0], id: 'rock-shipped-it-01' }] };
+
+    expect(compareCatalog(parsed, app)).toEqual(['playlist rock-shipped-it-01 is in the app but not here']);
   });
 
   it('notices a change of order', () => {
