@@ -36,6 +36,8 @@ belong here.
 - Pages at launch: Home, How it works, Install, Moods, Tips, and Privacy (about
   this site, not the app)
 - Moods are copied from the app's `catalog/playlists.yaml` at each release
+- Playlists, since 2026-11-07, are copied from the same file with their
+  covers, and each links to the playlist on Spotify
 - The app's `README.md`, `CONTRIBUTING.md` and `PRIVACY.md` are linked, never
   copied, so there are never two versions to drift
 - Not in v1: search, a changelog, a blog, a demo, translations

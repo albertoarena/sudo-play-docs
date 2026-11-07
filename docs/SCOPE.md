@@ -21,6 +21,11 @@ Home has had a Download for Mac button since 2026-10-20, under the lead. It is
 not persuasion: it serves visitors who arrive from a launch post already
 wanting the app, who would otherwise scroll to Install to find the DMG.
 
+Playlists has been in the reading order since 2026-11-07, after Moods. It
+shows every playlist in the catalog with its cover, and each opens on Spotify.
+The playlists were not copied before on the belief that they changed daily.
+They do not: the app picks a different one each day, but the list only grows.
+
 Troubleshooting has been in the reading order since 2026-10-21, last, after
 Privacy, labelled Help in the nav. It serves users whose app already
 misbehaves. It states what to do today and never promises a fix or a fix version until the

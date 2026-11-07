@@ -17,7 +17,7 @@ new session has are answered there.
 Phases 1 to 6 of `docs/PLAN.md` are done, and https://sudoplay.dev is live
 since 2026-10-14. Plain Astro with strict TypeScript,
 no Starlight and no CSS framework. The design, made with Impeccable, is in
-`docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All seven pages
+`docs/DIRECTION.md` (the decisions) and `DESIGN.md` (as built). All eight pages
 have real copy, and so does Credits, linked from the footer (2026-10-13), and a test fails if any page still carries the
 `data-placeholder` marker. A merge to `main` deploys itself: read
 `docs/DEPLOYMENT.md` before touching `publish.yml`, `scripts/server-deploy.sh`
@@ -48,13 +48,19 @@ release through `releaseNote()`, and a test forbids writing "no release"
 anywhere else. For each new release, update `release` there and `checkedAt`,
 then recheck the Install steps against the real build.
 
-The moods and genres are copied into `src/data/catalog.ts` from the app's
-`catalog/playlists.yaml`. `npm run check:catalog` compares the copy with the
+The genres, moods and playlists are copied into `src/data/catalog.ts` from
+the app's `catalog/playlists.yaml`. `npm run check:catalog` compares the copy with the
 catalog on the app's `catalog-live` branch, the file the shipped app
 downloads, so `checkedAt` stays on the release. Run it by hand after each
 catalog change in the app and at each release. CI does not run it: a mood
 merged in the app would fail every pull request here until the site caught
 up.
+
+Each playlist has a cover in `public/covers`, named by its catalog id, and a
+test fails if one is missing. The covers come from `spotify:cover <number>`
+in the curator's private `spotify-playlist-importer`, which numbers the
+playlists instead of naming them: match the two by the Spotify playlist id,
+then convert the JPEG to WebP at 640px with `cwebp -q 82`.
 
 Work is test first: the failing test is committed, then the code, one commit
 per green cycle.
