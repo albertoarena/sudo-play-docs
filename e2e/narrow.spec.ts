@@ -37,7 +37,8 @@ test('the nav wraps into compact rows at 320px', async ({ page }) => {
   expect(nav!.height).toBeLessThanOrEqual(80);
 });
 
-test('no nav row holds a single link at 320px', async ({ page }) => {
+for (const width of [320, 352]) test(`no nav row holds a single link at ${width}px`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 640 });
   await page.goto('/install/');
   const tops = await page
     .getByRole('navigation', { name: 'Site' })

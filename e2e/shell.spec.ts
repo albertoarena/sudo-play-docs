@@ -63,8 +63,9 @@ test('centres the reading column on a wide screen', async ({ page }) => {
 
 // Decided 2026-11-04: on a wide screen the masthead row stays at the top
 // while the page scrolls, Home included, where the panel scrolls away under
-// it. Below 40rem the masthead stacks to about 120px, so it scrolls away
-// as before and the phone keeps its reading space.
+// it. Below 48rem the masthead stacks to about 120px, so it scrolls away
+// as before and the phone keeps its reading space. The width was 40rem until
+// 2026-11-07, when Playlists made the row too long to fit there.
 for (const path of builtPages()) {
   test(`${path} keeps the masthead row at the top on a wide screen`, async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 600 });
@@ -97,4 +98,23 @@ test('a linked heading lands below the pinned masthead', async ({ page }) => {
   const banner = await page.getByRole('banner').boundingBox();
   const heading = await page.locator('#run-it-from-source').boundingBox();
   expect(heading!.y).toBeGreaterThanOrEqual(banner!.y + banner!.height);
+});
+
+// From 48rem every page's row fits on one line, so what stays pinned is short.
+test('the masthead is one row from 48rem', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 600 });
+  await page.goto('/playlists/');
+
+  const box = await page.getByRole('banner').boundingBox();
+  expect(box!.height).toBeLessThanOrEqual(64);
+});
+
+test('the masthead scrolls away just below 48rem', async ({ page }) => {
+  await page.setViewportSize({ width: 767, height: 600 });
+  await page.goto('/install/');
+  await page.mouse.wheel(0, 1000);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+  const box = await page.getByRole('banner').boundingBox();
+  expect(box!.y + box!.height).toBeLessThanOrEqual(0);
 });
