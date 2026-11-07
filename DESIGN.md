@@ -274,16 +274,17 @@ blocks and tables, 3rem above an `h2`, 2.25rem above an `h3`. Previous and next
 sit 4rem below the column, centred with it, in two equal cells.
 
 The masthead is one row, at least 56px: brand on the left, nav on the right.
-Below 48rem it stacks, with the nav wrapping under the name in compact rows.
+Below 52rem it stacks, with the nav wrapping under the name in compact rows.
 At 320px the seven links wrap three over four, so a row never strands one
 link. There is never a menu button. Home's band adds a hero area under the
 row for the panel.
 
-From 48rem up the row is pinned to the top while the page scrolls, and a
+From 52rem up the row is pinned to the top while the page scrolls, and a
 linked heading lands below it. Home's panel band scrolls away under it. On a
 phone or a small tablet the stacked masthead is about 120px, so it scrolls
 away with the page. The width was 40rem until 2026-11-07, when the seventh
-link made the row too long to fit between 40 and 48rem.
+link made the row too long to fit between 40 and 52rem with the wider
+system fonts of Linux and Windows.
 
 The consent banner is fixed to the bottom edge, on `--bg` with a
 `--border-strong` hairline on top: the title and one sentence on the left,
@@ -340,7 +341,7 @@ dark values twice, for the system unless the choice is light, and for a
 chosen dark. Home's badge and screenshot pick dark with a media query, so the
 toggle rewrites their `source` media to follow a choice. The button shows
 only when its script runs; without JavaScript the page follows the system.
-Below 48rem it shares the first line with the name.
+Below 52rem it shares the first line with the name.
 
 ### Navigation
 - **Style:** seven text links in `term-dim`, no underline, 24px apart.

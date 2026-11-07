@@ -80,7 +80,9 @@ both measured before the change:
   The links now simply wrap, three over four, in the same two rows as before
 - Between 641 and 767px the row no longer fit on one line, and the pinned
   masthead grew to 93 to 113px. It now stacks, and scrolls away, below
-  48rem instead of 40rem, so what stays pinned is always one row
+  52rem instead of 40rem, so what stays pinned is always one row. 48rem was
+  enough with the Mac's font, but CI on Linux showed a 93px masthead at
+  768px: a wider system font needs about 800px, so 52rem leaves room
 
 A page gets its own table of contents only if phase 3 makes it long.
 
