@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 // Two licences, decided 2026-10-13: MIT for the code, CC BY 4.0 for the text
 // of the pages and the link preview image. The README says which is which.
+// The playlist covers carry the name and mark, so neither licence covers
+// them. Added 2026-11-07.
 describe('licences', () => {
   it('puts the code under MIT', () => {
     const licence = readFileSync('LICENSE', 'utf8');
@@ -18,7 +20,7 @@ describe('licences', () => {
   it('says in the README which licence covers what', () => {
     const readme = readFileSync('README.md', 'utf8');
     const section = readme.split(/^## Licence$/m)[1]?.split(/^## /m)[0] ?? '';
-    for (const name of ['`LICENSE`', '`LICENSE-CONTENT`', 'OFL.txt', 'public/og.png', 'name and mark']) {
+    for (const name of ['`LICENSE`', '`LICENSE-CONTENT`', 'OFL.txt', 'public/og.png', 'name and mark', 'public/covers']) {
       expect(section).toContain(name);
     }
   });
