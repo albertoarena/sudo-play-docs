@@ -378,14 +378,16 @@ describe('Moods', () => {
 
   // Words people search for, in the title, the description and the lead.
   // Approved by Alberto on 2026-10-27, from an SEO idea dev-reputation passed on.
+  // The title changed on 2026-11-07, also on dev-reputation's advice, so that
+  // Playlists alone answers searches for Spotify playlists.
   describe('says what people search for', () => {
     const html = read('moods/index.html');
     const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
     const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
     const named = ['Debugging', 'Flow State', 'Friday Deploy'];
 
-    it('is titled with Spotify playlists and the coding mood', () => {
-      expect(title).toBe('Spotify playlists by coding mood · Sudo Play');
+    it('is titled with picking coding music by mood', () => {
+      expect(title).toBe('Pick coding music by mood · Sudo Play');
     });
 
     it('names real moods in its description', () => {
