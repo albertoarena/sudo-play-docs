@@ -50,9 +50,9 @@ const isHome = current === home.href;
   }
 
   /* On a wide screen the row stays at the top while the page scrolls.
-     Stacked on a phone it is about 120px, so there it scrolls away. Under
+     Stacked below 48rem it is about 120px, so there it scrolls away. Under
      the consent banner and the skip link. */
-  @media (min-width: 40.0625rem) {
+  @media (min-width: 48rem) {
     .masthead {
       position: sticky;
       top: 0;
@@ -198,8 +198,8 @@ const isHome = current === home.href;
   .here i:nth-child(3) { height: 73%; }
 
   /* Stacked: the name and the toggle share the first line, and the nav
-     wraps under them. */
-  @media (max-width: 40rem) {
+     wraps under them. Below 48rem the one row no longer fits. */
+  @media (max-width: 47.9375rem) {
     .brand {
       flex: 1;
     }
@@ -235,12 +235,6 @@ const isHome = current === home.href;
 
   }
 
-  /* The narrowest phones: three links over two, never one stranded. */
-  @media (max-width: 22rem) {
-    .site-nav ul {
-      display: grid;
-      grid-template-columns: repeat(3, auto);
-      justify-content: start;
-    }
-  }
+  /* On the narrowest phones the seven links wrap three over four, so no
+     row strands one. e2e/narrow.spec.ts checks it at 320 and 352px. */
 </style>
