@@ -1,7 +1,7 @@
-// The genres and moods from the app's catalog/playlists.yaml on catalog-live,
-// the file the shipped app downloads, copied word for word and in the
-// catalog's order. Playlists are not copied: they rotate daily and belong to
-// the app. `npm run check:catalog` compares this file with catalog-live.
+// The genres, moods and playlists from the app's catalog/playlists.yaml on
+// catalog-live, the file the shipped app downloads, copied word for word and
+// in the catalog's order. A playlist's curator is not shown, so it is not
+// copied. `npm run check:catalog` compares this file with catalog-live.
 export interface Genre {
   id: string;
   label: string;
@@ -12,6 +12,14 @@ export interface Mood {
   label: string;
   emoji: string;
   description: string;
+}
+
+export interface Playlist {
+  id: string;
+  title: string;
+  url: string;
+  genre: string;
+  moods: readonly string[];
 }
 
 export const genres: readonly Genre[] = [
@@ -33,4 +41,176 @@ export const moods: readonly Mood[] = [
   { id: 'friday-deploy', label: 'Friday Deploy', emoji: '🚀', description: 'Brave, energetic, a bit risky.' },
   { id: 'agent-mode', label: 'Agent Mode', emoji: '🤖', description: 'Calm, watching the machines work.' },
   { id: 'night-shift', label: 'Night Shift', emoji: '🌙', description: 'Wired, past midnight, one more commit.' },
+];
+
+// Each has a cover in public/covers, named by its id.
+export const playlists: readonly Playlist[] = [
+  {
+    id: 'lofi-flow-state-01',
+    title: 'Beats to refactor to',
+    url: 'https://open.spotify.com/playlist/3vRpZ8jH4GKBNCx6gDdGfJ',
+    genre: 'lofi',
+    moods: ['flow-state', 'debugging'],
+  },
+  {
+    id: 'classical-flow-state-01',
+    title: 'Fugue state',
+    url: 'https://open.spotify.com/playlist/3Qf0iHM6fA3vPgzfkV2XZJ',
+    genre: 'classical',
+    moods: ['flow-state', 'debugging'],
+  },
+  {
+    id: 'jazz-debugging-01',
+    title: 'Modal debugging',
+    url: 'https://open.spotify.com/playlist/5GxNW8anRPEkuFWwYSA4Vj',
+    genre: 'jazz',
+    moods: ['debugging', 'flow-state'],
+  },
+  {
+    id: 'electronic-flow-state-01',
+    title: 'Ambient runtime',
+    url: 'https://open.spotify.com/playlist/4iCzCCEu5pSnhvcGv1HbAZ',
+    genre: 'electronic',
+    moods: ['flow-state', 'debugging'],
+  },
+  {
+    id: 'lofi-coffee-needed-01',
+    title: 'Warm cache, cold coffee',
+    url: 'https://open.spotify.com/playlist/71AG4C3e54W6cYK8FAiAU2',
+    genre: 'lofi',
+    moods: ['coffee-needed', 'blue-monday'],
+  },
+  {
+    id: 'classical-blue-monday-01',
+    title: 'Adagio for Mondays',
+    url: 'https://open.spotify.com/playlist/0Uv7xjEhwlxEBmyUiO5jtN',
+    genre: 'classical',
+    moods: ['blue-monday', 'coffee-needed'],
+  },
+  {
+    id: 'jazz-coffee-needed-01',
+    title: 'Kind of Blue Monday',
+    url: 'https://open.spotify.com/playlist/3FENzWujkFE7VDnXb27Y73',
+    genre: 'jazz',
+    moods: ['coffee-needed', 'blue-monday'],
+  },
+  {
+    id: 'pop-coffee-needed-01',
+    title: 'Gentle standup',
+    url: 'https://open.spotify.com/playlist/4JFeSqb4VMDMDwLicIdgfL',
+    genre: 'pop',
+    moods: ['coffee-needed', 'blue-monday'],
+  },
+  {
+    id: 'indie-blue-monday-01',
+    title: 'Soft launch',
+    url: 'https://open.spotify.com/playlist/5DOkkAWcIjl3K6tcZpIo9A',
+    genre: 'indie',
+    moods: ['blue-monday', 'coffee-needed'],
+  },
+  {
+    id: 'rock-friday-deploy-01',
+    title: 'Riffs for risky releases',
+    url: 'https://open.spotify.com/playlist/6GpGexxx5zYkTAbwsKvrw6',
+    genre: 'rock',
+    moods: ['friday-deploy', 'shipped-it'],
+  },
+  {
+    id: 'electronic-friday-deploy-01',
+    title: 'Zero downtime drops',
+    url: 'https://open.spotify.com/playlist/7rCBGZG7NSjoI4cyjOt11c',
+    genre: 'electronic',
+    moods: ['friday-deploy', 'shipped-it'],
+  },
+  {
+    id: 'pop-shipped-it-01',
+    title: 'Green build anthems',
+    url: 'https://open.spotify.com/playlist/6ZyjZZPi6CHr2V3GWmrcZ7',
+    genre: 'pop',
+    moods: ['shipped-it', 'friday-deploy'],
+  },
+  {
+    id: 'indie-friday-deploy-01',
+    title: 'Feature flags and fuzz',
+    url: 'https://open.spotify.com/playlist/7ypVn6lXVPFkXe74E2z4K8',
+    genre: 'indie',
+    moods: ['friday-deploy', 'shipped-it'],
+  },
+  {
+    id: 'classical-friday-deploy-01',
+    title: 'Allegro ma non rollback',
+    url: 'https://open.spotify.com/playlist/3AzNOcVQtseCrxwvo284na',
+    genre: 'classical',
+    moods: ['friday-deploy', 'shipped-it'],
+  },
+  {
+    id: 'rock-debugging-01',
+    title: 'Stairway to mainframe',
+    url: 'https://open.spotify.com/playlist/7MJHEJXJbEkzs8fTUFQkrb',
+    genre: 'rock',
+    moods: ['debugging', 'flow-state'],
+  },
+  {
+    id: 'electronic-agent-mode-01',
+    title: 'Human in the loop',
+    url: 'https://open.spotify.com/playlist/0yxNg3fICQCsaZm5mj2AcM',
+    genre: 'electronic',
+    moods: ['agent-mode', 'flow-state'],
+  },
+  {
+    id: 'jazz-agent-mode-01',
+    title: 'A Prompt Supreme',
+    url: 'https://open.spotify.com/playlist/15HXVqksVeKKogujYa9v3v',
+    genre: 'jazz',
+    moods: ['agent-mode', 'flow-state'],
+  },
+  {
+    id: 'classical-agent-mode-01',
+    title: 'Music for 18 agents',
+    url: 'https://open.spotify.com/playlist/4NTzxbPsLrtl6vgG8KhK2q',
+    genre: 'classical',
+    moods: ['agent-mode', 'flow-state'],
+  },
+  {
+    id: 'indie-shipped-it-01',
+    title: 'One-person band',
+    url: 'https://open.spotify.com/playlist/4xjQHjX7HaGjWJhTsCLuJ7',
+    genre: 'indie',
+    moods: ['shipped-it', 'coffee-needed'],
+  },
+  {
+    id: 'electronic-night-shift-01',
+    title: 'Outrun the deadline',
+    url: 'https://open.spotify.com/playlist/0MZMYdUC4t1MAfrzug0ano',
+    genre: 'electronic',
+    moods: ['night-shift', 'flow-state'],
+  },
+  {
+    id: 'classical-night-shift-01',
+    title: 'Eine kleine Nachtbuild',
+    url: 'https://open.spotify.com/playlist/7HqqHYZBnUfcWypLbqvtb5',
+    genre: 'classical',
+    moods: ['night-shift', 'flow-state'],
+  },
+  {
+    id: 'jazz-night-shift-01',
+    title: "'Round midnight merge",
+    url: 'https://open.spotify.com/playlist/3dM7ldtqTLpLQ2y9XJKc0V',
+    genre: 'jazz',
+    moods: ['night-shift', 'shipped-it'],
+  },
+  {
+    id: 'indie-flow-state-01',
+    title: 'Post-rock, pre-commit',
+    url: 'https://open.spotify.com/playlist/0xBg9v3VCOPSx4p8qSGUSY',
+    genre: 'indie',
+    moods: ['flow-state', 'debugging'],
+  },
+  {
+    id: 'electronic-coffee-needed-01',
+    title: 'Wake on LAN',
+    url: 'https://open.spotify.com/playlist/2GU4g17R8CQvmQ0C2l7dPK',
+    genre: 'electronic',
+    moods: ['coffee-needed', 'blue-monday'],
+  },
 ];
