@@ -1,9 +1,10 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { moods } from '../src/data/catalog';
+import { genres, moods, playlists } from '../src/data/catalog';
 import { release, releaseNote } from '../src/data/release';
 import { STORAGE_KEY } from '../src/scripts/consent';
+import { shelf } from '../src/data/shelf';
 
 // Phase 3 checks on the built copy. Like dist.test.ts, these read dist/, so
 // `npm test` needs a `npm run build` before it.
@@ -12,7 +13,7 @@ const app = 'https://github.com/albertoarena/sudo-play';
 
 // Pages whose copy is written. A page joins this list when phase 3 replaces
 // its placeholder, and the list ends as every page.
-const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'privacy/index.html', 'tips/index.html', 'troubleshooting/index.html', 'credits/index.html'];
+const finished = ['index.html', 'how-it-works/index.html', 'install/index.html', 'moods/index.html', 'playlists/index.html', 'privacy/index.html', 'tips/index.html', 'troubleshooting/index.html', 'credits/index.html'];
 
 function htmlFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -69,9 +70,10 @@ describe.each(finished)('%s', (file) => {
   });
 
   // The genre is "Lo-fi" in prose, as in Moods and the catalog label.
-  // `lofi` is only ever a code value. Decided 2026-10-13.
+  // `lofi` is only ever a code value, like a cover's file name, so only the
+  // text outside tags is checked. Decided 2026-10-13.
   it('spells the genre Lo-fi', () => {
-    expect(column(html)).not.toMatch(/\blofi\b/i);
+    expect(column(html).replace(/<[^>]*>/g, ' ')).not.toMatch(/\blofi\b/i);
   });
 });
 
@@ -366,9 +368,12 @@ describe('Moods', () => {
     expect(content).toMatch(/catalog/i);
   });
 
-  // Link, do not copy: adding a playlist is documented in the app's README.
-  it('links to the README section on adding a playlist', () => {
-    expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
+  // The playlists have their own page since 2026-11-07, and the section on
+  // adding one moved there with them.
+  it('points to Playlists for the playlists themselves', () => {
+    expect(links(content)).toContain('/playlists/');
+    expect(decode(content)).toContain('Every playlist in the catalog, with its genre and moods, is on');
+    expect(links(content)).not.toContain(`${app}/blob/main/README.md#adding-a-playlist`);
   });
 
   // Words people search for, in the title, the description and the lead.
@@ -400,6 +405,114 @@ describe('Moods', () => {
       expect(decode(content)).toContain(
         'A mood is how you feel about what you are coding, for example a long debugging session or a Friday deploy. You choose a genre and a mood, and the app picks one Spotify playlist for today.',
       );
+    });
+  });
+});
+
+// Every playlist in the catalog, as a shelf of covers, each opening the
+// playlist on Spotify. After Moods in the reading order. Decided 2026-11-07,
+// and grouped the same day by the colour of the covers.
+describe('Playlists', () => {
+  const html = read('playlists/index.html');
+  const content = decode(column(html));
+  const items = [...content.matchAll(/<li class="record"[^>]*>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
+  // The page's order: the groups in turn, each in its own order.
+  const ordered = shelf().flatMap((group) => group.playlists);
+
+  it('comes after Moods in the masthead', () => {
+    const header = html.match(/<header[\s\S]*?<\/header>/)?.[0] ?? '';
+    const hrefs = links(header);
+
+    expect(hrefs.indexOf('/playlists/')).toBe(hrefs.indexOf('/moods/') + 1);
+    expect(header).toMatch(/<a\b[^>]*href="\/playlists\/"[^>]*>Playlists\b/);
+  });
+
+  it('counts the playlists in its lead, from the catalog', () => {
+    expect(content).toContain(`These are the ${playlists.length} playlists in the app's catalog. Choose one to open it in Spotify.`);
+  });
+
+  it('lists every playlist, in its group', () => {
+    expect(items).toHaveLength(playlists.length);
+    ordered.forEach((playlist, index) => expect(items[index], playlist.id).toContain(`>${playlist.title}<`));
+  });
+
+  // A heading per group, and each group's covers under it.
+  it('heads each group of covers with its moods', () => {
+    const sections = [...content.matchAll(/<h2[^>]*>([^<]*)<\/h2>\s*<ul class="shelf"[^>]*>([\s\S]*?)<\/ul>/g)];
+
+    expect(sections.map((section) => section[1])).toEqual(shelf().map((group) => group.heading));
+    sections.forEach((section, index) => {
+      expect(section[2].match(/<li class="record"/g)?.length, section[1]).toBe(shelf()[index].playlists.length);
+    });
+  });
+
+  it('opens each playlist on Spotify, in a new tab', () => {
+    ordered.forEach((playlist, index) => {
+      const link = items[index]?.match(/<a\b[^>]*>/)?.[0] ?? '';
+
+      expect(link, playlist.id).toContain(`href="${playlist.url}"`);
+      expect(link, playlist.id).toContain('target="_blank"');
+      expect(items[index], playlist.id).toContain('(opens in a new tab)');
+    });
+  });
+
+  // The title beside the cover names the link, so the cover adds nothing for
+  // a screen reader. A known size keeps the shelf from shifting as it loads.
+  it('shows each cover from this site, at its size, with an empty alt', () => {
+    ordered.forEach((playlist, index) => {
+      const img = items[index]?.match(/<img\b[^>]*>/)?.[0] ?? '';
+
+      expect(img, playlist.id).toContain(`src="/covers/${playlist.id}.webp"`);
+      expect(img, playlist.id).toContain('alt=""');
+      expect(img, playlist.id).toMatch(/\bwidth="640"/);
+      expect(img, playlist.id).toMatch(/\bheight="640"/);
+    });
+  });
+
+  // A wide screen shows six in the first row; the rest wait until scrolled to.
+  it('loads every cover after the first six lazily', () => {
+    items.forEach((item, index) => {
+      const img = item.match(/<img\b[^>]*>/)?.[0] ?? '';
+
+      expect(/loading="lazy"/.test(img), ordered[index].id).toBe(index >= 6);
+    });
+  });
+
+  // The cover prints the importer's own mood names, so the labels under it
+  // are the catalog's. Decided 2026-11-07.
+  it('labels each cover with its genre and moods from the catalog', () => {
+    ordered.forEach((playlist, index) => {
+      const genre = genres.find((entry) => entry.id === playlist.genre)!.label;
+      const names = playlist.moods.map((id) => moods.find((mood) => mood.id === id)!.label);
+      const shown = [...(items[index] ?? '').matchAll(/<span class="record-mood"[^>]*>([^<]*)</g)].map((match) => match[1]);
+
+      expect(items[index], playlist.id).toContain(`>${genre}<`);
+      expect(shown, playlist.id).toEqual(names);
+    });
+  });
+
+  it('links to the README section on adding a playlist', () => {
+    expect(links(content)).toContain(`${app}/blob/main/README.md#adding-a-playlist`);
+  });
+
+  describe('says what people search for', () => {
+    const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
+    const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '');
+    const named = ['Modal debugging', 'Riffs for risky releases'];
+
+    it('is titled with Spotify playlists for coding', () => {
+      expect(title).toBe('Spotify playlists for coding · Sudo Play');
+    });
+
+    it('counts the playlists and names two in its description', () => {
+      expect(description).toBe(
+        `The ${playlists.length} Spotify playlists Sudo Play picks from, such as Modal debugging and Riffs for risky releases. Choose one to open it in Spotify.`,
+      );
+    });
+
+    // The description types two titles by hand, so a renamed playlist fails here.
+    it('names only playlists that are in the catalog', () => {
+      for (const name of named) expect(playlists.map((playlist) => playlist.title)).toContain(name);
     });
   });
 });

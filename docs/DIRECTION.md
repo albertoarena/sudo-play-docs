@@ -60,18 +60,68 @@ code, this section is the design to bring back; git has the component.
 
 ### Wayfinding
 
-Six pages do not need a sidebar. The navigation is one row. At 320px it wraps to
+Eight pages do not need a sidebar. The navigation is one row. At 320px it wraps to
 a second line under the logo: no hamburger, and no JavaScript for the
 navigation. Every page ends with previous and next links in reading order:
 
-Home, How it works, Install, Moods, Tips, Privacy, Help.
+Home, How it works, Install, Moods, Playlists, Tips, Privacy, Help.
 
 Troubleshooting joined at the end on 2026-10-21. Nobody reads it in turn,
 and the right end of the masthead is where people look for help. Its nav
 label is "Help", because "Troubleshooting" made the 320px masthead three
 rows. The URL and the page heading say Troubleshooting.
 
+Playlists joined after Moods on 2026-11-07. Moods says what each mood
+means, and Playlists shows the music, so previous and next take a reader
+from one to the other. Its seventh link changed the masthead in two ways,
+both measured before the change:
+
+- At 320 and 352px, the three column grid left Help alone on a third row.
+  The links now simply wrap, three over four, in the same two rows as before
+- Between 641 and 767px the row no longer fit on one line, and the pinned
+  masthead grew to 93 to 113px. It now stacks, and scrolls away, below
+  52rem instead of 40rem, so what stays pinned is always one row. 48rem was
+  enough with the Mac's font, but CI on Linux showed a 93px masthead at
+  768px: a wider system font needs about 800px, so 52rem leaves room
+
 A page gets its own table of contents only if phase 3 makes it long.
+
+### The shelf on Playlists
+
+Every playlist in the catalog, as a grid of covers. Decided 2026-11-07. It is
+the one block wider than the reading column: it takes the full frame, centred
+on the column, because a shelf needs the width. Two covers a row on a phone,
+then three, four and six.
+
+The covers are grouped by colour, the same day, after the first build showed
+them in the order they were added, with the colours jumping about. A cover
+takes its colour from the playlist's first mood, the one in its id, and the
+colours pair the app's moods: Shipped It and Friday Deploy, Coffee Needed and
+Blue Monday, Flow State and Debugging, then Agent Mode and Night Shift alone.
+Each group has a heading made of those mood names, so the page never prints
+the importer's own groups. The groups follow the catalog's mood order, as the
+table on Moods does. Inside a group the covers go by genre, in the catalog's
+genre order: each genre has its own shade and Classical is the palest, so
+every group starts pale. The pairs live in `src/data/shelf.ts`, and a new mood
+fails the tests until it has a place there. A group of three leaves a short
+row at two and four covers a row, which is accepted.
+
+The cover and the title are one link, to the playlist on Spotify, in a new
+tab like every external link. Under them, in Geist Mono at label size, the
+genre and the moods from the catalog. The covers bring all the colour, and
+since they are content, the One Green Rule is not broken when a cover is
+green. Around them the page adds nothing: no shadow, no lift, no motion.
+Hover turns the title green with an underline, as on previous and next.
+
+The covers print the curator's own mood groups ("focus", "low and rising"),
+not the catalog's moods, so the label under each cover is the one to trust.
+Accepted on 2026-11-07, to be fixed later in the importer, which means
+uploading all 24 covers to Spotify again.
+
+The covers come from `spotify:cover` in the curator's private importer, which
+draws the same image every time. They are renamed to the catalog id, converted
+to WebP at 640px and committed in `public/covers`, about 13 KB each. Nothing
+loads from Spotify.
 
 The reading column, and previous and next under it, sit in the middle of the
 page. Decided 2026-10-11 in review: the first build aligned the column with the

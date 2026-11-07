@@ -17,7 +17,7 @@ html {
 
 /* Room for the pinned masthead row, so a linked heading or a focused link
    never lands under it. Masthead.astro pins it from the same width. */
-@media (min-width: 40.0625rem) {
+@media (min-width: 52rem) {
   html {
     scroll-padding-top: 4.5rem;
   }
@@ -33,12 +33,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* A container, so a block wider than the column, like the shelf on
+   Playlists, can take main's full width. */
 main {
   flex: 1;
   width: 100%;
   max-width: var(--frame);
   margin-inline: auto;
   padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter) clamp(3rem, 8vw, 5rem);
+  container-type: inline-size;
 }
 
 .column {

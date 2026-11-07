@@ -1,9 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import ExternalLink from '../components/ExternalLink.astro';
 import { genres, moods } from '../data/catalog';
 
-const app = 'https://github.com/albertoarena/sudo-play';
 const labels = genres.map((genre) => genre.label);
 const genreList = `${labels.slice(0, -1).join(', ')} and ${labels.at(-1)}`;
 ---
@@ -26,6 +24,5 @@ const genreList = `${labels.slice(0, -1).join(', ')} and ${labels.at(-1)}`;
     </table>
   </div>
 
-  <h2>Add a playlist</h2>
-  <p>Each playlist in the catalog has one genre and one or more moods. Anyone can add a playlist with a pull request. The app's README explains how, in <ExternalLink href={`${app}/blob/main/README.md#adding-a-playlist`}>Adding a playlist</ExternalLink>.</p>
+  <p>Every playlist in the catalog, with its genre and moods, is on <a href="/playlists/">Playlists</a>.</p>
 </Base>

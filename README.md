@@ -9,7 +9,7 @@ Lives at **https://sudoplay.dev**.
 ## Status
 
 Phases 1 to 6 of `docs/PLAN.md` are done: tooling and tests, the design, the
-copy for all seven pages and Credits, SEO basics, GA4 behind the consent gate,
+copy for all eight pages and Credits, SEO basics, GA4 behind the consent gate,
 and the deploy. The site is live since 2026-10-14, and a merge to `main`
 deploys itself: see `docs/DEPLOYMENT.md`. Analytics are on only in a build with
 `PUBLIC_GA_MEASUREMENT_ID` set, which the deploy build takes from a repository
@@ -74,3 +74,6 @@ font from a CDN, no iframe demo, no search widget that calls home on load.
 - **Geist Mono** keeps its own licence, the SIL Open Font License 1.1, in
   `public/fonts/geist-mono/OFL.txt`
 - **The Sudo Play name and mark** are not covered by either licence
+- **The playlist covers** in `public/covers` show the name and mark, so they
+  are not covered by either licence. They are drawn by the curator's own
+  tool and are the same images the playlists use on Spotify

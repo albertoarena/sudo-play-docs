@@ -9,12 +9,13 @@
 // fail every docs pull request until the site caught up. The tests beside the
 // site cover parseCatalog and compareCatalog with small fixtures.
 //
-// The catalog's genres and moods are lists of flat maps of strings, so this
-// reads that shape alone and adds no YAML dependency. Any other line inside
-// those two lists is an error, so a new YAML form stops the check instead of
-// passing it.
+// The catalog's genres, moods and playlists are lists of flat maps of
+// strings, plus a playlist's moods as a flow list like [debugging, flow-state].
+// This reads that shape alone and adds no YAML dependency. Any other line
+// inside those three lists is an error, so a new YAML form stops the check
+// instead of passing it.
 import { pathToFileURL } from 'node:url';
-import { genres, moods, type Genre, type Mood } from '../src/data/catalog.ts';
+import { genres, moods, playlists, type Genre, type Mood, type Playlist } from '../src/data/catalog.ts';
 
 // The same URL as DEFAULT_CATALOG_URL in the app's app/Settings/SettingKey.php.
 export const catalogUrl = 'https://raw.githubusercontent.com/albertoarena/sudo-play/catalog-live/catalog/playlists.yaml';
@@ -22,13 +23,16 @@ export const catalogUrl = 'https://raw.githubusercontent.com/albertoarena/sudo-p
 export interface Catalog {
   genres: readonly Genre[];
   moods: readonly Mood[];
+  playlists: readonly Playlist[];
 }
 
-type Entry = Record<string, string>;
+type Entry = Record<string, string | string[]>;
+const listNames = ['genres', 'moods', 'playlists'];
 
 export function parseCatalog(yaml: string): Catalog {
   const lists: Record<string, Entry[]> = {};
   let current: Entry[] | null = null;
+  let name = '';
 
   yaml.split('\n').forEach((raw, index) => {
     const line = stripComment(raw).trimEnd();
@@ -40,7 +44,8 @@ export function parseCatalog(yaml: string): Catalog {
     const top = line.match(/^([A-Za-z_]+):(.*)$/);
     if (top) {
       const [, key, rest] = top;
-      current = key === 'genres' || key === 'moods' ? (lists[key] = []) : null;
+      name = key;
+      current = listNames.includes(key) ? (lists[key] = []) : null;
       if (current && rest.trim() !== '') fail();
       return;
     }
@@ -52,25 +57,30 @@ export function parseCatalog(yaml: string): Catalog {
     if (marker === '- ') current.push({});
     const entry = current.at(-1);
     if (!entry) return fail();
-    entry[key] = scalar(value) ?? fail();
+    if (name === 'playlists' && key === 'moods') entry[key] = flowList(value) ?? fail();
+    else entry[key] = scalar(value) ?? fail();
   });
 
   return {
-    genres: required(lists.genres, 'genres', ['id', 'label']).map(({ id, label }) => ({ id, label })),
-    moods: required(lists.moods, 'moods', ['id', 'label', 'emoji', 'description']).map(({ id, label, emoji, description }) => ({
-      id,
-      label,
-      emoji,
-      description,
-    })),
+    genres: required(lists.genres, 'genres', ['id', 'label']).map(({ id, label }) => ({ id, label }) as Genre),
+    moods: required(lists.moods, 'moods', ['id', 'label', 'emoji', 'description']).map(
+      ({ id, label, emoji, description }) => ({ id, label, emoji, description }) as Mood,
+    ),
+    playlists: required(lists.playlists, 'playlists', ['id', 'title', 'url', 'genre', 'moods']).map(
+      ({ id, title, url, genre, moods }) => ({ id, title, url, genre, moods }) as Playlist,
+    ),
   };
 }
 
 export function compareCatalog(here: Catalog, app: Catalog): string[] {
-  return [...compareList('genre', here.genres, app.genres), ...compareList('mood', here.moods, app.moods)];
+  return [
+    ...compareList('genre', here.genres, app.genres),
+    ...compareList('mood', here.moods, app.moods),
+    ...compareList('playlist', here.playlists, app.playlists),
+  ];
 }
 
-function compareList(kind: string, here: readonly (Genre | Mood)[], app: readonly (Genre | Mood)[]): string[] {
+function compareList(kind: string, here: readonly (Genre | Mood | Playlist)[], app: readonly (Genre | Mood | Playlist)[]): string[] {
   const differences: string[] = [];
   const hereIds = here.map((entry) => entry.id);
   const appIds = app.map((entry) => entry.id);
@@ -82,8 +92,9 @@ function compareList(kind: string, here: readonly (Genre | Mood)[], app: readonl
     const theirs = app.find((entry) => entry.id === ours.id);
     if (!theirs) continue;
     for (const [key, value] of Object.entries(ours)) {
-      const other = (theirs as unknown as Entry)[key];
-      if (value !== other) differences.push(`${kind} ${ours.id}: ${key} is "${value}" here and "${other}" in the app`);
+      const mine = text(value);
+      const other = text((theirs as unknown as Entry)[key]);
+      if (mine !== other) differences.push(`${kind} ${ours.id}: ${key} is "${mine}" here and "${other}" in the app`);
     }
   }
 
@@ -94,6 +105,10 @@ function compareList(kind: string, here: readonly (Genre | Mood)[], app: readonl
   }
 
   return differences;
+}
+
+function text(value: string | readonly string[] | undefined): string | undefined {
+  return Array.isArray(value) ? value.join(', ') : (value as string | undefined);
 }
 
 // Drops a # comment, but not a # inside quotes.
@@ -120,6 +135,14 @@ function scalar(value: string): string | undefined {
   return value;
 }
 
+// A flow list of plain strings, [a, b]. Anything else is undefined.
+function flowList(value: string): string[] | undefined {
+  const inner = value.match(/^\[(.*)\]$/)?.[1];
+  if (inner === undefined || inner.trim() === '') return undefined;
+  const items = inner.split(',').map((item) => scalar(item.trim()));
+  return items.every((item): item is string => item !== undefined && item !== '') ? items : undefined;
+}
+
 function required(list: Entry[] | undefined, name: string, keys: string[]): Entry[] {
   if (!list || list.length === 0) throw new Error(`the catalog has no ${name}`);
   for (const entry of list) {
@@ -132,14 +155,16 @@ function required(list: Entry[] | undefined, name: string, keys: string[]): Entr
 async function main(): Promise<void> {
   const response = await fetch(catalogUrl);
   if (!response.ok) throw new Error(`${catalogUrl}: HTTP ${response.status}`);
-  const differences = compareCatalog({ genres, moods }, parseCatalog(await response.text()));
+  const differences = compareCatalog({ genres, moods, playlists }, parseCatalog(await response.text()));
 
   if (differences.length) {
     console.error('src/data/catalog.ts differs from the catalog on catalog-live:');
     for (const difference of differences) console.error(`- ${difference}`);
     process.exit(1);
   }
-  console.log(`src/data/catalog.ts matches the catalog on catalog-live: ${genres.length} genres, ${moods.length} moods.`);
+  console.log(
+    `src/data/catalog.ts matches the catalog on catalog-live: ${genres.length} genres, ${moods.length} moods, ${playlists.length} playlists.`,
+  );
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

@@ -174,7 +174,7 @@ identity.
 - One emerald accent; zinc neutrals with a faint cool violet cast
 - System sans for reading, Geist Mono for the panel, code and labels
 - Flat, borders instead of shadows, nothing moves
-- Seven pages read in order, with previous and next at the end of each, and
+- Eight pages read in order, with previous and next at the end of each, and
   Credits outside the order, linked from the footer
 
 ## Colors
@@ -246,8 +246,8 @@ Mono was chosen from a specimen of four pairs and is decided.
   size at 650.
 - **Small** (14px): footer and tables (tables are 15px, tabular figures).
 - **Code** (Geist Mono 14px, 1.65): code blocks; inline code is 0.875em.
-- **Label** (Geist Mono 12px, 1.4): unused since 2026-10-12, when its only
-  use, the label on a code block, was removed. Kept for small labels.
+- **Label** (Geist Mono 12px, 1.4): the genre and moods under each cover on
+  Playlists, since 2026-11-07, in `fg-muted`.
 
 Headings use balanced wrapping and the lead uses pretty wrapping. `strong` is
 650, not 700.
@@ -264,7 +264,9 @@ labels. Nothing else.
 One centred frame (72rem) with a fluid gutter (16 to 32px). Inside it, the
 masthead, the main area and the footer share the same edges. Page content sits
 in a single column capped at 66ch, centred in the frame. There is no
-sidebar and no table of contents.
+sidebar and no table of contents. The one block wider than the column is the
+shelf on Playlists, which takes the whole frame. `main` is a size container,
+so the shelf sets its width in `cqi`.
 
 Main has fluid top and bottom padding (about 40 to 72px above, 48 to 80px
 below). Vertical rhythm: 1.125rem between paragraphs, 1.5rem around code
@@ -272,14 +274,17 @@ blocks and tables, 3rem above an `h2`, 2.25rem above an `h3`. Previous and next
 sit 4rem below the column, centred with it, in two equal cells.
 
 The masthead is one row, at least 56px: brand on the left, nav on the right.
-Below 40rem it stacks, with the nav wrapping under the name in compact rows.
-Below 22rem the six links sit in a three column grid, so a row never strands
-one link. There is never a menu button. Home's band adds a hero area under the
+Below 52rem it stacks, with the nav wrapping under the name in compact rows.
+At 320px the seven links wrap three over four, so a row never strands one
+link. There is never a menu button. Home's band adds a hero area under the
 row for the panel.
 
-From 40rem up the row is pinned to the top while the page scrolls, and a
+From 52rem up the row is pinned to the top while the page scrolls, and a
 linked heading lands below it. Home's panel band scrolls away under it. On a
-phone the stacked masthead is about 120px, so it scrolls away with the page.
+phone or a small tablet the stacked masthead is about 120px, so it scrolls
+away with the page. The width was 40rem until 2026-11-07, when the seventh
+link made the row too long to fit between 40 and 52rem with the wider
+system fonts of Linux and Windows.
 
 The consent banner is fixed to the bottom edge, on `--bg` with a
 `--border-strong` hairline on top: the title and one sentence on the left,
@@ -336,10 +341,10 @@ dark values twice, for the system unless the choice is light, and for a
 chosen dark. Home's badge and screenshot pick dark with a media query, so the
 toggle rewrites their `source` media to follow a choice. The button shows
 only when its script runs; without JavaScript the page follows the system.
-Below 40rem it shares the first line with the name.
+Below 52rem it shares the first line with the name.
 
 ### Navigation
-- **Style:** six text links in `term-dim`, no underline, 24px apart.
+- **Style:** seven text links in `term-dim`, no underline, 24px apart.
 - **Hover:** `term-fg`.
 - **Current:** `term-green`, with `aria-current="page"` and three small
   equaliser bars (3px wide, 6px tall at most, heights 45%, 100% and 73%)
@@ -412,6 +417,28 @@ is flat, and shown at its natural size. The window's own 22px radius, and a
 
 The source is the app repository's `art/screenshots/`: when those change, crop
 and convert again.
+
+### Playlist Shelf
+Every playlist on Playlists, as covers in groups by colour. Each group is a
+`section` as wide as the frame: an `h2` of its mood names on the shelf's
+left edge, then the list, 1.25rem under it. Two a row, then three from 36rem,
+four from 52rem and six from 68rem, with 2rem between rows and 16 to 24px
+between covers. The groups and their order come from `src/data/shelf.ts`. Each item is one link holding
+the cover and the title, to the playlist on Spotify, through `ExternalLink`.
+
+- **Cover:** a 640px WebP from `public/covers`, square, 10px corners and a
+  `border` hairline drawn as an inset outline, as on the App Window. Its alt
+  is empty, because the title names the link. The first six load at once and
+  the rest lazily
+- **Title:** 16px at 650 in `fg`, 12px under the cover
+- **Label:** under the link, the genre, then the moods, each on its own line
+  in Label type and `fg-muted`. A mood name never breaks inside itself
+- **Hover:** the title turns `accent` with a 1px underline. Nothing moves
+- **Focus:** the 2px `focus` ring goes round the cover and the title, with
+  10px corners
+
+The covers are the page's colour, so nothing around them adds any. "Add a
+playlist" after the last group sits back in the reading column, 4rem down.
 
 ### Previous and Next
 The page's neighbours in reading order, in two cells at the end of every page.

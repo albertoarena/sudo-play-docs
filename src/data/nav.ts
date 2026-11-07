@@ -10,6 +10,7 @@ export const pages: readonly Page[] = [
   { href: '/how-it-works/', label: 'How it works' },
   { href: '/install/', label: 'Install' },
   { href: '/moods/', label: 'Moods' },
+  { href: '/playlists/', label: 'Playlists' },
   { href: '/tips/', label: 'Tips' },
   { href: '/privacy/', label: 'Privacy' },
   { href: '/troubleshooting/', label: 'Help' },
