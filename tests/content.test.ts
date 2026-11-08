@@ -429,8 +429,10 @@ describe('Playlists', () => {
     expect(header).toMatch(/<a\b[^>]*href="\/playlists\/"[^>]*>Playlists\b/);
   });
 
+  // In the visitor's words, not the catalog's, and as the description says
+  // it. On dev-reputation's advice, approved 2026-11-08.
   it('counts the playlists in its lead, from the catalog', () => {
-    expect(content).toContain(`These are the ${playlists.length} playlists in the app's catalog. Choose one to open it in Spotify.`);
+    expect(content).toContain(`These are the ${playlists.length} playlists Sudo Play picks from. Choose one to open it in Spotify.`);
   });
 
   it('lists every playlist, in its group', () => {
