@@ -130,6 +130,23 @@ describe('the publish workflow', () => {
     expect(workflow).not.toMatch(/G-[A-Z0-9]{6,}/);
   });
 
+  // On 2026-11-07 two merges 15 seconds apart finished CI out of order. The
+  // older one's Publish cancelled the newer one's and deployed the older
+  // commit, so the site stayed one merge behind. Now a run waits its turn
+  // instead of cancelling, and a run for a commit main has moved past
+  // publishes nothing: the newer commit's own run publishes that.
+  it('queues runs instead of cancelling one in progress', () => {
+    expect(workflow).toMatch(/concurrency:\n\s+group: publish\n\s+cancel-in-progress: false/);
+  });
+
+  it('publishes nothing for a commit main has moved past', () => {
+    expect(workflow).toContain('git ls-remote origin refs/heads/main');
+    expect(workflow).toContain('echo "stale=true" >> "$GITHUB_OUTPUT"');
+    const guarded = workflow.match(/if: steps\.tip\.outputs\.stale != 'true'/g) ?? [];
+    // npm ci, the build and the push to deploy.
+    expect(guarded).toHaveLength(3);
+  });
+
   it('force pushes dist/ to the deploy branch', () => {
     expect(workflow).toContain('cd dist');
     expect(workflow).toMatch(/git push -q --force "https:\/\/x-access-token:\$\{GITHUB_TOKEN\}@github\.com\/\$\{GITHUB_REPOSITORY\}\.git" deploy/);
