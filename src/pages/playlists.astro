@@ -22,7 +22,7 @@ const place = new Map(groups.flatMap((group) => group.playlists).map((playlist, 
       <h2>{group.heading}</h2>
       <ul class="shelf" role="list">
         {group.playlists.map((playlist) => (
-          <li class="record">
+          <li class="record" id={playlist.id}>
             <ExternalLink class="record-link" href={playlist.url}>
               <img src={`/covers/${playlist.id}.webp`} width="640" height="640" alt="" decoding="async" loading={place.get(playlist.id)! < firstRow ? undefined : 'lazy'} />
               <span class="record-title">{playlist.title}</span>

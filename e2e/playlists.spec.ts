@@ -49,3 +49,14 @@ test('a focused playlist shows the focus ring', async ({ page }) => {
   const outline = await link.evaluate((el) => getComputedStyle(el).outlineStyle);
   expect(outline).toBe('solid');
 });
+
+// A link to one playlist lands on its cover, below the pinned masthead.
+test('a link to one playlist shows its cover below the masthead', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/playlists/#jazz-night-shift-01');
+  const banner = await page.getByRole('banner').boundingBox();
+  const cover = await page.locator('#jazz-night-shift-01 img').boundingBox();
+
+  expect(cover!.y).toBeGreaterThanOrEqual(banner!.y + banner!.height);
+  expect(cover!.y + cover!.height).toBeLessThanOrEqual(800);
+});
