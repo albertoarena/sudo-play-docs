@@ -10,7 +10,12 @@ the same Netsons host.
 2. If CI passes, `.github/workflows/publish.yml` builds the site with
    `PUBLIC_GA_MEASUREMENT_ID` from the repository variable, and force pushes
    `dist/` to the `deploy` branch, as one commit. It builds the commit CI
-   tested. A red `main` never reaches the host.
+   tested. A red `main` never reaches the host. Publish runs queue, and a
+   run for a commit `main` has already moved past publishes nothing, because
+   the newer commit's own run publishes that. Since 2026-11-08: before, a
+   new run cancelled the one in progress, and when two merges finished CI
+   out of order the older commit was deployed. A run by hand from the
+   Actions tab always builds the current `main`.
 3. Every 5 minutes, cron on the host runs `scripts/server-deploy.sh`. When the
    `deploy` branch has a commit it has not deployed, the script unpacks it into
    `~/sudoplay.dev/releases/<timestamp>/`, points the `current` symlink at it,
