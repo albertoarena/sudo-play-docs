@@ -7,6 +7,11 @@ name: Publish
 # It runs when CI finishes on a push to main, and only if CI passed, so a red
 # main never reaches the host. It checks out the commit CI tested, not
 # whatever main is by then.
+#
+# Runs queue, and one for a commit main has already moved past publishes
+# nothing: the newer commit's own run publishes that. Two merges close
+# together can finish CI out of order, and on 2026-11-07, when a new run
+# still cancelled the one in progress, the older commit won.
 
 on:
   workflow_run:
@@ -20,7 +25,7 @@ permissions:
 
 concurrency:
   group: publish
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -34,12 +39,26 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
+      # A run by hand builds main itself, so only a CI run can be stale.
+      - name: Check the commit is still the tip of main
+        id: tip
+        if: github.event_name == 'workflow_run'
+        env:
+          TESTED: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          tip=$(git ls-remote origin refs/heads/main | cut -f1)
+          if [ "$tip" != "$TESTED" ]; then
+            echo "main is at $tip, past $TESTED: the run for $tip publishes it."
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+        if: steps.tip.outputs.stale != 'true'
       - name: Build
+        if: steps.tip.outputs.stale != 'true'
         env:
           # A repository variable, not a secret: the ID is in every page's
           # source anyway. It is set here and nowhere in the code, so only the
@@ -48,6 +67,7 @@ jobs:
           PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
         run: npm run build
       - name: Publish dist to the deploy branch
+        if: steps.tip.outputs.stale != 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
