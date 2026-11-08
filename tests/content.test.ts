@@ -450,6 +450,15 @@ describe('Playlists', () => {
     });
   });
 
+  // A post about one playlist links straight to its cover, as
+  // /playlists/#<id>. The id is the catalog's, so it never changes.
+  // dev-reputation's idea, approved 2026-11-08.
+  it('gives each playlist an anchor, its catalog id', () => {
+    const ids = [...content.matchAll(/<li class="record"[^>]*\bid="([^"]*)"/g)].map((match) => match[1]);
+
+    expect(ids).toEqual(ordered.map((playlist) => playlist.id));
+  });
+
   it('opens each playlist on Spotify, in a new tab', () => {
     ordered.forEach((playlist, index) => {
       const link = items[index]?.match(/<a\b[^>]*>/)?.[0] ?? '';
