@@ -113,10 +113,13 @@ since they are content, the One Green Rule is not broken when a cover is
 green. Around them the page adds nothing: no shadow, no lift, no motion.
 Hover turns the title green with an underline, as on previous and next.
 
-The covers print the curator's own mood groups ("focus", "low and rising"),
-not the catalog's moods, so the label under each cover is the one to trust.
-Accepted on 2026-11-07, to be fixed later in the importer, which means
-uploading all 24 covers to Spotify again.
+Each cover prints only its genre, such as "rock", since 2026-11-09. Until
+then it printed the importer's own mood group too ("rock / focus"), words the
+app never uses, beside headings in the app's words. Alberto chose the genre
+alone over printing a catalog mood, so a cover can never disagree with the
+catalog. The colour still comes from the importer's group, which the page's
+groups follow. The importer uploads the same images to Spotify with
+`spotify:cover --upload`.
 
 The covers come from `spotify:cover` in the curator's private importer, which
 draws the same image every time. They are renamed to the catalog id, converted

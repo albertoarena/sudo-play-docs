@@ -491,8 +491,8 @@ describe('Playlists', () => {
     });
   });
 
-  // The cover prints the importer's own mood names, so the labels under it
-  // are the catalog's. Decided 2026-11-07.
+  // The cover prints only the genre, so the moods are named here, in the
+  // catalog's words. Decided 2026-11-07, covers changed 2026-11-09.
   it('labels each cover with its genre and moods from the catalog', () => {
     ordered.forEach((playlist, index) => {
       const genre = genres.find((entry) => entry.id === playlist.genre)!.label;
