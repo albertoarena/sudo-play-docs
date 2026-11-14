@@ -33,24 +33,24 @@ describe('releaseNote', () => {
   });
 });
 
-// 1.0.3, published on 2026-10-27. The app starts its background PHP
-// process again when it stops, and keeps a second log file.
-it('is the signed 1.0.3', () => {
+// 1.0.4, published on 2026-11-15. The app no longer changes its own files
+// when it starts, so macOS keeps accepting its signature.
+it('is the signed 1.0.4', () => {
   const tag = 'https://github.com/albertoarena/sudo-play/releases';
 
   expect(release).toEqual({
-    version: '1.0.3',
-    name: '1.0.3',
-    date: '2026-10-27',
-    url: `${tag}/tag/v1.0.3`,
+    version: '1.0.4',
+    name: '1.0.4',
+    date: '2026-11-15',
+    url: `${tag}/tag/v1.0.4`,
     dmg: {
-      file: 'Sudo-Play-1.0.3-arm64.dmg',
-      url: `${tag}/download/v1.0.3/Sudo-Play-1.0.3-arm64.dmg`,
+      file: 'Sudo-Play-1.0.4-arm64.dmg',
+      url: `${tag}/download/v1.0.4/Sudo-Play-1.0.4-arm64.dmg`,
       size: '163 MB',
-      sha256: '43ad8b4b56c47856fa266b807e114efcbbbca26955e964608a1e78ddee46d479',
+      sha256: 'c4ae4f0547b6b641c0739c47beba9f595bae1e4c51a7595f0d598e2ee62c03cd',
     },
   });
-  expect(releaseNote(release)).toBe('The current release is 1.0.3.');
+  expect(releaseNote(release)).toBe('The current release is 1.0.4.');
 });
 
 it('Home states the release from the data file', () => {
